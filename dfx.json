@@ -1,0 +1,41 @@
+{
+  "canisters": {
+    "chordify_backend": {
+      "build": "npx azle chordify_backend",
+      "candid": "src/chordify_backend/chordify_backend.did",
+      "gzip": true,
+      "main": "src/chordify_backend/src/index.ts",
+      "type": "custom",
+      "wasm": ".azle/chordify_backend/chordify_backend.wasm"
+    },
+    "chordify_frontend": {
+      "dependencies": [
+        "chordify_backend"
+      ],
+      "source": [
+        "src/chordify_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "chordify_frontend"
+    },
+    "internet_identity": {
+      "candid": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity.did",
+      "frontend": {},
+      "remote": {
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+      },
+      "type": "custom",
+      "wasm": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity_dev.wasm.gz"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
