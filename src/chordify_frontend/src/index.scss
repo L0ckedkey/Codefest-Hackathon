@@ -1,37 +1,75 @@
-body {
-  font-family: sans-serif;
-  font-size: 1.5rem;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#carousel.swiper {
+  @apply w-full sm:rounded-2xl;
 }
 
-img {
-  max-width: 50vw;
-  max-height: 25vw;
-  display: block;
-  margin: auto;
+#carousel .swiper-slide {
+  @apply max-w-[90%] sm:max-w-none;
 }
 
-form {
-  display: flex;
-  justify-content: center;
-  gap: 0.5em;
-  flex-flow: row wrap;
-  max-width: 40vw;
-  margin: auto;
-  align-items: baseline;
+:is(#carousel, .collections-slide):hover :is(.swiper-button-prev, .swiper-button-next) {
+  @apply opacity-100;
 }
 
-button[type="submit"] {
-  padding: 5px 20px;
-  margin: 10px auto;
-  float: right;
+:is(#carousel, .collections-slide) :is(.swiper-button-prev, .swiper-button-next) {
+  @apply hidden h-12 w-12 overflow-hidden rounded-full bg-white/80 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:flex;
 }
 
-#greeting {
-  margin: 10px auto;
-  padding: 10px 60px;
-  border: 1px solid #222;
+:is(#carousel, .collections-slide) :is(.swiper-button-prev, .swiper-button-next)::after {
+  @apply text-xl font-black text-slate-800;
 }
 
-#greeting:empty {
+.collections-slide :is(.swiper-button-prev, .swiper-button-next) {
+  @apply border bg-white shadow-lg;
+}
+
+.collections-slide .swiper-button-disabled {
+  @apply hidden;
+}
+
+#main-tabs {
+  @apply [mask:linear-gradient(to_right,rgba(0,0,0,0)_0%,rgb(0,0,0)_5%,rgb(0,0,0)_95%,rgba(0,0,0,0)_100%)] sm:[mask:none];
+}
+
+#main-tabs .swiper {
+  @apply px-4 sm:px-0;
+}
+
+#main-tabs .swiper-slide {
+  @apply w-fit;
+}
+
+#main-tabs :is(.swiper-button-next, .swiper-button-prev) {
   display: none;
+}
+
+.collections-slide {
+  @apply py-4;
+}
+
+.collections-slide .swiper-slide {
+  @apply w-3/4;
+}
+
+// Button Glass Effect
+
+.btn-glass{
+  @apply overflow-hidden relative;
+}
+
+.btn-glass::after{
+  @apply bg-gray-200 ;
+  content: "";
+  @apply h-36 -left-20 opacity-20 absolute -top-12 rotate-[35deg] transition-all w-12 z-10 duration-1000;
+}
+
+.btn-glass:hover::after {
+  @apply left-[150%] transition-all duration-1000;
+}
+
+.auth-input{
+  @apply bg-white  shadow-gray-400 shadow-sm focus:shadow-gray-400 px-4 py-3 placeholder:text-gray-400 text-black rounded-md focus:ring-0 outline-none border-none focus:shadow-md transition-all duration-150
 }

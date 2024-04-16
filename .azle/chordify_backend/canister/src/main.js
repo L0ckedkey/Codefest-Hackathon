@@ -30,7 +30,7 @@ function _extends() {
     };
     return _extends.apply(this, arguments);
 }
-var _class, _class1, _class2, _class3, _class4, _class5;
+var _class, _class1, _class2, _class3, _class4, _class5, _class6, _class7, _class8;
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -95568,9 +95568,9 @@ var require_text_encoding = __commonJS({
         };
     }
 });
-// node_modules/js-sha256/src/sha256.js
+// node_modules/@dfinity/principal/node_modules/js-sha256/src/sha256.js
 var require_sha256 = __commonJS({
-    "node_modules/js-sha256/src/sha256.js" (exports, module) {
+    "node_modules/@dfinity/principal/node_modules/js-sha256/src/sha256.js" (exports, module) {
         (function() {
             
             var ERROR = "input is invalid type";
@@ -96103,6 +96103,564 @@ var require_sha256 = __commonJS({
                 if (AMD) {
                     define(function() {
                         return exports;
+                    });
+                }
+            }
+        })();
+    }
+});
+// (disabled):crypto
+var require_crypto = __commonJS({
+    "(disabled):crypto" () {}
+});
+// (disabled):node_modules/buffer/index.js
+var require_buffer2 = __commonJS({
+    "(disabled):node_modules/buffer/index.js" () {}
+});
+// node_modules/js-sha256/src/sha256.js
+var require_sha2562 = __commonJS({
+    "node_modules/js-sha256/src/sha256.js" (exports2, module2) {
+        (function() {
+            
+            var ERROR2 = "input is invalid type";
+            var WINDOW2 = typeof window === "object";
+            var root2 = WINDOW2 ? window : {};
+            if (root2.JS_SHA256_NO_WINDOW) {
+                WINDOW2 = false;
+            }
+            var WEB_WORKER2 = !WINDOW2 && typeof self === "object";
+            var NODE_JS2 = !root2.JS_SHA256_NO_NODE_JS && typeof process === "object" && process.versions && process.versions.node;
+            if (NODE_JS2) {
+                root2 = global;
+            } else if (WEB_WORKER2) {
+                root2 = self;
+            }
+            var COMMON_JS2 = !root2.JS_SHA256_NO_COMMON_JS && typeof module2 === "object" && module2.exports;
+            var AMD2 = typeof define === "function" && define.amd;
+            var ARRAY_BUFFER2 = !root2.JS_SHA256_NO_ARRAY_BUFFER && typeof ArrayBuffer !== "undefined";
+            var HEX_CHARS2 = "0123456789abcdef".split("");
+            var EXTRA2 = [
+                -2147483648,
+                8388608,
+                32768,
+                128
+            ];
+            var SHIFT2 = [
+                24,
+                16,
+                8,
+                0
+            ];
+            var K2 = [
+                1116352408,
+                1899447441,
+                3049323471,
+                3921009573,
+                961987163,
+                1508970993,
+                2453635748,
+                2870763221,
+                3624381080,
+                310598401,
+                607225278,
+                1426881987,
+                1925078388,
+                2162078206,
+                2614888103,
+                3248222580,
+                3835390401,
+                4022224774,
+                264347078,
+                604807628,
+                770255983,
+                1249150122,
+                1555081692,
+                1996064986,
+                2554220882,
+                2821834349,
+                2952996808,
+                3210313671,
+                3336571891,
+                3584528711,
+                113926993,
+                338241895,
+                666307205,
+                773529912,
+                1294757372,
+                1396182291,
+                1695183700,
+                1986661051,
+                2177026350,
+                2456956037,
+                2730485921,
+                2820302411,
+                3259730800,
+                3345764771,
+                3516065817,
+                3600352804,
+                4094571909,
+                275423344,
+                430227734,
+                506948616,
+                659060556,
+                883997877,
+                958139571,
+                1322822218,
+                1537002063,
+                1747873779,
+                1955562222,
+                2024104815,
+                2227730452,
+                2361852424,
+                2428436474,
+                2756734187,
+                3204031479,
+                3329325298
+            ];
+            var OUTPUT_TYPES2 = [
+                "hex",
+                "array",
+                "digest",
+                "arrayBuffer"
+            ];
+            var blocks2 = [];
+            if (root2.JS_SHA256_NO_NODE_JS || !Array.isArray) {
+                Array.isArray = function(obj) {
+                    return Object.prototype.toString.call(obj) === "[object Array]";
+                };
+            }
+            if (ARRAY_BUFFER2 && (root2.JS_SHA256_NO_ARRAY_BUFFER_IS_VIEW || !ArrayBuffer.isView)) {
+                ArrayBuffer.isView = function(obj) {
+                    return typeof obj === "object" && obj.buffer && obj.buffer.constructor === ArrayBuffer;
+                };
+            }
+            var createOutputMethod2 = function(outputType, is2242) {
+                return function(message) {
+                    return new Sha2562(is2242, true).update(message)[outputType]();
+                };
+            };
+            var createMethod2 = function(is2242) {
+                var method2 = createOutputMethod2("hex", is2242);
+                if (NODE_JS2) {
+                    method2 = nodeWrap2(method2, is2242);
+                }
+                method2.create = function() {
+                    return new Sha2562(is2242);
+                };
+                method2.update = function(message) {
+                    return method2.create().update(message);
+                };
+                for(var i = 0; i < OUTPUT_TYPES2.length; ++i){
+                    var type = OUTPUT_TYPES2[i];
+                    method2[type] = createOutputMethod2(type, is2242);
+                }
+                return method2;
+            };
+            var nodeWrap2 = function(method2, is2242) {
+                var crypto2 = require_crypto();
+                var Buffer3 = require_buffer2().Buffer;
+                var algorithm2 = is2242 ? "sha224" : "sha256";
+                var bufferFrom;
+                if (Buffer3.from && !root2.JS_SHA256_NO_BUFFER_FROM) {
+                    bufferFrom = Buffer3.from;
+                } else {
+                    bufferFrom = function(message) {
+                        return new Buffer3(message);
+                    };
+                }
+                var nodeMethod2 = function(message) {
+                    if (typeof message === "string") {
+                        return crypto2.createHash(algorithm2).update(message, "utf8").digest("hex");
+                    } else {
+                        if (message === null || message === void 0) {
+                            throw new Error(ERROR2);
+                        } else if (message.constructor === ArrayBuffer) {
+                            message = new Uint8Array(message);
+                        }
+                    }
+                    if (Array.isArray(message) || ArrayBuffer.isView(message) || message.constructor === Buffer3) {
+                        return crypto2.createHash(algorithm2).update(bufferFrom(message)).digest("hex");
+                    } else {
+                        return method2(message);
+                    }
+                };
+                return nodeMethod2;
+            };
+            var createHmacOutputMethod2 = function(outputType, is2242) {
+                return function(key, message) {
+                    return new HmacSha2562(key, is2242, true).update(message)[outputType]();
+                };
+            };
+            var createHmacMethod2 = function(is2242) {
+                var method2 = createHmacOutputMethod2("hex", is2242);
+                method2.create = function(key) {
+                    return new HmacSha2562(key, is2242);
+                };
+                method2.update = function(key, message) {
+                    return method2.create(key).update(message);
+                };
+                for(var i = 0; i < OUTPUT_TYPES2.length; ++i){
+                    var type = OUTPUT_TYPES2[i];
+                    method2[type] = createHmacOutputMethod2(type, is2242);
+                }
+                return method2;
+            };
+            function Sha2562(is2242, sharedMemory) {
+                if (sharedMemory) {
+                    blocks2[0] = blocks2[16] = blocks2[1] = blocks2[2] = blocks2[3] = blocks2[4] = blocks2[5] = blocks2[6] = blocks2[7] = blocks2[8] = blocks2[9] = blocks2[10] = blocks2[11] = blocks2[12] = blocks2[13] = blocks2[14] = blocks2[15] = 0;
+                    this.blocks = blocks2;
+                } else {
+                    this.blocks = [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ];
+                }
+                if (is2242) {
+                    this.h0 = 3238371032;
+                    this.h1 = 914150663;
+                    this.h2 = 812702999;
+                    this.h3 = 4144912697;
+                    this.h4 = 4290775857;
+                    this.h5 = 1750603025;
+                    this.h6 = 1694076839;
+                    this.h7 = 3204075428;
+                } else {
+                    this.h0 = 1779033703;
+                    this.h1 = 3144134277;
+                    this.h2 = 1013904242;
+                    this.h3 = 2773480762;
+                    this.h4 = 1359893119;
+                    this.h5 = 2600822924;
+                    this.h6 = 528734635;
+                    this.h7 = 1541459225;
+                }
+                this.block = this.start = this.bytes = this.hBytes = 0;
+                this.finalized = this.hashed = false;
+                this.first = true;
+                this.is224 = is2242;
+            }
+            Sha2562.prototype.update = function(message) {
+                if (this.finalized) {
+                    return;
+                }
+                var notString, type = typeof message;
+                if (type !== "string") {
+                    if (type === "object") {
+                        if (message === null) {
+                            throw new Error(ERROR2);
+                        } else if (ARRAY_BUFFER2 && message.constructor === ArrayBuffer) {
+                            message = new Uint8Array(message);
+                        } else if (!Array.isArray(message)) {
+                            if (!ARRAY_BUFFER2 || !ArrayBuffer.isView(message)) {
+                                throw new Error(ERROR2);
+                            }
+                        }
+                    } else {
+                        throw new Error(ERROR2);
+                    }
+                    notString = true;
+                }
+                var code, index = 0, i, length = message.length, blocks3 = this.blocks;
+                while(index < length){
+                    if (this.hashed) {
+                        this.hashed = false;
+                        blocks3[0] = this.block;
+                        this.block = blocks3[16] = blocks3[1] = blocks3[2] = blocks3[3] = blocks3[4] = blocks3[5] = blocks3[6] = blocks3[7] = blocks3[8] = blocks3[9] = blocks3[10] = blocks3[11] = blocks3[12] = blocks3[13] = blocks3[14] = blocks3[15] = 0;
+                    }
+                    if (notString) {
+                        for(i = this.start; index < length && i < 64; ++index){
+                            blocks3[i >>> 2] |= message[index] << SHIFT2[i++ & 3];
+                        }
+                    } else {
+                        for(i = this.start; index < length && i < 64; ++index){
+                            code = message.charCodeAt(index);
+                            if (code < 128) {
+                                blocks3[i >>> 2] |= code << SHIFT2[i++ & 3];
+                            } else if (code < 2048) {
+                                blocks3[i >>> 2] |= (192 | code >>> 6) << SHIFT2[i++ & 3];
+                                blocks3[i >>> 2] |= (128 | code & 63) << SHIFT2[i++ & 3];
+                            } else if (code < 55296 || code >= 57344) {
+                                blocks3[i >>> 2] |= (224 | code >>> 12) << SHIFT2[i++ & 3];
+                                blocks3[i >>> 2] |= (128 | code >>> 6 & 63) << SHIFT2[i++ & 3];
+                                blocks3[i >>> 2] |= (128 | code & 63) << SHIFT2[i++ & 3];
+                            } else {
+                                code = 65536 + ((code & 1023) << 10 | message.charCodeAt(++index) & 1023);
+                                blocks3[i >>> 2] |= (240 | code >>> 18) << SHIFT2[i++ & 3];
+                                blocks3[i >>> 2] |= (128 | code >>> 12 & 63) << SHIFT2[i++ & 3];
+                                blocks3[i >>> 2] |= (128 | code >>> 6 & 63) << SHIFT2[i++ & 3];
+                                blocks3[i >>> 2] |= (128 | code & 63) << SHIFT2[i++ & 3];
+                            }
+                        }
+                    }
+                    this.lastByteIndex = i;
+                    this.bytes += i - this.start;
+                    if (i >= 64) {
+                        this.block = blocks3[16];
+                        this.start = i - 64;
+                        this.hash();
+                        this.hashed = true;
+                    } else {
+                        this.start = i;
+                    }
+                }
+                if (this.bytes > 4294967295) {
+                    this.hBytes += this.bytes / 4294967296 << 0;
+                    this.bytes = this.bytes % 4294967296;
+                }
+                return this;
+            };
+            Sha2562.prototype.finalize = function() {
+                if (this.finalized) {
+                    return;
+                }
+                this.finalized = true;
+                var blocks3 = this.blocks, i = this.lastByteIndex;
+                blocks3[16] = this.block;
+                blocks3[i >>> 2] |= EXTRA2[i & 3];
+                this.block = blocks3[16];
+                if (i >= 56) {
+                    if (!this.hashed) {
+                        this.hash();
+                    }
+                    blocks3[0] = this.block;
+                    blocks3[16] = blocks3[1] = blocks3[2] = blocks3[3] = blocks3[4] = blocks3[5] = blocks3[6] = blocks3[7] = blocks3[8] = blocks3[9] = blocks3[10] = blocks3[11] = blocks3[12] = blocks3[13] = blocks3[14] = blocks3[15] = 0;
+                }
+                blocks3[14] = this.hBytes << 3 | this.bytes >>> 29;
+                blocks3[15] = this.bytes << 3;
+                this.hash();
+            };
+            Sha2562.prototype.hash = function() {
+                var a = this.h0, b = this.h1, c = this.h2, d = this.h3, e = this.h4, f = this.h5, g = this.h6, h = this.h7, blocks3 = this.blocks, j, s0, s1, maj, t1, t2, ch, ab, da, cd, bc;
+                for(j = 16; j < 64; ++j){
+                    t1 = blocks3[j - 15];
+                    s0 = (t1 >>> 7 | t1 << 25) ^ (t1 >>> 18 | t1 << 14) ^ t1 >>> 3;
+                    t1 = blocks3[j - 2];
+                    s1 = (t1 >>> 17 | t1 << 15) ^ (t1 >>> 19 | t1 << 13) ^ t1 >>> 10;
+                    blocks3[j] = blocks3[j - 16] + s0 + blocks3[j - 7] + s1 << 0;
+                }
+                bc = b & c;
+                for(j = 0; j < 64; j += 4){
+                    if (this.first) {
+                        if (this.is224) {
+                            ab = 300032;
+                            t1 = blocks3[0] - 1413257819;
+                            h = t1 - 150054599 << 0;
+                            d = t1 + 24177077 << 0;
+                        } else {
+                            ab = 704751109;
+                            t1 = blocks3[0] - 210244248;
+                            h = t1 - 1521486534 << 0;
+                            d = t1 + 143694565 << 0;
+                        }
+                        this.first = false;
+                    } else {
+                        s0 = (a >>> 2 | a << 30) ^ (a >>> 13 | a << 19) ^ (a >>> 22 | a << 10);
+                        s1 = (e >>> 6 | e << 26) ^ (e >>> 11 | e << 21) ^ (e >>> 25 | e << 7);
+                        ab = a & b;
+                        maj = ab ^ a & c ^ bc;
+                        ch = e & f ^ ~e & g;
+                        t1 = h + s1 + ch + K2[j] + blocks3[j];
+                        t2 = s0 + maj;
+                        h = d + t1 << 0;
+                        d = t1 + t2 << 0;
+                    }
+                    s0 = (d >>> 2 | d << 30) ^ (d >>> 13 | d << 19) ^ (d >>> 22 | d << 10);
+                    s1 = (h >>> 6 | h << 26) ^ (h >>> 11 | h << 21) ^ (h >>> 25 | h << 7);
+                    da = d & a;
+                    maj = da ^ d & b ^ ab;
+                    ch = h & e ^ ~h & f;
+                    t1 = g + s1 + ch + K2[j + 1] + blocks3[j + 1];
+                    t2 = s0 + maj;
+                    g = c + t1 << 0;
+                    c = t1 + t2 << 0;
+                    s0 = (c >>> 2 | c << 30) ^ (c >>> 13 | c << 19) ^ (c >>> 22 | c << 10);
+                    s1 = (g >>> 6 | g << 26) ^ (g >>> 11 | g << 21) ^ (g >>> 25 | g << 7);
+                    cd = c & d;
+                    maj = cd ^ c & a ^ da;
+                    ch = g & h ^ ~g & e;
+                    t1 = f + s1 + ch + K2[j + 2] + blocks3[j + 2];
+                    t2 = s0 + maj;
+                    f = b + t1 << 0;
+                    b = t1 + t2 << 0;
+                    s0 = (b >>> 2 | b << 30) ^ (b >>> 13 | b << 19) ^ (b >>> 22 | b << 10);
+                    s1 = (f >>> 6 | f << 26) ^ (f >>> 11 | f << 21) ^ (f >>> 25 | f << 7);
+                    bc = b & c;
+                    maj = bc ^ b & d ^ cd;
+                    ch = f & g ^ ~f & h;
+                    t1 = e + s1 + ch + K2[j + 3] + blocks3[j + 3];
+                    t2 = s0 + maj;
+                    e = a + t1 << 0;
+                    a = t1 + t2 << 0;
+                    this.chromeBugWorkAround = true;
+                }
+                this.h0 = this.h0 + a << 0;
+                this.h1 = this.h1 + b << 0;
+                this.h2 = this.h2 + c << 0;
+                this.h3 = this.h3 + d << 0;
+                this.h4 = this.h4 + e << 0;
+                this.h5 = this.h5 + f << 0;
+                this.h6 = this.h6 + g << 0;
+                this.h7 = this.h7 + h << 0;
+            };
+            Sha2562.prototype.hex = function() {
+                this.finalize();
+                var h0 = this.h0, h1 = this.h1, h2 = this.h2, h3 = this.h3, h4 = this.h4, h5 = this.h5, h6 = this.h6, h7 = this.h7;
+                var hex = HEX_CHARS2[h0 >>> 28 & 15] + HEX_CHARS2[h0 >>> 24 & 15] + HEX_CHARS2[h0 >>> 20 & 15] + HEX_CHARS2[h0 >>> 16 & 15] + HEX_CHARS2[h0 >>> 12 & 15] + HEX_CHARS2[h0 >>> 8 & 15] + HEX_CHARS2[h0 >>> 4 & 15] + HEX_CHARS2[h0 & 15] + HEX_CHARS2[h1 >>> 28 & 15] + HEX_CHARS2[h1 >>> 24 & 15] + HEX_CHARS2[h1 >>> 20 & 15] + HEX_CHARS2[h1 >>> 16 & 15] + HEX_CHARS2[h1 >>> 12 & 15] + HEX_CHARS2[h1 >>> 8 & 15] + HEX_CHARS2[h1 >>> 4 & 15] + HEX_CHARS2[h1 & 15] + HEX_CHARS2[h2 >>> 28 & 15] + HEX_CHARS2[h2 >>> 24 & 15] + HEX_CHARS2[h2 >>> 20 & 15] + HEX_CHARS2[h2 >>> 16 & 15] + HEX_CHARS2[h2 >>> 12 & 15] + HEX_CHARS2[h2 >>> 8 & 15] + HEX_CHARS2[h2 >>> 4 & 15] + HEX_CHARS2[h2 & 15] + HEX_CHARS2[h3 >>> 28 & 15] + HEX_CHARS2[h3 >>> 24 & 15] + HEX_CHARS2[h3 >>> 20 & 15] + HEX_CHARS2[h3 >>> 16 & 15] + HEX_CHARS2[h3 >>> 12 & 15] + HEX_CHARS2[h3 >>> 8 & 15] + HEX_CHARS2[h3 >>> 4 & 15] + HEX_CHARS2[h3 & 15] + HEX_CHARS2[h4 >>> 28 & 15] + HEX_CHARS2[h4 >>> 24 & 15] + HEX_CHARS2[h4 >>> 20 & 15] + HEX_CHARS2[h4 >>> 16 & 15] + HEX_CHARS2[h4 >>> 12 & 15] + HEX_CHARS2[h4 >>> 8 & 15] + HEX_CHARS2[h4 >>> 4 & 15] + HEX_CHARS2[h4 & 15] + HEX_CHARS2[h5 >>> 28 & 15] + HEX_CHARS2[h5 >>> 24 & 15] + HEX_CHARS2[h5 >>> 20 & 15] + HEX_CHARS2[h5 >>> 16 & 15] + HEX_CHARS2[h5 >>> 12 & 15] + HEX_CHARS2[h5 >>> 8 & 15] + HEX_CHARS2[h5 >>> 4 & 15] + HEX_CHARS2[h5 & 15] + HEX_CHARS2[h6 >>> 28 & 15] + HEX_CHARS2[h6 >>> 24 & 15] + HEX_CHARS2[h6 >>> 20 & 15] + HEX_CHARS2[h6 >>> 16 & 15] + HEX_CHARS2[h6 >>> 12 & 15] + HEX_CHARS2[h6 >>> 8 & 15] + HEX_CHARS2[h6 >>> 4 & 15] + HEX_CHARS2[h6 & 15];
+                if (!this.is224) {
+                    hex += HEX_CHARS2[h7 >>> 28 & 15] + HEX_CHARS2[h7 >>> 24 & 15] + HEX_CHARS2[h7 >>> 20 & 15] + HEX_CHARS2[h7 >>> 16 & 15] + HEX_CHARS2[h7 >>> 12 & 15] + HEX_CHARS2[h7 >>> 8 & 15] + HEX_CHARS2[h7 >>> 4 & 15] + HEX_CHARS2[h7 & 15];
+                }
+                return hex;
+            };
+            Sha2562.prototype.toString = Sha2562.prototype.hex;
+            Sha2562.prototype.digest = function() {
+                this.finalize();
+                var h0 = this.h0, h1 = this.h1, h2 = this.h2, h3 = this.h3, h4 = this.h4, h5 = this.h5, h6 = this.h6, h7 = this.h7;
+                var arr = [
+                    h0 >>> 24 & 255,
+                    h0 >>> 16 & 255,
+                    h0 >>> 8 & 255,
+                    h0 & 255,
+                    h1 >>> 24 & 255,
+                    h1 >>> 16 & 255,
+                    h1 >>> 8 & 255,
+                    h1 & 255,
+                    h2 >>> 24 & 255,
+                    h2 >>> 16 & 255,
+                    h2 >>> 8 & 255,
+                    h2 & 255,
+                    h3 >>> 24 & 255,
+                    h3 >>> 16 & 255,
+                    h3 >>> 8 & 255,
+                    h3 & 255,
+                    h4 >>> 24 & 255,
+                    h4 >>> 16 & 255,
+                    h4 >>> 8 & 255,
+                    h4 & 255,
+                    h5 >>> 24 & 255,
+                    h5 >>> 16 & 255,
+                    h5 >>> 8 & 255,
+                    h5 & 255,
+                    h6 >>> 24 & 255,
+                    h6 >>> 16 & 255,
+                    h6 >>> 8 & 255,
+                    h6 & 255
+                ];
+                if (!this.is224) {
+                    arr.push(h7 >>> 24 & 255, h7 >>> 16 & 255, h7 >>> 8 & 255, h7 & 255);
+                }
+                return arr;
+            };
+            Sha2562.prototype.array = Sha2562.prototype.digest;
+            Sha2562.prototype.arrayBuffer = function() {
+                this.finalize();
+                var buffer = new ArrayBuffer(this.is224 ? 28 : 32);
+                var dataView = new DataView(buffer);
+                dataView.setUint32(0, this.h0);
+                dataView.setUint32(4, this.h1);
+                dataView.setUint32(8, this.h2);
+                dataView.setUint32(12, this.h3);
+                dataView.setUint32(16, this.h4);
+                dataView.setUint32(20, this.h5);
+                dataView.setUint32(24, this.h6);
+                if (!this.is224) {
+                    dataView.setUint32(28, this.h7);
+                }
+                return buffer;
+            };
+            function HmacSha2562(key, is2242, sharedMemory) {
+                var i, type = typeof key;
+                if (type === "string") {
+                    var bytes2 = [], length = key.length, index = 0, code;
+                    for(i = 0; i < length; ++i){
+                        code = key.charCodeAt(i);
+                        if (code < 128) {
+                            bytes2[index++] = code;
+                        } else if (code < 2048) {
+                            bytes2[index++] = 192 | code >>> 6;
+                            bytes2[index++] = 128 | code & 63;
+                        } else if (code < 55296 || code >= 57344) {
+                            bytes2[index++] = 224 | code >>> 12;
+                            bytes2[index++] = 128 | code >>> 6 & 63;
+                            bytes2[index++] = 128 | code & 63;
+                        } else {
+                            code = 65536 + ((code & 1023) << 10 | key.charCodeAt(++i) & 1023);
+                            bytes2[index++] = 240 | code >>> 18;
+                            bytes2[index++] = 128 | code >>> 12 & 63;
+                            bytes2[index++] = 128 | code >>> 6 & 63;
+                            bytes2[index++] = 128 | code & 63;
+                        }
+                    }
+                    key = bytes2;
+                } else {
+                    if (type === "object") {
+                        if (key === null) {
+                            throw new Error(ERROR2);
+                        } else if (ARRAY_BUFFER2 && key.constructor === ArrayBuffer) {
+                            key = new Uint8Array(key);
+                        } else if (!Array.isArray(key)) {
+                            if (!ARRAY_BUFFER2 || !ArrayBuffer.isView(key)) {
+                                throw new Error(ERROR2);
+                            }
+                        }
+                    } else {
+                        throw new Error(ERROR2);
+                    }
+                }
+                if (key.length > 64) {
+                    key = new Sha2562(is2242, true).update(key).array();
+                }
+                var oKeyPad = [], iKeyPad = [];
+                for(i = 0; i < 64; ++i){
+                    var b = key[i] || 0;
+                    oKeyPad[i] = 92 ^ b;
+                    iKeyPad[i] = 54 ^ b;
+                }
+                Sha2562.call(this, is2242, sharedMemory);
+                this.update(iKeyPad);
+                this.oKeyPad = oKeyPad;
+                this.inner = true;
+                this.sharedMemory = sharedMemory;
+            }
+            HmacSha2562.prototype = new Sha2562();
+            HmacSha2562.prototype.finalize = function() {
+                Sha2562.prototype.finalize.call(this);
+                if (this.inner) {
+                    this.inner = false;
+                    var innerHash = this.array();
+                    Sha2562.call(this, this.is224, this.sharedMemory);
+                    this.update(this.oKeyPad);
+                    this.update(innerHash);
+                    Sha2562.prototype.finalize.call(this);
+                }
+            };
+            var exports3 = createMethod2();
+            exports3.sha256 = exports3;
+            exports3.sha224 = createMethod2(true);
+            exports3.sha256.hmac = createHmacMethod2();
+            exports3.sha224.hmac = createHmacMethod2(true);
+            if (COMMON_JS2) {
+                module2.exports = exports3;
+            } else {
+                root2.sha256 = exports3.sha256;
+                root2.sha224 = exports3.sha224;
+                if (AMD2) {
+                    define(function() {
+                        return exports3;
                     });
                 }
             }
@@ -98904,8 +99462,78 @@ function Some(value) {
 var None = {
     None: null
 };
+function Opt2(t) {
+    return new AzleOpt(t);
+}
+var AzleOpt = (_class1 = class {
+    toBytes(data) {
+        return encode3(this, data);
+    }
+    fromBytes(bytes2) {
+        return decode3(this, bytes2);
+    }
+    getIdl(parents) {
+        return idl_exports.Opt(toIdl(this.innerType, parents));
+    }
+    constructor(t){
+        this.tsType = {};
+        this._azleKind = "AzleOpt";
+        this.innerType = t;
+    }
+}, _class1._azleKind = "AzleOpt", _class1);
+// node_modules/azle/src/lib/candid/types/constructed/record.ts
+function Record2(obj) {
+    return _extends({}, obj, {
+        tsType: {},
+        toBytes (data) {
+            return encode3(this, data);
+        },
+        fromBytes (bytes2) {
+            return decode3(this, bytes2);
+        },
+        getIdl (parents) {
+            return idl_exports.Record(toIdlMap(obj, parents));
+        }
+    });
+}
+// node_modules/azle/src/lib/candid/types/constructed/vec.ts
+var AzleVec = (_class2 = class {
+    toBytes(data) {
+        return encode3(this, data);
+    }
+    fromBytes(bytes2) {
+        return decode3(this, bytes2);
+    }
+    getIdl(parents) {
+        return idl_exports.Vec(toIdl(this.innerType, parents));
+    }
+    constructor(t){
+        this.tsType = {};
+        this._azleKind = "AzleVec";
+        this.innerType = t;
+    }
+}, _class2._azleKind = "AzleVec", _class2);
+function Vec2(t) {
+    return new AzleVec(t);
+}
+// node_modules/azle/src/lib/candid/types/primitive/ints/int64.ts
+var AzleInt64 = (_class3 = class {
+    static toBytes(data) {
+        return encode3(this, data);
+    }
+    static fromBytes(bytes2) {
+        return decode3(this, bytes2);
+    }
+    static getIdl() {
+        return idl_exports.Int64;
+    }
+    constructor(){
+        this._azleKind = "AzleInt64";
+    }
+}, _class3._azleKind = "AzleInt64", _class3);
+var int64 = AzleInt64;
 // node_modules/azle/src/lib/candid/types/primitive/nats/nat.ts
-var AzleNat = (_class1 = class {
+var AzleNat = (_class4 = class {
     static toBytes(data) {
         return encode3(this, data);
     }
@@ -98918,10 +99546,10 @@ var AzleNat = (_class1 = class {
     constructor(){
         this._azleKind = "AzleNat";
     }
-}, _class1._azleKind = "AzleNat", _class1);
+}, _class4._azleKind = "AzleNat", _class4);
 var nat = AzleNat;
 // node_modules/azle/src/lib/candid/types/primitive/null.ts
-var AzleNull = (_class2 = class {
+var AzleNull = (_class5 = class {
     static toBytes(data) {
         return encode3(this, data);
     }
@@ -98934,10 +99562,10 @@ var AzleNull = (_class2 = class {
     constructor(){
         this._azleKind = "AzleNull";
     }
-}, _class2._azleKind = "AzleNull", _class2);
+}, _class5._azleKind = "AzleNull", _class5);
 var Null2 = AzleNull;
 // node_modules/azle/src/lib/candid/types/primitive/text.ts
-var AzleText = (_class3 = class {
+var AzleText = (_class6 = class {
     static toBytes(data) {
         return encode3(this, data);
     }
@@ -98950,7 +99578,7 @@ var AzleText = (_class3 = class {
     constructor(){
         this._azleKind = "AzleText";
     }
-}, _class3._azleKind = "AzleText", _class3);
+}, _class6._azleKind = "AzleText", _class6);
 var text = AzleText;
 // node_modules/azle/src/lib/candid/types/reference/service/canister_function/query_update.ts
 function createQueryMethods(canisterOptions) {
@@ -99106,7 +99734,7 @@ function Canister(canisterOptions) {
     return result;
 }
 // node_modules/azle/src/lib/candid/types/reference/principal.ts
-var Principal3 = (_class4 = class extends Principal {
+var Principal3 = (_class7 = class extends Principal {
     static toBytes(data) {
         return encode3(this, data);
     }
@@ -99116,7 +99744,7 @@ var Principal3 = (_class4 = class extends Principal {
     static getIdl(_parents) {
         return idl_exports.Principal;
     }
-}, _class4._azleKind = "Principal", _class4);
+}, _class7._azleKind = "Principal", _class7);
 // node_modules/azle/src/lib/candid/serde/decode.ts
 function decode3(candidType, data) {
     if (Array.isArray(candidType)) {
@@ -99188,19 +99816,29 @@ function Result(ok, err) {
     return new AzleResult(ok, err);
 }
 ((Result2)=>{
-    function Ok(value) {
+    function Ok2(value) {
         return {
             Ok: value
         };
     }
-    Result2.Ok = Ok;
-    function Err(value) {
+    Result2.Ok = Ok2;
+    function Err2(value) {
         return {
             Err: value
         };
     }
-    Result2.Err = Err;
+    Result2.Err = Err2;
 })(Result || (Result = {}));
+function Ok(value) {
+    return {
+        Ok: value
+    };
+}
+function Err(value) {
+    return {
+        Err: value
+    };
+}
 // node_modules/azle/src/lib/candid/serde/visitors/visit/variant/azle_variant.ts
 function visitAzleVariant(visitor, fields, data) {
     const candidFields = fields.reduce((acc, [memberName, memberIdl])=>{
@@ -99334,7 +99972,7 @@ function encodeMultiple(candidTypes, data) {
     return new Uint8Array(idl_exports.encode(idls, values));
 }
 // node_modules/azle/src/lib/candid/types/primitive/nats/nat64.ts
-var AzleNat64 = (_class5 = class {
+var AzleNat64 = (_class8 = class {
     static toBytes(data) {
         return encode3(this, data);
     }
@@ -99347,7 +99985,7 @@ var AzleNat64 = (_class5 = class {
     constructor(){
         this._azleKind = "AzleNat64";
     }
-}, _class5._azleKind = "AzleNat64", _class5);
+}, _class8._azleKind = "AzleNat64", _class8);
 var nat64 = AzleNat64;
 // node_modules/azle/src/lib/ic/call_raw.ts
 function callRaw(canisterId, method2, argsRaw, payment) {
@@ -100050,6 +100688,168 @@ function query(paramCandidTypes, returnCandidType, callback, methodArgs) {
         guard: methodArgs == null ? void 0 : methodArgs.guard
     };
 }
+// node_modules/azle/src/lib/canister_methods/methods/update.ts
+function update(paramCandidTypes, returnCandidType, callback, methodArgs) {
+    const finalCallback = callback === void 0 ? void 0 : (...args)=>{
+        var _methodArgs_manual;
+        executeMethod("update", args, callback, paramCandidTypes, returnCandidType, (_methodArgs_manual = methodArgs == null ? void 0 : methodArgs.manual) != null ? _methodArgs_manual : false);
+    };
+    return {
+        mode: "update",
+        callback: finalCallback,
+        paramCandidTypes,
+        returnCandidType,
+        async: callback === void 0 ? false : isAsync(callback),
+        guard: methodArgs == null ? void 0 : methodArgs.guard
+    };
+}
+// node_modules/azle/src/lib/stable_structures/stable_b_tree_map.ts
+function StableBTreeMap(memoryIdNumber, keySerializable = stableJson, valueSerializable = stableJson) {
+    const memoryId = memoryIdNumber.toString();
+    if (globalThis._azleIc !== void 0) {
+        globalThis._azleIc.stableBTreeMapInit(memoryId);
+    }
+    isSerializable(keySerializable);
+    isSerializable(valueSerializable);
+    return {
+        /**
+     * Checks if the given key exists in the map.
+     * @param key the key to check.
+     * @returns `true` if the key exists in the map, `false` otherwise.
+     */ containsKey (key) {
+            if (globalThis._azleIc === void 0) {
+                return void 0;
+            }
+            const encodedKey = keySerializable.toBytes(key).buffer;
+            return globalThis._azleIc.stableBTreeMapContainsKey(memoryId, encodedKey);
+        },
+        /**
+     * Retrieves the value stored at the provided key.
+     * @param key the location from which to retrieve.
+     * @returns the value associated with the given key, if it exists.
+     */ get (key) {
+            if (globalThis._azleIc === void 0) {
+                return void 0;
+            }
+            const encodedKey = keySerializable.toBytes(key).buffer;
+            const encodedResult = globalThis._azleIc.stableBTreeMapGet(memoryId, encodedKey);
+            if (encodedResult === void 0) {
+                return None;
+            } else {
+                return Some(valueSerializable.fromBytes(new Uint8Array(encodedResult)));
+            }
+        },
+        /**
+     * Inserts a value into the map at the provided key.
+     * @param key the location at which to insert.
+     * @param value the value to insert.
+     * @returns the previous value of the key, if present.
+     */ insert (key, value) {
+            if (globalThis._azleIc === void 0) {
+                return void 0;
+            }
+            const encodedKey = keySerializable.toBytes(key).buffer;
+            const encodedValue = valueSerializable.toBytes(value).buffer;
+            const encodedResult = globalThis._azleIc.stableBTreeMapInsert(memoryId, encodedKey, encodedValue);
+            if (encodedResult === void 0) {
+                return None;
+            } else {
+                return Some(valueSerializable.fromBytes(new Uint8Array(encodedResult)));
+            }
+        },
+        /**
+     * Checks if the map is empty.
+     * @returns `true` if the map contains no elements, `false` otherwise.
+     */ isEmpty () {
+            if (globalThis._azleIc === void 0) {
+                return void 0;
+            }
+            return globalThis._azleIc.stableBTreeMapIsEmpty(memoryId);
+        },
+        /**
+     * Retrieves the items in the map in sorted order.
+     * @param startIndex the starting index to begin retrieval
+     * @param length the number of items to retrieve
+     * @returns tuples representing key/value pairs.
+     */ items (startIndex, length) {
+            if (globalThis._azleIc === void 0) {
+                return void 0;
+            }
+            var _startIndex_toString, _length_toString;
+            const encodedItems = globalThis._azleIc.stableBTreeMapItems(memoryId, (_startIndex_toString = startIndex == null ? void 0 : startIndex.toString()) != null ? _startIndex_toString : "0", (_length_toString = length == null ? void 0 : length.toString()) != null ? _length_toString : "NOT_SET");
+            return encodedItems.map(([encodedKey, encodedValue])=>{
+                return [
+                    keySerializable.fromBytes(new Uint8Array(encodedKey)),
+                    valueSerializable.fromBytes(new Uint8Array(encodedValue))
+                ];
+            });
+        },
+        /**
+     * The keys for each element in the map in sorted order.
+     * @param startIndex the starting index to begin retrieval
+     * @param length the number of keys to retrieve
+     * @returns they keys in the map.
+     */ keys (startIndex, length) {
+            if (globalThis._azleIc === void 0) {
+                return void 0;
+            }
+            var _startIndex_toString, _length_toString;
+            const encodedKeys = globalThis._azleIc.stableBTreeMapKeys(memoryId, (_startIndex_toString = startIndex == null ? void 0 : startIndex.toString()) != null ? _startIndex_toString : "0", (_length_toString = length == null ? void 0 : length.toString()) != null ? _length_toString : "NOT_SET");
+            return encodedKeys.map((encodedKey)=>{
+                return keySerializable.fromBytes(new Uint8Array(encodedKey));
+            });
+        },
+        /**
+     * Checks to see how many elements are in the map.
+     * @returns the number of elements in the map.
+     */ len () {
+            if (globalThis._azleIc === void 0) {
+                return void 0;
+            }
+            const candidEncodedLen = globalThis._azleIc.stableBTreeMapLen(memoryId);
+            return decode3(nat64, candidEncodedLen);
+        },
+        /**
+     * Removes a key from the map.
+     * @param key the location from which to remove.
+     * @returns the previous value at the key if it exists, `null` otherwise.
+     */ remove (key) {
+            if (globalThis._azleIc === void 0) {
+                return void 0;
+            }
+            const encodedKey = keySerializable.toBytes(key).buffer;
+            const encodedValue = globalThis._azleIc.stableBTreeMapRemove(memoryId, encodedKey);
+            if (encodedValue === void 0) {
+                return None;
+            } else {
+                return Some(valueSerializable.fromBytes(new Uint8Array(encodedValue)));
+            }
+        },
+        /**
+     * The values in the map in sorted order.
+     * @param startIndex the starting index to begin retrieval
+     * @param length the number of values to retrieve
+     * @returns the values in the map.
+     */ values (startIndex, length) {
+            if (globalThis._azleIc === void 0) {
+                return void 0;
+            }
+            var _startIndex_toString, _length_toString;
+            const encodedValues = globalThis._azleIc.stableBTreeMapValues(memoryId, (_startIndex_toString = startIndex == null ? void 0 : startIndex.toString()) != null ? _startIndex_toString : "0", (_length_toString = length == null ? void 0 : length.toString()) != null ? _length_toString : "NOT_SET");
+            return encodedValues.map((encodedValue)=>{
+                return valueSerializable.fromBytes(new Uint8Array(encodedValue));
+            });
+        }
+    };
+}
+function isSerializable(obj) {
+    if (obj.toBytes === void 0) {
+        throw new Error(`value must have a toBytes method`);
+    }
+    if (obj.fromBytes === void 0) {
+        throw new Error(`value must have a fromBytes method`);
+    }
+}
 // node_modules/@dfinity/principal/lib/esm/utils/base32.js
 var alphabet2 = "abcdefghijklmnopqrstuvwxyz234567";
 var lookupTable2 = /* @__PURE__ */ Object.create(null);
@@ -100503,11 +101303,298 @@ var Principal4 = class _Principal {
     }
 };
 // src/chordify_backend/src/index.ts
+var import_js_sha2562 = __toESM(require_sha2562(), 1);
+var User = Record2({
+    id: Principal3,
+    username: text,
+    password: text
+});
+var UserCreateRequestDTO = Record2({
+    username: text,
+    password: text
+});
+var UserResultDTO = Record2({
+    id: Principal3,
+    username: text
+});
+var Genre = Record2({
+    id: Principal3,
+    name: text
+});
+var GenreCreateDTO = Record2({
+    name: text
+});
+var MusicCart = Record2({
+    id: Principal3,
+    name: text,
+    genreId: Principal3,
+    authorId: Principal3,
+    quantity: text
+});
+var Music = Record2({
+    id: Principal3,
+    name: text,
+    genres: Vec2(text),
+    authorId: Principal3,
+    description: text,
+    volume: int64,
+    supply: int64,
+    price: int64,
+    imageUrl: text
+});
+var MusicCreateDTO = Record2({
+    name: text,
+    genres: Vec2(text),
+    authorId: Principal3,
+    description: text,
+    supply: int64,
+    price: int64,
+    imageUrl: text
+});
+var Cart = Record2({
+    id: Principal3,
+    userId: Principal3,
+    musics: Vec2(MusicCart)
+});
+var CartCreateDTO = Record2({
+    userId: Principal3,
+    musicId: Principal3,
+    quantity: text
+});
+var RemoveFromCartDTO = Record2({
+    userId: Principal3,
+    musicId: Principal3
+});
+var Error2 = Variant2({
+    UserDoesNotExist: Principal3,
+    GenreDoesNotExist: Principal3,
+    MusicDoesNotExist: Principal3,
+    UsernameDoesNotExist: text,
+    CredentialNotMatch: text,
+    InvalidMusicName: text,
+    InvalidMusicPrice: text,
+    NoGenre: text
+});
+var usersStorage = StableBTreeMap(0);
+var genreStorage = StableBTreeMap(1);
+var musicStorage = StableBTreeMap(2);
+var cartStorage = StableBTreeMap(3);
+function generateId() {
+    const randomBytes = new Array(29).fill(0).map((_)=>Math.floor(Math.random() * 256));
+    return Principal3.fromUint8Array(Uint8Array.from(randomBytes));
+}
+function hashPassword(password) {
+    const salt = "your-salt-value";
+    const saltedPassword = password + salt;
+    const hash = (0, import_js_sha2562.sha256)(saltedPassword);
+    return hash;
+}
+function verifyPassword(password, storedHash) {
+    const hashedPassword = hashPassword(password);
+    return hashedPassword !== storedHash;
+}
 var src_default = Canister({
     greet: query([
         text
     ], text, (name)=>{
         return `Hello, ${name}!`;
+    }),
+    createUser: update([
+        UserCreateRequestDTO
+    ], User, (dto)=>{
+        const user = {
+            id: generateId(),
+            username: dto.username,
+            password: hashPassword(dto.password)
+        };
+        usersStorage.insert(user.id, user);
+        return user;
+    }),
+    getUserById: query([
+        Principal3
+    ], Result(UserResultDTO, Error2), (id2)=>{
+        const userOpt = usersStorage.get(id2);
+        const user = userOpt.Some;
+        if (user == void 0) {
+            return Err({
+                UserDoesNotExist: id2
+            });
+        }
+        const userResult = {
+            id: user.id,
+            username: user.username
+        };
+        return Ok(userResult);
+    }),
+    login: query([
+        UserCreateRequestDTO
+    ], Result(Principal3, Error2), (dto)=>{
+        const allUsers = usersStorage.values();
+        const user = allUsers.find((user2)=>user2.username === dto.username);
+        if (user == void 0) {
+            return Err({
+                UsernameDoesNotExist: dto.username
+            });
+        }
+        if (verifyPassword(dto.password, user.password)) {
+            return Err({
+                CredentialNotMatch: dto.username
+            });
+        }
+        return Ok(user.id);
+    }),
+    getUsers: query([], Vec2(User), ()=>{
+        return usersStorage.values();
+    }),
+    getUserCount: query([], nat64, ()=>{
+        return usersStorage.len();
+    }),
+    createGenre: update([
+        GenreCreateDTO
+    ], Genre, (dto)=>{
+        const genre = {
+            id: generateId(),
+            name: dto.name
+        };
+        genreStorage.insert(genre.id, genre);
+        return genre;
+    }),
+    getGenreById: query([
+        Principal3
+    ], Opt2(Genre), (id2)=>{
+        return genreStorage.get(id2);
+    }),
+    getGenres: query([], Vec2(Genre), ()=>{
+        return genreStorage.values();
+    }),
+    getGenreCount: query([], nat64, ()=>{
+        return genreStorage.len();
+    }),
+    createMusic: update([
+        MusicCreateDTO
+    ], Music, (dto)=>{
+        const music = {
+            id: generateId(),
+            name: dto.name,
+            genres: dto.genres,
+            authorId: dto.authorId,
+            volume: BigInt(0),
+            price: dto.price,
+            imageUrl: dto.imageUrl,
+            supply: dto.supply,
+            description: dto.description
+        };
+        musicStorage.insert(music.id, music);
+        return music;
+    }),
+    getMusicById: query([
+        Principal3
+    ], Opt2(Music), (id2)=>{
+        return musicStorage.get(id2);
+    }),
+    getMusics: query([], Vec2(Music), ()=>{
+        return musicStorage.values();
+    }),
+    getMusicByName: query([
+        text
+    ], Vec2(Music), (name)=>{
+        const searchedMusic = [];
+        for (const music of musicStorage.values()){
+            if (music.name.includes(name)) {
+                searchedMusic.push(music);
+            }
+        }
+        return searchedMusic;
+    }),
+    getMusicCount: query([], nat64, ()=>{
+        return musicStorage.len();
+    }),
+    createCart: update([
+        CartCreateDTO
+    ], Cart, (dto)=>{
+        const userOpt = usersStorage.get(dto.userId);
+        if ("None" in userOpt) {
+            return Err({
+                UserDoesNotExist: dto.userId
+            });
+        }
+        const musicOpt = musicStorage.get(dto.musicId);
+        if ("None" in musicOpt) {
+            return Err({
+                MusicDoesNotExist: dto.userId
+            });
+        }
+        const musicCart = {
+            authorId: musicOpt.Some.authorId,
+            genreId: musicOpt.Some.genreId,
+            name: musicOpt.Some.name,
+            id: musicOpt.Some.id,
+            quantity: dto.quantity
+        };
+        const keysIterator = cartStorage.keys();
+        for (const key of keysIterator){
+            var _cart2_Some;
+            const cart2 = cartStorage.get(key);
+            if (((_cart2_Some = cart2.Some) == null ? void 0 : _cart2_Some.userId.compareTo(dto.userId)) == "eq") {
+                var _cart2_Some1;
+                (_cart2_Some1 = cart2.Some) == null ? void 0 : _cart2_Some1.musics.push(musicCart);
+                return cart2;
+            }
+        }
+        const cart = {
+            id: generateId(),
+            musics: [
+                musicCart
+            ],
+            userId: dto.userId
+        };
+        cartStorage.insert(cart.id, cart);
+        return cart;
+    }),
+    getCartById: query([
+        Principal3
+    ], Opt2(Music), (id2)=>{
+        return musicStorage.get(id2);
+    }),
+    getCarts: query([], Vec2(Music), ()=>{
+        return musicStorage.values();
+    }),
+    getCartCount: query([], nat64, ()=>{
+        return musicStorage.len();
+    }),
+    deleteMusicFromCart: query([
+        RemoveFromCartDTO
+    ], Result(text, Error2), (dto)=>{
+        const userOpt = usersStorage.get(dto.userId);
+        if ("None" in userOpt) {
+            return Err({
+                UserDoesNotExist: dto.userId
+            });
+        }
+        const musicOpt = musicStorage.get(dto.musicId);
+        if ("None" in musicOpt) {
+            return Err({
+                MusicDoesNotExist: dto.musicId
+            });
+        }
+        for (const cart of cartStorage.values()){
+            if (cart.userId === dto.userId) {
+                break;
+            }
+        }
+        return "asd";
+    }),
+    getMusicByGenre: query([
+        text
+    ], Result(Music, Error2), (genre)=>{
+        const allMusic = musicStorage.values();
+        const musicResult = allMusic.find((music)=>music.genres.includes(genre));
+        if (musicResult == void 0) {
+            return Err({
+                NoGenre: genre
+            });
+        }
+        return Ok(musicResult);
     })
 });
 // <stdin>
@@ -100535,6 +101622,16 @@ js-sha256/src/sha256.js:
    * @version 0.9.0
    * @author Chen, Yi-Cyuan [emn178@gmail.com]
    * @copyright Chen, Yi-Cyuan 2014-2017
+   * @license MIT
+   *)
+
+js-sha256/src/sha256.js:
+  (**
+   * [js-sha256]{@link https://github.com/emn178/js-sha256}
+   *
+   * @version 0.11.0
+   * @author Chen, Yi-Cyuan [emn178@gmail.com]
+   * @copyright Chen, Yi-Cyuan 2014-2024
    * @license MIT
    *)
 

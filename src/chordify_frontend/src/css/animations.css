@@ -1,0 +1,45 @@
+/* Image Marquee */
+.marquee {
+  --duration: 30s;
+  --gap: 2rem;
+
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: 4rem;
+  border:10px solid;
+  border-color: #FB5279 #FB5279 #FCC666 #FCC666 ;
+}
+
+.marquee__group {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--gap);
+  min-width: 100%;
+  animation: scroll var(--duration) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__group {
+    animation-play-state: paused;
+  }
+}
+
+.marquee__group img {
+  max-width: clamp(10rem, 1rem + 28vmin, 20rem);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50px;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
