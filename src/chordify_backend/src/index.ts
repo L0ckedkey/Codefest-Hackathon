@@ -125,7 +125,6 @@ function hashPassword(password: string) {
 }
 
 function verifyPassword(password: string, storedHash: string) {
-  // Hash the provided password with the same salt
   const hashedPassword = hashPassword(password);
   return hashedPassword !== storedHash;
 }
@@ -193,7 +192,6 @@ export default Canister({
   getUserCount: query([], nat64, () => {
     return usersStorage.len();
   }),
-
 
   createGenre: update(
     [GenreCreateDTO],
