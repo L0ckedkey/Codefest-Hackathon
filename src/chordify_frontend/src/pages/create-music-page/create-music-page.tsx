@@ -4,15 +4,23 @@ import { useDropzone } from "react-dropzone"
 import UploadFile from "../../utils/upload-file"
 import ChooseGenre from "./choose-genre"
 import { chordify_backend } from "../../../../declarations/chordify_backend"
+import {useAuth} from "../../contexts/auth-context"
+import { useLoading } from "../../contexts/loading-context"
+import { toast } from "react-toastify"
 
 export default function CreateMusic() {
 
-    const [form, setForm] = useState({
+    const {user, isLoggedIn} = useAuth()
+    const {setIsLoading} = useLoading()
+
+    const defaultForm = {
         "name": "",
         "description": "",
         "supply": "",
         "price": ""
-    })
+    }
+
+    const [form, setForm] = useState(defaultForm)
     const [selectedFile, setSelectedFile] = useState<File>()
     const [selectedGenres, setSelectedGenres] = useState<string[]>([])
 
@@ -29,23 +37,43 @@ export default function CreateMusic() {
         setForm({ ...form, [name]: value })
     }
 
+    const reset = () => {
+        setForm(defaultForm)
+        setSelectedGenres([])
+        setSelectedFile(undefined)
+    }
+
     const handleSubmit = async (e: React.MouseEvent) => {
         e.preventDefault()
+        if(!isLoggedIn){
+            toast.error("Please Login!")
+            return
+        }
+        if(!selectedFile){
+            toast.error("Please Select Image")
+            return
+        }
+        if(!form.name || !form.description || !form.price || !form.supply || selectedGenres.length === 0){
+            toast.error("All Field Must Be Filled")
+            return
+        }
         try {
-            if (selectedFile) {
-                const url = await UploadFile("images", selectedFile)
-                const res = chordify_backend.createMusic({
-                    authorId: "7ygje-ywltj-izh36-2mhgu-gjf3x-jhxvw-4pd6s-2xvzs-krzpn-k4vrw-jpi",
-                    name: form.name,
-                    description: form.description,
-                    price: BigInt(form.price),
-                    supply: BigInt(form.supply),
-                    genres: selectedGenres,
-                    imageUrl: url
-                })
-                console.log(res)
-            }
+            setIsLoading(true)
+            reset()
+            const url = await UploadFile("images", selectedFile)
+            const res = await chordify_backend.createMusic({
+                authorId: user.id,
+                name: form.name,
+                description: form.description,
+                price: BigInt(form.price),
+                supply: BigInt(form.supply),
+                genres: selectedGenres,
+                imageUrl: url
+            })
+            setIsLoading(false)
+            toast.success("Create NFT Success")
         } catch (error) {
+            toast.error("Create NFT Failed")
             console.log(error)
         }
     }

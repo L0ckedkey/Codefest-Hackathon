@@ -16,7 +16,10 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": ["vite/client"],
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@dfinity/principal": ["./node_modules/@dfinity/principal"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]

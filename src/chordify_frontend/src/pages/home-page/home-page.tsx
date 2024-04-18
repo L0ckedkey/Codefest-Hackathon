@@ -8,10 +8,11 @@ import {
     Navigation
 } from 'swiper/modules'
 import StatisticTable from '../../components/statistics-table.tsx'
-import Container from '../../components/container.tsx'
+import DiscoverSection from './discover-section.tsx'
 
 export default function Home() {
     const { banner, images } = useImage()
+
     return (
         <>
             {/* <Tabs /> */}
@@ -49,16 +50,7 @@ export default function Home() {
                     data-scroll-direction="horizontal" src={banner} alt="" />
 
                 <div className="px-4 py-8 sm:px-6 lg:px-8 box-border">
-                    <h1 className='text-white text-3xl font-bold self-start'>Discover</h1>
-                    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                        {
-                            images.map((image, index) => (
-                                <NFTCard key={index} image={image} />
-                            ))
-                        }
-                        <div className="group relative">
-                        </div>
-                    </div>
+                    <DiscoverSection />
                 </div>
                 <StatisticTable />
             </div >

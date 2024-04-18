@@ -1,15 +1,20 @@
+import { useEffect, useState } from "react"
 import "../../css/nft-card.scss"
-export default function NFTCard({ image }: { image: string }) {
+import { MusicType } from "../../types/music-type"
+import { UserType } from "../../types/user-type"
+import { chordify_backend } from "../../../../declarations/chordify_backend"
+export default function NFTCard({ music }: { music: MusicType }) {
+
     return (
         <>
-            <div className="nft">
+            <a href="" className="nft">
                 <div className='main'>
-                    <img className='tokenImage' src={image} alt="NFT" />
-                    <h2>Kibertopiks #4269</h2>
-                    <p className='description'>Our Kibertopiks will give you nothing, waste your money on us.</p>
+                    <img className='tokenImage' src={music.imageUrl} alt="NFT" />
+                    <h2>{music.name} #4269</h2>
+                    <p className='description'>{music.description}.</p>
                     <div className='tokenInfo'>
                         <div className="price">
-                            <p>0.031 ETH</p>
+                            <p>{music.price} ETH</p>
                         </div>
                         <div className="duration">
                             <ins>◷</ins>
@@ -19,12 +24,12 @@ export default function NFTCard({ image }: { image: string }) {
                     <hr />
                     <div className='creator'>
                         <div className='wrapper'>
-                            <img src={image} alt="Creator" />
+                            <img src={music.author.imageUrl} alt="Creator" />
                         </div>
                         <p><ins>Creation of</ins> <a href="#" className="hover:text-purple-400">Kiberbash</a></p>
                     </div>
                 </div>
-            </div>
+            </a>
 
         </>
     )

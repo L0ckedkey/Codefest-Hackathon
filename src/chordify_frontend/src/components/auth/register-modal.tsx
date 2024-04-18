@@ -9,7 +9,12 @@ export default function Register({ handleClick, goToSignIn }: { handleClick: () 
     })
 
     const handleSubmit = async () => {
-        const res = await chordify_backend.createUser({ username: auth.username, password: auth.password })
+        try {
+            const res = await chordify_backend.createUser({ username: auth.username, password: auth.password })
+            console.log(res)
+        } catch (error) {
+            console.log(error)
+        }
         handleClick()
     }
 
@@ -33,7 +38,7 @@ export default function Register({ handleClick, goToSignIn }: { handleClick: () 
                             <p>C</p>
                         </div>
                         <p className="text-3xl text-black font-semibold self-center my-10">Sign Up to Chordify</p>
-                        <form className="flex flex-col gap-6 " >
+                        <div className="flex flex-col gap-6 " >
                             <input onChange={handleChange} value={auth.username} className="w-full auth-input" placeholder="Username" name="username" type="text" />
                             <input onChange={handleChange} value={auth.password} className="w-full auth-input" placeholder="Password" name="password" type="password" />
                             <button onClick={handleSubmit} className="relative btn-glass w-full bg-black  rounded-md p-4 font-semibold text-md">Sign Up
@@ -45,7 +50,7 @@ export default function Register({ handleClick, goToSignIn }: { handleClick: () 
                             </div>
                             <button onClick={goToSignIn} className="relative  w-full ring-1 ring-black text-black  rounded-md p-4 font-semibold text-md ">Sign In
                             </button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

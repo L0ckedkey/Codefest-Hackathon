@@ -1,10 +1,11 @@
 import React, { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import Cookies  from "js-cookie";
+import Cookies from "js-cookie";
 import { chordify_backend } from "../../../declarations/chordify_backend";
 import { UserType } from "../types/user-type";
+import { Principal } from "@dfinity/principal";
 
 
-interface AuthContextType{
+interface AuthContextType {
     user: UserType;
     isLoggedIn: boolean;
     logOut: () => void;
@@ -20,36 +21,40 @@ export function useAuth(): AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export default function AuthProvider({children}: {children: ReactNode}){
+export default function AuthProvider({ children }: { children: ReactNode }) {
 
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState<UserType>({} as UserType)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     const logOut = () => {
         Cookies.remove("authentication")
-        setUser({})
+        setUser({} as UserType)
         setIsLoggedIn(false)
     }
 
-    useEffect(() => {
-        const getUser = async () =>{
-            const token = Cookies.get("authentication")
-            if(token){
-                const res = await chordify_backend.getUserById(token)
+    const init = async () =>{
+        try {
+            const authentication = Cookies.get("authentication")
+            if(authentication){
+                const id = Principal.fromText(authentication)
+                const res = await chordify_backend.getUserById(id)
                 if('Ok' in res){
-                    setUser(res.Ok as any)
                     setIsLoggedIn(true)
-                }else{
-                    setUser({})
-                    setIsLoggedIn(false)
+                    const user: UserType = res.Ok
+                    setUser(user)
                 }
             }
+        } catch (error) {
+            console.log(`Error: ${error}`)
         }
-        getUser()
+    }
+
+    useEffect(() => {
+        init()
     }, [])
 
     return (
-        <AuthContext.Provider value={{user, isLoggedIn, logOut} as AuthContextType}>
+        <AuthContext.Provider value={{ user, isLoggedIn, logOut } as AuthContextType}>
             {children}
         </AuthContext.Provider>
     )

@@ -67,11 +67,11 @@ var __toESM = (mod, isNodeMode, target)=>(target = mod != null ? __create(__getP
     }) : target, mod));
 // node_modules/base64-js/index.js
 var require_base64_js = __commonJS({
-    "node_modules/base64-js/index.js" (exports2) {
+    "node_modules/base64-js/index.js" (exports1) {
         
-        exports2.byteLength = byteLength;
-        exports2.toByteArray = toByteArray;
-        exports2.fromByteArray = fromByteArray;
+        exports1.byteLength = byteLength;
+        exports1.toByteArray = toByteArray;
+        exports1.fromByteArray = fromByteArray;
         var lookup = [];
         var revLookup = [];
         var Arr = typeof Uint8Array !== "undefined" ? Uint8Array : Array;
@@ -166,8 +166,8 @@ var require_base64_js = __commonJS({
 });
 // node_modules/ieee754/index.js
 var require_ieee754 = __commonJS({
-    "node_modules/ieee754/index.js" (exports2) {
-        exports2.read = function(buffer, offset, isLE2, mLen, nBytes) {
+    "node_modules/ieee754/index.js" (exports1) {
+        exports1.read = function(buffer, offset, isLE2, mLen, nBytes) {
             var e, m;
             var eLen = nBytes * 8 - mLen - 1;
             var eMax = (1 << eLen) - 1;
@@ -195,7 +195,7 @@ var require_ieee754 = __commonJS({
             }
             return (s ? -1 : 1) * m * Math.pow(2, e - mLen);
         };
-        exports2.write = function(buffer, value, offset, isLE2, mLen, nBytes) {
+        exports1.write = function(buffer, value, offset, isLE2, mLen, nBytes) {
             var e, m, c;
             var eLen = nBytes * 8 - mLen - 1;
             var eMax = (1 << eLen) - 1;
@@ -244,16 +244,16 @@ var require_ieee754 = __commonJS({
 });
 // node_modules/buffer/index.js
 var require_buffer = __commonJS({
-    "node_modules/buffer/index.js" (exports2) {
+    "node_modules/buffer/index.js" (exports1) {
         
         var base64 = require_base64_js();
         var ieee754 = require_ieee754();
         var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
-        exports2.Buffer = Buffer3;
-        exports2.SlowBuffer = SlowBuffer;
-        exports2.INSPECT_MAX_BYTES = 50;
+        exports1.Buffer = Buffer3;
+        exports1.SlowBuffer = SlowBuffer;
+        exports1.INSPECT_MAX_BYTES = 50;
         var K_MAX_LENGTH = 2147483647;
-        exports2.kMaxLength = K_MAX_LENGTH;
+        exports1.kMaxLength = K_MAX_LENGTH;
         Buffer3.TYPED_ARRAY_SUPPORT = typedArraySupport();
         if (!Buffer3.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
             console.error("This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support.");
@@ -667,7 +667,7 @@ var require_buffer = __commonJS({
         };
         Buffer3.prototype.inspect = function inspect() {
             let str = "";
-            const max = exports2.INSPECT_MAX_BYTES;
+            const max = exports1.INSPECT_MAX_BYTES;
             str = this.toString("hex", 0, max).replace(/(.{2})/g, "$1 ").trim();
             if (this.length > max) str += " ... ";
             return "<Buffer " + str + ">";
@@ -1782,11 +1782,11 @@ var require_buffer = __commonJS({
 });
 // node_modules/text-encoding/lib/encoding-indexes.js
 var require_encoding_indexes = __commonJS({
-    "node_modules/text-encoding/lib/encoding-indexes.js" (exports2, module2) {
+    "node_modules/text-encoding/lib/encoding-indexes.js" (exports1, module) {
         (function(global2) {
             
-            if (typeof module2 !== "undefined" && module2.exports) {
-                module2.exports = global2;
+            if (typeof module !== "undefined" && module.exports) {
+                module.exports = global2;
             }
             global2["encoding-indexes"] = {
                 "big5": [
@@ -93918,15 +93918,15 @@ var require_encoding_indexes = __commonJS({
                     8364
                 ]
             };
-        })(exports2 || {});
+        })(exports1 || {});
     }
 });
 // node_modules/text-encoding/lib/encoding.js
 var require_encoding = __commonJS({
-    "node_modules/text-encoding/lib/encoding.js" (exports2, module2) {
+    "node_modules/text-encoding/lib/encoding.js" (exports1, module) {
         (function(global2) {
             
-            if (typeof module2 !== "undefined" && module2.exports && !global2["encoding-indexes"]) {
+            if (typeof module !== "undefined" && module.exports && !global2["encoding-indexes"]) {
                 global2["encoding-indexes"] = require_encoding_indexes()["encoding-indexes"];
             }
             function inRange(a, min, max) {
@@ -95548,29 +95548,37 @@ var require_encoding = __commonJS({
             };
             if (!global2["TextEncoder"]) global2["TextEncoder"] = TextEncoder2;
             if (!global2["TextDecoder"]) global2["TextDecoder"] = TextDecoder2;
-            if (typeof module2 !== "undefined" && module2.exports) {
-                module2.exports = {
+            if (typeof module !== "undefined" && module.exports) {
+                module.exports = {
                     TextEncoder: global2["TextEncoder"],
                     TextDecoder: global2["TextDecoder"],
                     EncodingIndexes: global2["encoding-indexes"]
                 };
             }
-        })(exports2 || {});
+        })(exports1 || {});
     }
 });
 // node_modules/text-encoding/index.js
 var require_text_encoding = __commonJS({
-    "node_modules/text-encoding/index.js" (exports2, module2) {
+    "node_modules/text-encoding/index.js" (exports1, module) {
         var encoding = require_encoding();
-        module2.exports = {
+        module.exports = {
             TextEncoder: encoding.TextEncoder,
             TextDecoder: encoding.TextDecoder
         };
     }
 });
-// node_modules/@dfinity/principal/node_modules/js-sha256/src/sha256.js
+// (disabled):crypto
+var require_crypto = __commonJS({
+    "(disabled):crypto" () {}
+});
+// (disabled):node_modules/buffer/index.js
+var require_buffer2 = __commonJS({
+    "(disabled):node_modules/buffer/index.js" () {}
+});
+// node_modules/js-sha256/src/sha256.js
 var require_sha256 = __commonJS({
-    "node_modules/@dfinity/principal/node_modules/js-sha256/src/sha256.js" (exports, module) {
+    "node_modules/js-sha256/src/sha256.js" (exports1, module) {
         (function() {
             
             var ERROR = "input is invalid type";
@@ -95685,35 +95693,43 @@ var require_sha256 = __commonJS({
                     return typeof obj === "object" && obj.buffer && obj.buffer.constructor === ArrayBuffer;
                 };
             }
-            var createOutputMethod = function(outputType, is2242) {
+            var createOutputMethod = function(outputType, is224) {
                 return function(message) {
-                    return new Sha256(is2242, true).update(message)[outputType]();
+                    return new Sha256(is224, true).update(message)[outputType]();
                 };
             };
-            var createMethod = function(is2242) {
-                var method2 = createOutputMethod("hex", is2242);
+            var createMethod = function(is224) {
+                var method = createOutputMethod("hex", is224);
                 if (NODE_JS) {
-                    method2 = nodeWrap(method2, is2242);
+                    method = nodeWrap(method, is224);
                 }
-                method2.create = function() {
-                    return new Sha256(is2242);
+                method.create = function() {
+                    return new Sha256(is224);
                 };
-                method2.update = function(message) {
-                    return method2.create().update(message);
+                method.update = function(message) {
+                    return method.create().update(message);
                 };
                 for(var i = 0; i < OUTPUT_TYPES.length; ++i){
                     var type = OUTPUT_TYPES[i];
-                    method2[type] = createOutputMethod(type, is2242);
+                    method[type] = createOutputMethod(type, is224);
                 }
-                return method2;
+                return method;
             };
             var nodeWrap = function(method, is224) {
-                var crypto = eval("require('crypto')");
-                var Buffer = eval("require('buffer').Buffer");
+                var crypto2 = require_crypto();
+                var Buffer3 = require_buffer2().Buffer;
                 var algorithm = is224 ? "sha224" : "sha256";
+                var bufferFrom;
+                if (Buffer3.from && !root.JS_SHA256_NO_BUFFER_FROM) {
+                    bufferFrom = Buffer3.from;
+                } else {
+                    bufferFrom = function(message) {
+                        return new Buffer3(message);
+                    };
+                }
                 var nodeMethod = function(message) {
                     if (typeof message === "string") {
-                        return crypto.createHash(algorithm).update(message, "utf8").digest("hex");
+                        return crypto2.createHash(algorithm).update(message, "utf8").digest("hex");
                     } else {
                         if (message === null || message === void 0) {
                             throw new Error(ERROR);
@@ -95721,34 +95737,34 @@ var require_sha256 = __commonJS({
                             message = new Uint8Array(message);
                         }
                     }
-                    if (Array.isArray(message) || ArrayBuffer.isView(message) || message.constructor === Buffer) {
-                        return crypto.createHash(algorithm).update(new Buffer(message)).digest("hex");
+                    if (Array.isArray(message) || ArrayBuffer.isView(message) || message.constructor === Buffer3) {
+                        return crypto2.createHash(algorithm).update(bufferFrom(message)).digest("hex");
                     } else {
                         return method(message);
                     }
                 };
                 return nodeMethod;
             };
-            var createHmacOutputMethod = function(outputType, is2242) {
+            var createHmacOutputMethod = function(outputType, is224) {
                 return function(key, message) {
-                    return new HmacSha256(key, is2242, true).update(message)[outputType]();
+                    return new HmacSha256(key, is224, true).update(message)[outputType]();
                 };
             };
-            var createHmacMethod = function(is2242) {
-                var method2 = createHmacOutputMethod("hex", is2242);
-                method2.create = function(key) {
-                    return new HmacSha256(key, is2242);
+            var createHmacMethod = function(is224) {
+                var method = createHmacOutputMethod("hex", is224);
+                method.create = function(key) {
+                    return new HmacSha256(key, is224);
                 };
-                method2.update = function(key, message) {
-                    return method2.create(key).update(message);
+                method.update = function(key, message) {
+                    return method.create(key).update(message);
                 };
                 for(var i = 0; i < OUTPUT_TYPES.length; ++i){
                     var type = OUTPUT_TYPES[i];
-                    method2[type] = createHmacOutputMethod(type, is2242);
+                    method[type] = createHmacOutputMethod(type, is224);
                 }
-                return method2;
+                return method;
             };
-            function Sha256(is2242, sharedMemory) {
+            function Sha256(is224, sharedMemory) {
                 if (sharedMemory) {
                     blocks[0] = blocks[16] = blocks[1] = blocks[2] = blocks[3] = blocks[4] = blocks[5] = blocks[6] = blocks[7] = blocks[8] = blocks[9] = blocks[10] = blocks[11] = blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
                     this.blocks = blocks;
@@ -95773,7 +95789,7 @@ var require_sha256 = __commonJS({
                         0
                     ];
                 }
-                if (is2242) {
+                if (is224) {
                     this.h0 = 3238371032;
                     this.h1 = 914150663;
                     this.h2 = 812702999;
@@ -95795,7 +95811,7 @@ var require_sha256 = __commonJS({
                 this.block = this.start = this.bytes = this.hBytes = 0;
                 this.finalized = this.hashed = false;
                 this.first = true;
-                this.is224 = is2242;
+                this.is224 = is224;
             }
             Sha256.prototype.update = function(message) {
                 if (this.finalized) {
@@ -95823,30 +95839,30 @@ var require_sha256 = __commonJS({
                     if (this.hashed) {
                         this.hashed = false;
                         blocks2[0] = this.block;
-                        blocks2[16] = blocks2[1] = blocks2[2] = blocks2[3] = blocks2[4] = blocks2[5] = blocks2[6] = blocks2[7] = blocks2[8] = blocks2[9] = blocks2[10] = blocks2[11] = blocks2[12] = blocks2[13] = blocks2[14] = blocks2[15] = 0;
+                        this.block = blocks2[16] = blocks2[1] = blocks2[2] = blocks2[3] = blocks2[4] = blocks2[5] = blocks2[6] = blocks2[7] = blocks2[8] = blocks2[9] = blocks2[10] = blocks2[11] = blocks2[12] = blocks2[13] = blocks2[14] = blocks2[15] = 0;
                     }
                     if (notString) {
                         for(i = this.start; index < length && i < 64; ++index){
-                            blocks2[i >> 2] |= message[index] << SHIFT[i++ & 3];
+                            blocks2[i >>> 2] |= message[index] << SHIFT[i++ & 3];
                         }
                     } else {
                         for(i = this.start; index < length && i < 64; ++index){
                             code = message.charCodeAt(index);
                             if (code < 128) {
-                                blocks2[i >> 2] |= code << SHIFT[i++ & 3];
+                                blocks2[i >>> 2] |= code << SHIFT[i++ & 3];
                             } else if (code < 2048) {
-                                blocks2[i >> 2] |= (192 | code >> 6) << SHIFT[i++ & 3];
-                                blocks2[i >> 2] |= (128 | code & 63) << SHIFT[i++ & 3];
+                                blocks2[i >>> 2] |= (192 | code >>> 6) << SHIFT[i++ & 3];
+                                blocks2[i >>> 2] |= (128 | code & 63) << SHIFT[i++ & 3];
                             } else if (code < 55296 || code >= 57344) {
-                                blocks2[i >> 2] |= (224 | code >> 12) << SHIFT[i++ & 3];
-                                blocks2[i >> 2] |= (128 | code >> 6 & 63) << SHIFT[i++ & 3];
-                                blocks2[i >> 2] |= (128 | code & 63) << SHIFT[i++ & 3];
+                                blocks2[i >>> 2] |= (224 | code >>> 12) << SHIFT[i++ & 3];
+                                blocks2[i >>> 2] |= (128 | code >>> 6 & 63) << SHIFT[i++ & 3];
+                                blocks2[i >>> 2] |= (128 | code & 63) << SHIFT[i++ & 3];
                             } else {
                                 code = 65536 + ((code & 1023) << 10 | message.charCodeAt(++index) & 1023);
-                                blocks2[i >> 2] |= (240 | code >> 18) << SHIFT[i++ & 3];
-                                blocks2[i >> 2] |= (128 | code >> 12 & 63) << SHIFT[i++ & 3];
-                                blocks2[i >> 2] |= (128 | code >> 6 & 63) << SHIFT[i++ & 3];
-                                blocks2[i >> 2] |= (128 | code & 63) << SHIFT[i++ & 3];
+                                blocks2[i >>> 2] |= (240 | code >>> 18) << SHIFT[i++ & 3];
+                                blocks2[i >>> 2] |= (128 | code >>> 12 & 63) << SHIFT[i++ & 3];
+                                blocks2[i >>> 2] |= (128 | code >>> 6 & 63) << SHIFT[i++ & 3];
+                                blocks2[i >>> 2] |= (128 | code & 63) << SHIFT[i++ & 3];
                             }
                         }
                     }
@@ -95874,7 +95890,7 @@ var require_sha256 = __commonJS({
                 this.finalized = true;
                 var blocks2 = this.blocks, i = this.lastByteIndex;
                 blocks2[16] = this.block;
-                blocks2[i >> 2] |= EXTRA[i & 3];
+                blocks2[i >>> 2] |= EXTRA[i & 3];
                 this.block = blocks2[16];
                 if (i >= 56) {
                     if (!this.hashed) {
@@ -95949,6 +95965,7 @@ var require_sha256 = __commonJS({
                     t2 = s0 + maj;
                     e = a + t1 << 0;
                     a = t1 + t2 << 0;
+                    this.chromeBugWorkAround = true;
                 }
                 this.h0 = this.h0 + a << 0;
                 this.h1 = this.h1 + b << 0;
@@ -95962,572 +95979,14 @@ var require_sha256 = __commonJS({
             Sha256.prototype.hex = function() {
                 this.finalize();
                 var h0 = this.h0, h1 = this.h1, h2 = this.h2, h3 = this.h3, h4 = this.h4, h5 = this.h5, h6 = this.h6, h7 = this.h7;
-                var hex = HEX_CHARS[h0 >> 28 & 15] + HEX_CHARS[h0 >> 24 & 15] + HEX_CHARS[h0 >> 20 & 15] + HEX_CHARS[h0 >> 16 & 15] + HEX_CHARS[h0 >> 12 & 15] + HEX_CHARS[h0 >> 8 & 15] + HEX_CHARS[h0 >> 4 & 15] + HEX_CHARS[h0 & 15] + HEX_CHARS[h1 >> 28 & 15] + HEX_CHARS[h1 >> 24 & 15] + HEX_CHARS[h1 >> 20 & 15] + HEX_CHARS[h1 >> 16 & 15] + HEX_CHARS[h1 >> 12 & 15] + HEX_CHARS[h1 >> 8 & 15] + HEX_CHARS[h1 >> 4 & 15] + HEX_CHARS[h1 & 15] + HEX_CHARS[h2 >> 28 & 15] + HEX_CHARS[h2 >> 24 & 15] + HEX_CHARS[h2 >> 20 & 15] + HEX_CHARS[h2 >> 16 & 15] + HEX_CHARS[h2 >> 12 & 15] + HEX_CHARS[h2 >> 8 & 15] + HEX_CHARS[h2 >> 4 & 15] + HEX_CHARS[h2 & 15] + HEX_CHARS[h3 >> 28 & 15] + HEX_CHARS[h3 >> 24 & 15] + HEX_CHARS[h3 >> 20 & 15] + HEX_CHARS[h3 >> 16 & 15] + HEX_CHARS[h3 >> 12 & 15] + HEX_CHARS[h3 >> 8 & 15] + HEX_CHARS[h3 >> 4 & 15] + HEX_CHARS[h3 & 15] + HEX_CHARS[h4 >> 28 & 15] + HEX_CHARS[h4 >> 24 & 15] + HEX_CHARS[h4 >> 20 & 15] + HEX_CHARS[h4 >> 16 & 15] + HEX_CHARS[h4 >> 12 & 15] + HEX_CHARS[h4 >> 8 & 15] + HEX_CHARS[h4 >> 4 & 15] + HEX_CHARS[h4 & 15] + HEX_CHARS[h5 >> 28 & 15] + HEX_CHARS[h5 >> 24 & 15] + HEX_CHARS[h5 >> 20 & 15] + HEX_CHARS[h5 >> 16 & 15] + HEX_CHARS[h5 >> 12 & 15] + HEX_CHARS[h5 >> 8 & 15] + HEX_CHARS[h5 >> 4 & 15] + HEX_CHARS[h5 & 15] + HEX_CHARS[h6 >> 28 & 15] + HEX_CHARS[h6 >> 24 & 15] + HEX_CHARS[h6 >> 20 & 15] + HEX_CHARS[h6 >> 16 & 15] + HEX_CHARS[h6 >> 12 & 15] + HEX_CHARS[h6 >> 8 & 15] + HEX_CHARS[h6 >> 4 & 15] + HEX_CHARS[h6 & 15];
+                var hex = HEX_CHARS[h0 >>> 28 & 15] + HEX_CHARS[h0 >>> 24 & 15] + HEX_CHARS[h0 >>> 20 & 15] + HEX_CHARS[h0 >>> 16 & 15] + HEX_CHARS[h0 >>> 12 & 15] + HEX_CHARS[h0 >>> 8 & 15] + HEX_CHARS[h0 >>> 4 & 15] + HEX_CHARS[h0 & 15] + HEX_CHARS[h1 >>> 28 & 15] + HEX_CHARS[h1 >>> 24 & 15] + HEX_CHARS[h1 >>> 20 & 15] + HEX_CHARS[h1 >>> 16 & 15] + HEX_CHARS[h1 >>> 12 & 15] + HEX_CHARS[h1 >>> 8 & 15] + HEX_CHARS[h1 >>> 4 & 15] + HEX_CHARS[h1 & 15] + HEX_CHARS[h2 >>> 28 & 15] + HEX_CHARS[h2 >>> 24 & 15] + HEX_CHARS[h2 >>> 20 & 15] + HEX_CHARS[h2 >>> 16 & 15] + HEX_CHARS[h2 >>> 12 & 15] + HEX_CHARS[h2 >>> 8 & 15] + HEX_CHARS[h2 >>> 4 & 15] + HEX_CHARS[h2 & 15] + HEX_CHARS[h3 >>> 28 & 15] + HEX_CHARS[h3 >>> 24 & 15] + HEX_CHARS[h3 >>> 20 & 15] + HEX_CHARS[h3 >>> 16 & 15] + HEX_CHARS[h3 >>> 12 & 15] + HEX_CHARS[h3 >>> 8 & 15] + HEX_CHARS[h3 >>> 4 & 15] + HEX_CHARS[h3 & 15] + HEX_CHARS[h4 >>> 28 & 15] + HEX_CHARS[h4 >>> 24 & 15] + HEX_CHARS[h4 >>> 20 & 15] + HEX_CHARS[h4 >>> 16 & 15] + HEX_CHARS[h4 >>> 12 & 15] + HEX_CHARS[h4 >>> 8 & 15] + HEX_CHARS[h4 >>> 4 & 15] + HEX_CHARS[h4 & 15] + HEX_CHARS[h5 >>> 28 & 15] + HEX_CHARS[h5 >>> 24 & 15] + HEX_CHARS[h5 >>> 20 & 15] + HEX_CHARS[h5 >>> 16 & 15] + HEX_CHARS[h5 >>> 12 & 15] + HEX_CHARS[h5 >>> 8 & 15] + HEX_CHARS[h5 >>> 4 & 15] + HEX_CHARS[h5 & 15] + HEX_CHARS[h6 >>> 28 & 15] + HEX_CHARS[h6 >>> 24 & 15] + HEX_CHARS[h6 >>> 20 & 15] + HEX_CHARS[h6 >>> 16 & 15] + HEX_CHARS[h6 >>> 12 & 15] + HEX_CHARS[h6 >>> 8 & 15] + HEX_CHARS[h6 >>> 4 & 15] + HEX_CHARS[h6 & 15];
                 if (!this.is224) {
-                    hex += HEX_CHARS[h7 >> 28 & 15] + HEX_CHARS[h7 >> 24 & 15] + HEX_CHARS[h7 >> 20 & 15] + HEX_CHARS[h7 >> 16 & 15] + HEX_CHARS[h7 >> 12 & 15] + HEX_CHARS[h7 >> 8 & 15] + HEX_CHARS[h7 >> 4 & 15] + HEX_CHARS[h7 & 15];
+                    hex += HEX_CHARS[h7 >>> 28 & 15] + HEX_CHARS[h7 >>> 24 & 15] + HEX_CHARS[h7 >>> 20 & 15] + HEX_CHARS[h7 >>> 16 & 15] + HEX_CHARS[h7 >>> 12 & 15] + HEX_CHARS[h7 >>> 8 & 15] + HEX_CHARS[h7 >>> 4 & 15] + HEX_CHARS[h7 & 15];
                 }
                 return hex;
             };
             Sha256.prototype.toString = Sha256.prototype.hex;
             Sha256.prototype.digest = function() {
-                this.finalize();
-                var h0 = this.h0, h1 = this.h1, h2 = this.h2, h3 = this.h3, h4 = this.h4, h5 = this.h5, h6 = this.h6, h7 = this.h7;
-                var arr = [
-                    h0 >> 24 & 255,
-                    h0 >> 16 & 255,
-                    h0 >> 8 & 255,
-                    h0 & 255,
-                    h1 >> 24 & 255,
-                    h1 >> 16 & 255,
-                    h1 >> 8 & 255,
-                    h1 & 255,
-                    h2 >> 24 & 255,
-                    h2 >> 16 & 255,
-                    h2 >> 8 & 255,
-                    h2 & 255,
-                    h3 >> 24 & 255,
-                    h3 >> 16 & 255,
-                    h3 >> 8 & 255,
-                    h3 & 255,
-                    h4 >> 24 & 255,
-                    h4 >> 16 & 255,
-                    h4 >> 8 & 255,
-                    h4 & 255,
-                    h5 >> 24 & 255,
-                    h5 >> 16 & 255,
-                    h5 >> 8 & 255,
-                    h5 & 255,
-                    h6 >> 24 & 255,
-                    h6 >> 16 & 255,
-                    h6 >> 8 & 255,
-                    h6 & 255
-                ];
-                if (!this.is224) {
-                    arr.push(h7 >> 24 & 255, h7 >> 16 & 255, h7 >> 8 & 255, h7 & 255);
-                }
-                return arr;
-            };
-            Sha256.prototype.array = Sha256.prototype.digest;
-            Sha256.prototype.arrayBuffer = function() {
-                this.finalize();
-                var buffer = new ArrayBuffer(this.is224 ? 28 : 32);
-                var dataView = new DataView(buffer);
-                dataView.setUint32(0, this.h0);
-                dataView.setUint32(4, this.h1);
-                dataView.setUint32(8, this.h2);
-                dataView.setUint32(12, this.h3);
-                dataView.setUint32(16, this.h4);
-                dataView.setUint32(20, this.h5);
-                dataView.setUint32(24, this.h6);
-                if (!this.is224) {
-                    dataView.setUint32(28, this.h7);
-                }
-                return buffer;
-            };
-            function HmacSha256(key, is2242, sharedMemory) {
-                var i, type = typeof key;
-                if (type === "string") {
-                    var bytes2 = [], length = key.length, index = 0, code;
-                    for(i = 0; i < length; ++i){
-                        code = key.charCodeAt(i);
-                        if (code < 128) {
-                            bytes2[index++] = code;
-                        } else if (code < 2048) {
-                            bytes2[index++] = 192 | code >> 6;
-                            bytes2[index++] = 128 | code & 63;
-                        } else if (code < 55296 || code >= 57344) {
-                            bytes2[index++] = 224 | code >> 12;
-                            bytes2[index++] = 128 | code >> 6 & 63;
-                            bytes2[index++] = 128 | code & 63;
-                        } else {
-                            code = 65536 + ((code & 1023) << 10 | key.charCodeAt(++i) & 1023);
-                            bytes2[index++] = 240 | code >> 18;
-                            bytes2[index++] = 128 | code >> 12 & 63;
-                            bytes2[index++] = 128 | code >> 6 & 63;
-                            bytes2[index++] = 128 | code & 63;
-                        }
-                    }
-                    key = bytes2;
-                } else {
-                    if (type === "object") {
-                        if (key === null) {
-                            throw new Error(ERROR);
-                        } else if (ARRAY_BUFFER && key.constructor === ArrayBuffer) {
-                            key = new Uint8Array(key);
-                        } else if (!Array.isArray(key)) {
-                            if (!ARRAY_BUFFER || !ArrayBuffer.isView(key)) {
-                                throw new Error(ERROR);
-                            }
-                        }
-                    } else {
-                        throw new Error(ERROR);
-                    }
-                }
-                if (key.length > 64) {
-                    key = new Sha256(is2242, true).update(key).array();
-                }
-                var oKeyPad = [], iKeyPad = [];
-                for(i = 0; i < 64; ++i){
-                    var b = key[i] || 0;
-                    oKeyPad[i] = 92 ^ b;
-                    iKeyPad[i] = 54 ^ b;
-                }
-                Sha256.call(this, is2242, sharedMemory);
-                this.update(iKeyPad);
-                this.oKeyPad = oKeyPad;
-                this.inner = true;
-                this.sharedMemory = sharedMemory;
-            }
-            HmacSha256.prototype = new Sha256();
-            HmacSha256.prototype.finalize = function() {
-                Sha256.prototype.finalize.call(this);
-                if (this.inner) {
-                    this.inner = false;
-                    var innerHash = this.array();
-                    Sha256.call(this, this.is224, this.sharedMemory);
-                    this.update(this.oKeyPad);
-                    this.update(innerHash);
-                    Sha256.prototype.finalize.call(this);
-                }
-            };
-            var exports = createMethod();
-            exports.sha256 = exports;
-            exports.sha224 = createMethod(true);
-            exports.sha256.hmac = createHmacMethod();
-            exports.sha224.hmac = createHmacMethod(true);
-            if (COMMON_JS) {
-                module.exports = exports;
-            } else {
-                root.sha256 = exports.sha256;
-                root.sha224 = exports.sha224;
-                if (AMD) {
-                    define(function() {
-                        return exports;
-                    });
-                }
-            }
-        })();
-    }
-});
-// (disabled):crypto
-var require_crypto = __commonJS({
-    "(disabled):crypto" () {}
-});
-// (disabled):node_modules/buffer/index.js
-var require_buffer2 = __commonJS({
-    "(disabled):node_modules/buffer/index.js" () {}
-});
-// node_modules/js-sha256/src/sha256.js
-var require_sha2562 = __commonJS({
-    "node_modules/js-sha256/src/sha256.js" (exports2, module2) {
-        (function() {
-            
-            var ERROR2 = "input is invalid type";
-            var WINDOW2 = typeof window === "object";
-            var root2 = WINDOW2 ? window : {};
-            if (root2.JS_SHA256_NO_WINDOW) {
-                WINDOW2 = false;
-            }
-            var WEB_WORKER2 = !WINDOW2 && typeof self === "object";
-            var NODE_JS2 = !root2.JS_SHA256_NO_NODE_JS && typeof process === "object" && process.versions && process.versions.node;
-            if (NODE_JS2) {
-                root2 = global;
-            } else if (WEB_WORKER2) {
-                root2 = self;
-            }
-            var COMMON_JS2 = !root2.JS_SHA256_NO_COMMON_JS && typeof module2 === "object" && module2.exports;
-            var AMD2 = typeof define === "function" && define.amd;
-            var ARRAY_BUFFER2 = !root2.JS_SHA256_NO_ARRAY_BUFFER && typeof ArrayBuffer !== "undefined";
-            var HEX_CHARS2 = "0123456789abcdef".split("");
-            var EXTRA2 = [
-                -2147483648,
-                8388608,
-                32768,
-                128
-            ];
-            var SHIFT2 = [
-                24,
-                16,
-                8,
-                0
-            ];
-            var K2 = [
-                1116352408,
-                1899447441,
-                3049323471,
-                3921009573,
-                961987163,
-                1508970993,
-                2453635748,
-                2870763221,
-                3624381080,
-                310598401,
-                607225278,
-                1426881987,
-                1925078388,
-                2162078206,
-                2614888103,
-                3248222580,
-                3835390401,
-                4022224774,
-                264347078,
-                604807628,
-                770255983,
-                1249150122,
-                1555081692,
-                1996064986,
-                2554220882,
-                2821834349,
-                2952996808,
-                3210313671,
-                3336571891,
-                3584528711,
-                113926993,
-                338241895,
-                666307205,
-                773529912,
-                1294757372,
-                1396182291,
-                1695183700,
-                1986661051,
-                2177026350,
-                2456956037,
-                2730485921,
-                2820302411,
-                3259730800,
-                3345764771,
-                3516065817,
-                3600352804,
-                4094571909,
-                275423344,
-                430227734,
-                506948616,
-                659060556,
-                883997877,
-                958139571,
-                1322822218,
-                1537002063,
-                1747873779,
-                1955562222,
-                2024104815,
-                2227730452,
-                2361852424,
-                2428436474,
-                2756734187,
-                3204031479,
-                3329325298
-            ];
-            var OUTPUT_TYPES2 = [
-                "hex",
-                "array",
-                "digest",
-                "arrayBuffer"
-            ];
-            var blocks2 = [];
-            if (root2.JS_SHA256_NO_NODE_JS || !Array.isArray) {
-                Array.isArray = function(obj) {
-                    return Object.prototype.toString.call(obj) === "[object Array]";
-                };
-            }
-            if (ARRAY_BUFFER2 && (root2.JS_SHA256_NO_ARRAY_BUFFER_IS_VIEW || !ArrayBuffer.isView)) {
-                ArrayBuffer.isView = function(obj) {
-                    return typeof obj === "object" && obj.buffer && obj.buffer.constructor === ArrayBuffer;
-                };
-            }
-            var createOutputMethod2 = function(outputType, is2242) {
-                return function(message) {
-                    return new Sha2562(is2242, true).update(message)[outputType]();
-                };
-            };
-            var createMethod2 = function(is2242) {
-                var method2 = createOutputMethod2("hex", is2242);
-                if (NODE_JS2) {
-                    method2 = nodeWrap2(method2, is2242);
-                }
-                method2.create = function() {
-                    return new Sha2562(is2242);
-                };
-                method2.update = function(message) {
-                    return method2.create().update(message);
-                };
-                for(var i = 0; i < OUTPUT_TYPES2.length; ++i){
-                    var type = OUTPUT_TYPES2[i];
-                    method2[type] = createOutputMethod2(type, is2242);
-                }
-                return method2;
-            };
-            var nodeWrap2 = function(method2, is2242) {
-                var crypto2 = require_crypto();
-                var Buffer3 = require_buffer2().Buffer;
-                var algorithm2 = is2242 ? "sha224" : "sha256";
-                var bufferFrom;
-                if (Buffer3.from && !root2.JS_SHA256_NO_BUFFER_FROM) {
-                    bufferFrom = Buffer3.from;
-                } else {
-                    bufferFrom = function(message) {
-                        return new Buffer3(message);
-                    };
-                }
-                var nodeMethod2 = function(message) {
-                    if (typeof message === "string") {
-                        return crypto2.createHash(algorithm2).update(message, "utf8").digest("hex");
-                    } else {
-                        if (message === null || message === void 0) {
-                            throw new Error(ERROR2);
-                        } else if (message.constructor === ArrayBuffer) {
-                            message = new Uint8Array(message);
-                        }
-                    }
-                    if (Array.isArray(message) || ArrayBuffer.isView(message) || message.constructor === Buffer3) {
-                        return crypto2.createHash(algorithm2).update(bufferFrom(message)).digest("hex");
-                    } else {
-                        return method2(message);
-                    }
-                };
-                return nodeMethod2;
-            };
-            var createHmacOutputMethod2 = function(outputType, is2242) {
-                return function(key, message) {
-                    return new HmacSha2562(key, is2242, true).update(message)[outputType]();
-                };
-            };
-            var createHmacMethod2 = function(is2242) {
-                var method2 = createHmacOutputMethod2("hex", is2242);
-                method2.create = function(key) {
-                    return new HmacSha2562(key, is2242);
-                };
-                method2.update = function(key, message) {
-                    return method2.create(key).update(message);
-                };
-                for(var i = 0; i < OUTPUT_TYPES2.length; ++i){
-                    var type = OUTPUT_TYPES2[i];
-                    method2[type] = createHmacOutputMethod2(type, is2242);
-                }
-                return method2;
-            };
-            function Sha2562(is2242, sharedMemory) {
-                if (sharedMemory) {
-                    blocks2[0] = blocks2[16] = blocks2[1] = blocks2[2] = blocks2[3] = blocks2[4] = blocks2[5] = blocks2[6] = blocks2[7] = blocks2[8] = blocks2[9] = blocks2[10] = blocks2[11] = blocks2[12] = blocks2[13] = blocks2[14] = blocks2[15] = 0;
-                    this.blocks = blocks2;
-                } else {
-                    this.blocks = [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ];
-                }
-                if (is2242) {
-                    this.h0 = 3238371032;
-                    this.h1 = 914150663;
-                    this.h2 = 812702999;
-                    this.h3 = 4144912697;
-                    this.h4 = 4290775857;
-                    this.h5 = 1750603025;
-                    this.h6 = 1694076839;
-                    this.h7 = 3204075428;
-                } else {
-                    this.h0 = 1779033703;
-                    this.h1 = 3144134277;
-                    this.h2 = 1013904242;
-                    this.h3 = 2773480762;
-                    this.h4 = 1359893119;
-                    this.h5 = 2600822924;
-                    this.h6 = 528734635;
-                    this.h7 = 1541459225;
-                }
-                this.block = this.start = this.bytes = this.hBytes = 0;
-                this.finalized = this.hashed = false;
-                this.first = true;
-                this.is224 = is2242;
-            }
-            Sha2562.prototype.update = function(message) {
-                if (this.finalized) {
-                    return;
-                }
-                var notString, type = typeof message;
-                if (type !== "string") {
-                    if (type === "object") {
-                        if (message === null) {
-                            throw new Error(ERROR2);
-                        } else if (ARRAY_BUFFER2 && message.constructor === ArrayBuffer) {
-                            message = new Uint8Array(message);
-                        } else if (!Array.isArray(message)) {
-                            if (!ARRAY_BUFFER2 || !ArrayBuffer.isView(message)) {
-                                throw new Error(ERROR2);
-                            }
-                        }
-                    } else {
-                        throw new Error(ERROR2);
-                    }
-                    notString = true;
-                }
-                var code, index = 0, i, length = message.length, blocks3 = this.blocks;
-                while(index < length){
-                    if (this.hashed) {
-                        this.hashed = false;
-                        blocks3[0] = this.block;
-                        this.block = blocks3[16] = blocks3[1] = blocks3[2] = blocks3[3] = blocks3[4] = blocks3[5] = blocks3[6] = blocks3[7] = blocks3[8] = blocks3[9] = blocks3[10] = blocks3[11] = blocks3[12] = blocks3[13] = blocks3[14] = blocks3[15] = 0;
-                    }
-                    if (notString) {
-                        for(i = this.start; index < length && i < 64; ++index){
-                            blocks3[i >>> 2] |= message[index] << SHIFT2[i++ & 3];
-                        }
-                    } else {
-                        for(i = this.start; index < length && i < 64; ++index){
-                            code = message.charCodeAt(index);
-                            if (code < 128) {
-                                blocks3[i >>> 2] |= code << SHIFT2[i++ & 3];
-                            } else if (code < 2048) {
-                                blocks3[i >>> 2] |= (192 | code >>> 6) << SHIFT2[i++ & 3];
-                                blocks3[i >>> 2] |= (128 | code & 63) << SHIFT2[i++ & 3];
-                            } else if (code < 55296 || code >= 57344) {
-                                blocks3[i >>> 2] |= (224 | code >>> 12) << SHIFT2[i++ & 3];
-                                blocks3[i >>> 2] |= (128 | code >>> 6 & 63) << SHIFT2[i++ & 3];
-                                blocks3[i >>> 2] |= (128 | code & 63) << SHIFT2[i++ & 3];
-                            } else {
-                                code = 65536 + ((code & 1023) << 10 | message.charCodeAt(++index) & 1023);
-                                blocks3[i >>> 2] |= (240 | code >>> 18) << SHIFT2[i++ & 3];
-                                blocks3[i >>> 2] |= (128 | code >>> 12 & 63) << SHIFT2[i++ & 3];
-                                blocks3[i >>> 2] |= (128 | code >>> 6 & 63) << SHIFT2[i++ & 3];
-                                blocks3[i >>> 2] |= (128 | code & 63) << SHIFT2[i++ & 3];
-                            }
-                        }
-                    }
-                    this.lastByteIndex = i;
-                    this.bytes += i - this.start;
-                    if (i >= 64) {
-                        this.block = blocks3[16];
-                        this.start = i - 64;
-                        this.hash();
-                        this.hashed = true;
-                    } else {
-                        this.start = i;
-                    }
-                }
-                if (this.bytes > 4294967295) {
-                    this.hBytes += this.bytes / 4294967296 << 0;
-                    this.bytes = this.bytes % 4294967296;
-                }
-                return this;
-            };
-            Sha2562.prototype.finalize = function() {
-                if (this.finalized) {
-                    return;
-                }
-                this.finalized = true;
-                var blocks3 = this.blocks, i = this.lastByteIndex;
-                blocks3[16] = this.block;
-                blocks3[i >>> 2] |= EXTRA2[i & 3];
-                this.block = blocks3[16];
-                if (i >= 56) {
-                    if (!this.hashed) {
-                        this.hash();
-                    }
-                    blocks3[0] = this.block;
-                    blocks3[16] = blocks3[1] = blocks3[2] = blocks3[3] = blocks3[4] = blocks3[5] = blocks3[6] = blocks3[7] = blocks3[8] = blocks3[9] = blocks3[10] = blocks3[11] = blocks3[12] = blocks3[13] = blocks3[14] = blocks3[15] = 0;
-                }
-                blocks3[14] = this.hBytes << 3 | this.bytes >>> 29;
-                blocks3[15] = this.bytes << 3;
-                this.hash();
-            };
-            Sha2562.prototype.hash = function() {
-                var a = this.h0, b = this.h1, c = this.h2, d = this.h3, e = this.h4, f = this.h5, g = this.h6, h = this.h7, blocks3 = this.blocks, j, s0, s1, maj, t1, t2, ch, ab, da, cd, bc;
-                for(j = 16; j < 64; ++j){
-                    t1 = blocks3[j - 15];
-                    s0 = (t1 >>> 7 | t1 << 25) ^ (t1 >>> 18 | t1 << 14) ^ t1 >>> 3;
-                    t1 = blocks3[j - 2];
-                    s1 = (t1 >>> 17 | t1 << 15) ^ (t1 >>> 19 | t1 << 13) ^ t1 >>> 10;
-                    blocks3[j] = blocks3[j - 16] + s0 + blocks3[j - 7] + s1 << 0;
-                }
-                bc = b & c;
-                for(j = 0; j < 64; j += 4){
-                    if (this.first) {
-                        if (this.is224) {
-                            ab = 300032;
-                            t1 = blocks3[0] - 1413257819;
-                            h = t1 - 150054599 << 0;
-                            d = t1 + 24177077 << 0;
-                        } else {
-                            ab = 704751109;
-                            t1 = blocks3[0] - 210244248;
-                            h = t1 - 1521486534 << 0;
-                            d = t1 + 143694565 << 0;
-                        }
-                        this.first = false;
-                    } else {
-                        s0 = (a >>> 2 | a << 30) ^ (a >>> 13 | a << 19) ^ (a >>> 22 | a << 10);
-                        s1 = (e >>> 6 | e << 26) ^ (e >>> 11 | e << 21) ^ (e >>> 25 | e << 7);
-                        ab = a & b;
-                        maj = ab ^ a & c ^ bc;
-                        ch = e & f ^ ~e & g;
-                        t1 = h + s1 + ch + K2[j] + blocks3[j];
-                        t2 = s0 + maj;
-                        h = d + t1 << 0;
-                        d = t1 + t2 << 0;
-                    }
-                    s0 = (d >>> 2 | d << 30) ^ (d >>> 13 | d << 19) ^ (d >>> 22 | d << 10);
-                    s1 = (h >>> 6 | h << 26) ^ (h >>> 11 | h << 21) ^ (h >>> 25 | h << 7);
-                    da = d & a;
-                    maj = da ^ d & b ^ ab;
-                    ch = h & e ^ ~h & f;
-                    t1 = g + s1 + ch + K2[j + 1] + blocks3[j + 1];
-                    t2 = s0 + maj;
-                    g = c + t1 << 0;
-                    c = t1 + t2 << 0;
-                    s0 = (c >>> 2 | c << 30) ^ (c >>> 13 | c << 19) ^ (c >>> 22 | c << 10);
-                    s1 = (g >>> 6 | g << 26) ^ (g >>> 11 | g << 21) ^ (g >>> 25 | g << 7);
-                    cd = c & d;
-                    maj = cd ^ c & a ^ da;
-                    ch = g & h ^ ~g & e;
-                    t1 = f + s1 + ch + K2[j + 2] + blocks3[j + 2];
-                    t2 = s0 + maj;
-                    f = b + t1 << 0;
-                    b = t1 + t2 << 0;
-                    s0 = (b >>> 2 | b << 30) ^ (b >>> 13 | b << 19) ^ (b >>> 22 | b << 10);
-                    s1 = (f >>> 6 | f << 26) ^ (f >>> 11 | f << 21) ^ (f >>> 25 | f << 7);
-                    bc = b & c;
-                    maj = bc ^ b & d ^ cd;
-                    ch = f & g ^ ~f & h;
-                    t1 = e + s1 + ch + K2[j + 3] + blocks3[j + 3];
-                    t2 = s0 + maj;
-                    e = a + t1 << 0;
-                    a = t1 + t2 << 0;
-                    this.chromeBugWorkAround = true;
-                }
-                this.h0 = this.h0 + a << 0;
-                this.h1 = this.h1 + b << 0;
-                this.h2 = this.h2 + c << 0;
-                this.h3 = this.h3 + d << 0;
-                this.h4 = this.h4 + e << 0;
-                this.h5 = this.h5 + f << 0;
-                this.h6 = this.h6 + g << 0;
-                this.h7 = this.h7 + h << 0;
-            };
-            Sha2562.prototype.hex = function() {
-                this.finalize();
-                var h0 = this.h0, h1 = this.h1, h2 = this.h2, h3 = this.h3, h4 = this.h4, h5 = this.h5, h6 = this.h6, h7 = this.h7;
-                var hex = HEX_CHARS2[h0 >>> 28 & 15] + HEX_CHARS2[h0 >>> 24 & 15] + HEX_CHARS2[h0 >>> 20 & 15] + HEX_CHARS2[h0 >>> 16 & 15] + HEX_CHARS2[h0 >>> 12 & 15] + HEX_CHARS2[h0 >>> 8 & 15] + HEX_CHARS2[h0 >>> 4 & 15] + HEX_CHARS2[h0 & 15] + HEX_CHARS2[h1 >>> 28 & 15] + HEX_CHARS2[h1 >>> 24 & 15] + HEX_CHARS2[h1 >>> 20 & 15] + HEX_CHARS2[h1 >>> 16 & 15] + HEX_CHARS2[h1 >>> 12 & 15] + HEX_CHARS2[h1 >>> 8 & 15] + HEX_CHARS2[h1 >>> 4 & 15] + HEX_CHARS2[h1 & 15] + HEX_CHARS2[h2 >>> 28 & 15] + HEX_CHARS2[h2 >>> 24 & 15] + HEX_CHARS2[h2 >>> 20 & 15] + HEX_CHARS2[h2 >>> 16 & 15] + HEX_CHARS2[h2 >>> 12 & 15] + HEX_CHARS2[h2 >>> 8 & 15] + HEX_CHARS2[h2 >>> 4 & 15] + HEX_CHARS2[h2 & 15] + HEX_CHARS2[h3 >>> 28 & 15] + HEX_CHARS2[h3 >>> 24 & 15] + HEX_CHARS2[h3 >>> 20 & 15] + HEX_CHARS2[h3 >>> 16 & 15] + HEX_CHARS2[h3 >>> 12 & 15] + HEX_CHARS2[h3 >>> 8 & 15] + HEX_CHARS2[h3 >>> 4 & 15] + HEX_CHARS2[h3 & 15] + HEX_CHARS2[h4 >>> 28 & 15] + HEX_CHARS2[h4 >>> 24 & 15] + HEX_CHARS2[h4 >>> 20 & 15] + HEX_CHARS2[h4 >>> 16 & 15] + HEX_CHARS2[h4 >>> 12 & 15] + HEX_CHARS2[h4 >>> 8 & 15] + HEX_CHARS2[h4 >>> 4 & 15] + HEX_CHARS2[h4 & 15] + HEX_CHARS2[h5 >>> 28 & 15] + HEX_CHARS2[h5 >>> 24 & 15] + HEX_CHARS2[h5 >>> 20 & 15] + HEX_CHARS2[h5 >>> 16 & 15] + HEX_CHARS2[h5 >>> 12 & 15] + HEX_CHARS2[h5 >>> 8 & 15] + HEX_CHARS2[h5 >>> 4 & 15] + HEX_CHARS2[h5 & 15] + HEX_CHARS2[h6 >>> 28 & 15] + HEX_CHARS2[h6 >>> 24 & 15] + HEX_CHARS2[h6 >>> 20 & 15] + HEX_CHARS2[h6 >>> 16 & 15] + HEX_CHARS2[h6 >>> 12 & 15] + HEX_CHARS2[h6 >>> 8 & 15] + HEX_CHARS2[h6 >>> 4 & 15] + HEX_CHARS2[h6 & 15];
-                if (!this.is224) {
-                    hex += HEX_CHARS2[h7 >>> 28 & 15] + HEX_CHARS2[h7 >>> 24 & 15] + HEX_CHARS2[h7 >>> 20 & 15] + HEX_CHARS2[h7 >>> 16 & 15] + HEX_CHARS2[h7 >>> 12 & 15] + HEX_CHARS2[h7 >>> 8 & 15] + HEX_CHARS2[h7 >>> 4 & 15] + HEX_CHARS2[h7 & 15];
-                }
-                return hex;
-            };
-            Sha2562.prototype.toString = Sha2562.prototype.hex;
-            Sha2562.prototype.digest = function() {
                 this.finalize();
                 var h0 = this.h0, h1 = this.h1, h2 = this.h2, h3 = this.h3, h4 = this.h4, h5 = this.h5, h6 = this.h6, h7 = this.h7;
                 var arr = [
@@ -96565,8 +96024,8 @@ var require_sha2562 = __commonJS({
                 }
                 return arr;
             };
-            Sha2562.prototype.array = Sha2562.prototype.digest;
-            Sha2562.prototype.arrayBuffer = function() {
+            Sha256.prototype.array = Sha256.prototype.digest;
+            Sha256.prototype.arrayBuffer = function() {
                 this.finalize();
                 var buffer = new ArrayBuffer(this.is224 ? 28 : 32);
                 var dataView = new DataView(buffer);
@@ -96582,7 +96041,7 @@ var require_sha2562 = __commonJS({
                 }
                 return buffer;
             };
-            function HmacSha2562(key, is2242, sharedMemory) {
+            function HmacSha256(key, is224, sharedMemory) {
                 var i, type = typeof key;
                 if (type === "string") {
                     var bytes2 = [], length = key.length, index = 0, code;
@@ -96609,20 +96068,20 @@ var require_sha2562 = __commonJS({
                 } else {
                     if (type === "object") {
                         if (key === null) {
-                            throw new Error(ERROR2);
-                        } else if (ARRAY_BUFFER2 && key.constructor === ArrayBuffer) {
+                            throw new Error(ERROR);
+                        } else if (ARRAY_BUFFER && key.constructor === ArrayBuffer) {
                             key = new Uint8Array(key);
                         } else if (!Array.isArray(key)) {
-                            if (!ARRAY_BUFFER2 || !ArrayBuffer.isView(key)) {
-                                throw new Error(ERROR2);
+                            if (!ARRAY_BUFFER || !ArrayBuffer.isView(key)) {
+                                throw new Error(ERROR);
                             }
                         }
                     } else {
-                        throw new Error(ERROR2);
+                        throw new Error(ERROR);
                     }
                 }
                 if (key.length > 64) {
-                    key = new Sha2562(is2242, true).update(key).array();
+                    key = new Sha256(is224, true).update(key).array();
                 }
                 var oKeyPad = [], iKeyPad = [];
                 for(i = 0; i < 64; ++i){
@@ -96630,37 +96089,37 @@ var require_sha2562 = __commonJS({
                     oKeyPad[i] = 92 ^ b;
                     iKeyPad[i] = 54 ^ b;
                 }
-                Sha2562.call(this, is2242, sharedMemory);
+                Sha256.call(this, is224, sharedMemory);
                 this.update(iKeyPad);
                 this.oKeyPad = oKeyPad;
                 this.inner = true;
                 this.sharedMemory = sharedMemory;
             }
-            HmacSha2562.prototype = new Sha2562();
-            HmacSha2562.prototype.finalize = function() {
-                Sha2562.prototype.finalize.call(this);
+            HmacSha256.prototype = new Sha256();
+            HmacSha256.prototype.finalize = function() {
+                Sha256.prototype.finalize.call(this);
                 if (this.inner) {
                     this.inner = false;
                     var innerHash = this.array();
-                    Sha2562.call(this, this.is224, this.sharedMemory);
+                    Sha256.call(this, this.is224, this.sharedMemory);
                     this.update(this.oKeyPad);
                     this.update(innerHash);
-                    Sha2562.prototype.finalize.call(this);
+                    Sha256.prototype.finalize.call(this);
                 }
             };
-            var exports3 = createMethod2();
-            exports3.sha256 = exports3;
-            exports3.sha224 = createMethod2(true);
-            exports3.sha256.hmac = createHmacMethod2();
-            exports3.sha224.hmac = createHmacMethod2(true);
-            if (COMMON_JS2) {
-                module2.exports = exports3;
+            var exports2 = createMethod();
+            exports2.sha256 = exports2;
+            exports2.sha224 = createMethod(true);
+            exports2.sha256.hmac = createHmacMethod();
+            exports2.sha224.hmac = createHmacMethod(true);
+            if (COMMON_JS) {
+                module.exports = exports2;
             } else {
-                root2.sha256 = exports3.sha256;
-                root2.sha224 = exports3.sha224;
-                if (AMD2) {
+                root.sha256 = exports2.sha256;
+                root.sha224 = exports2.sha224;
+                if (AMD) {
                     define(function() {
-                        return exports3;
+                        return exports2;
                     });
                 }
             }
@@ -98799,11 +98258,11 @@ var FuncClass = class extends ConstructType {
         const canister = concat(new Uint8Array([
             1
         ]), len, buf);
-        const method2 = new TextEncoder().encode(methodName2);
-        const methodLen = lebEncode(method2.byteLength);
+        const method = new TextEncoder().encode(methodName2);
+        const methodLen = lebEncode(method.byteLength);
         return concat(new Uint8Array([
             1
-        ]), canister, methodLen, method2);
+        ]), canister, methodLen, method);
     }
     _buildTypeTableImpl(T) {
         this.argTypes.forEach((arg)=>arg.buildTypeTable(T));
@@ -98828,10 +98287,10 @@ var FuncClass = class extends ConstructType {
         const decoder = new TextDecoder("utf8", {
             fatal: true
         });
-        const method2 = decoder.decode(buf);
+        const method = decoder.decode(buf);
         return [
             canister,
-            method2
+            method
         ];
     }
     get name() {
@@ -99988,7 +99447,7 @@ var AzleNat64 = (_class8 = class {
 }, _class8._azleKind = "AzleNat64", _class8);
 var nat64 = AzleNat64;
 // node_modules/azle/src/lib/ic/call_raw.ts
-function callRaw(canisterId, method2, argsRaw, payment) {
+function callRaw(canisterId, method, argsRaw, payment) {
     if (globalThis._azleIc === void 0) {
         return void 0;
     }
@@ -100013,7 +99472,7 @@ function callRaw(canisterId, method2, argsRaw, payment) {
         const argsRawBuffer = argsRaw.buffer;
         const paymentCandidBytes = encode3(nat64, payment).buffer;
         try {
-            globalThis._azleIc.callRaw(promiseId, canisterIdBytes, method2, argsRawBuffer, paymentCandidBytes);
+            globalThis._azleIc.callRaw(promiseId, canisterIdBytes, method, argsRawBuffer, paymentCandidBytes);
         } catch (error) {
             delete globalThis._azleResolveIds[globalResolveId];
             delete globalThis._azleRejectIds[globalRejectId];
@@ -100022,7 +99481,7 @@ function callRaw(canisterId, method2, argsRaw, payment) {
     });
 }
 // node_modules/azle/src/lib/ic/call_raw_128.ts
-function callRaw128(canisterId, method2, argsRaw, payment) {
+function callRaw128(canisterId, method, argsRaw, payment) {
     if (globalThis._azleIc === void 0) {
         return void 0;
     }
@@ -100047,7 +99506,7 @@ function callRaw128(canisterId, method2, argsRaw, payment) {
         const argsRawBuffer = argsRaw.buffer;
         const paymentCandidBytes = encode3(nat, payment).buffer;
         try {
-            globalThis._azleIc.callRaw128(promiseId, canisterIdBytes, method2, argsRawBuffer, paymentCandidBytes);
+            globalThis._azleIc.callRaw128(promiseId, canisterIdBytes, method, argsRawBuffer, paymentCandidBytes);
         } catch (error) {
             delete globalThis._azleResolveIds[globalResolveId];
             delete globalThis._azleRejectIds[globalRejectId];
@@ -100056,13 +99515,13 @@ function callRaw128(canisterId, method2, argsRaw, payment) {
     });
 }
 // node_modules/azle/src/lib/ic/call.ts
-function call(method2, config) {
+function call(method, config) {
     if (globalThis._azleIc === void 0) {
         return void 0;
     }
     const { callFunction, cycles } = getCallFunctionAndCycles(config == null ? void 0 : config.cycles, config == null ? void 0 : config.cycles128);
     var _config_args;
-    return method2(false, callFunction, cycles, (_config_args = config == null ? void 0 : config.args) != null ? _config_args : []);
+    return method(false, callFunction, cycles, (_config_args = config == null ? void 0 : config.args) != null ? _config_args : []);
 }
 function getCallFunctionAndCycles(cycles, cycles128) {
     if (cycles128 !== void 0) {
@@ -100220,22 +99679,22 @@ function msgCyclesRefunded128() {
     return decode3(nat, msgCyclesRefunded128CandidBytes);
 }
 // node_modules/azle/src/lib/ic/notify_raw.ts
-function notifyRaw(canisterId, method2, argsRaw, payment) {
+function notifyRaw(canisterId, method, argsRaw, payment) {
     if (globalThis._azleIc === void 0) {
         return void 0;
     }
     const canisterIdBytes = canisterId.toUint8Array().buffer;
     const argsRawBuffer = argsRaw.buffer;
     const paymentCandidBytes = encode3(nat, payment).buffer;
-    return globalThis._azleIc.notifyRaw(canisterIdBytes, method2, argsRawBuffer, paymentCandidBytes);
+    return globalThis._azleIc.notifyRaw(canisterIdBytes, method, argsRawBuffer, paymentCandidBytes);
 }
 // node_modules/azle/src/lib/ic/notify.ts
-function notify(method2, config) {
+function notify(method, config) {
     if (globalThis._azleIc === void 0) {
         return void 0;
     }
     var _config_cycles, _config_args;
-    return method2(true, notifyRaw, (_config_cycles = config == null ? void 0 : config.cycles) != null ? _config_cycles : 0n, (_config_args = config == null ? void 0 : config.args) != null ? _config_args : []);
+    return method(true, notifyRaw, (_config_cycles = config == null ? void 0 : config.cycles) != null ? _config_cycles : 0n, (_config_args = config == null ? void 0 : config.args) != null ? _config_args : []);
 }
 // node_modules/azle/src/lib/ic/performance_counter.ts
 function performanceCounter(counterType) {
@@ -101181,13 +100640,11 @@ function getCrc322(buf) {
     return (crc ^ -1) >>> 0;
 }
 // node_modules/@dfinity/principal/lib/esm/utils/sha224.js
-var import_js_sha256 = __toESM(require_sha256());
 function sha2243(data) {
-    const shaObj = import_js_sha256.sha224.create();
-    shaObj.update(data);
-    return new Uint8Array(shaObj.array());
+    return sha224.create().update(new Uint8Array(data)).digest();
 }
 // node_modules/@dfinity/principal/lib/esm/index.js
+var JSON_KEY_PRINCIPAL2 = "__principal__";
 var SELF_AUTHENTICATING_SUFFIX2 = 2;
 var ANONYMOUS_SUFFIX2 = 4;
 var MANAGEMENT_CANISTER_PRINCIPAL_HEX_STR2 = "aaaaa-aa";
@@ -101218,6 +100675,8 @@ var Principal4 = class _Principal {
     static from(other) {
         if (typeof other === "string") {
             return _Principal.fromText(other);
+        } else if (Object.getPrototypeOf(other) === Uint8Array.prototype) {
+            return new _Principal(other);
         } else if (typeof other === "object" && other !== null && other._isPrincipal === true) {
             return new _Principal(other._arr);
         }
@@ -101227,12 +100686,19 @@ var Principal4 = class _Principal {
         return new this(fromHexString2(hex));
     }
     static fromText(text2) {
-        const canisterIdNoDash = text2.toLowerCase().replace(/-/g, "");
+        let maybePrincipal = text2;
+        if (text2.includes(JSON_KEY_PRINCIPAL2)) {
+            const obj = JSON.parse(text2);
+            if (JSON_KEY_PRINCIPAL2 in obj) {
+                maybePrincipal = obj[JSON_KEY_PRINCIPAL2];
+            }
+        }
+        const canisterIdNoDash = maybePrincipal.toLowerCase().replace(/-/g, "");
         let arr = decode4(canisterIdNoDash);
         arr = arr.slice(4, arr.length);
         const principal = new this(arr);
-        if (principal.toText() !== text2) {
-            throw new Error(`Principal "${principal.toText()}" does not have a valid checksum (original value "${text2}" may not be a valid Principal ID).`);
+        if (principal.toText() !== maybePrincipal) {
+            throw new Error(`Principal "${principal.toText()}" does not have a valid checksum (original value "${maybePrincipal}" may not be a valid Principal ID).`);
         }
         return principal;
     }
@@ -101269,6 +100735,14 @@ var Principal4 = class _Principal {
         return this.toText();
     }
     /**
+   * Serializes to JSON
+   * @returns {JsonnablePrincipal} a JSON object with a single key, {@link JSON_KEY_PRINCIPAL}, whose value is the principal as a string
+   */ toJSON() {
+        return {
+            [JSON_KEY_PRINCIPAL2]: this.toText()
+        };
+    }
+    /**
    * Utility method taking a Principal to compare against. Used for determining canister ranges in certificate verification
    * @param {Principal} other - a {@link Principal} to compare
    * @returns {'lt' | 'eq' | 'gt'} `'lt' | 'eq' | 'gt'` a string, representing less than, equal to, or greater than
@@ -101303,11 +100777,12 @@ var Principal4 = class _Principal {
     }
 };
 // src/chordify_backend/src/index.ts
-var import_js_sha2562 = __toESM(require_sha2562(), 1);
+var import_js_sha256 = __toESM(require_sha256(), 1);
 var User = Record2({
     id: Principal3,
     username: text,
-    password: text
+    password: text,
+    imageUrl: text
 });
 var UserCreateRequestDTO = Record2({
     username: text,
@@ -101315,7 +100790,8 @@ var UserCreateRequestDTO = Record2({
 });
 var UserResultDTO = Record2({
     id: Principal3,
-    username: text
+    username: text,
+    imageUrl: text
 });
 var Genre = Record2({
     id: Principal3,
@@ -101335,7 +100811,7 @@ var Music = Record2({
     id: Principal3,
     name: text,
     genres: Vec2(text),
-    authorId: Principal3,
+    author: UserResultDTO,
     description: text,
     volume: int64,
     supply: int64,
@@ -101351,15 +100827,27 @@ var MusicCreateDTO = Record2({
     price: int64,
     imageUrl: text
 });
+var MusicByVolumeDescDTO = Record2({
+    limit: int64
+});
 var Cart = Record2({
     id: Principal3,
     userId: Principal3,
-    musics: Vec2(MusicCart)
+    musicId: Principal3,
+    quantity: int64
 });
 var CartCreateDTO = Record2({
     userId: Principal3,
-    musicId: Principal3,
-    quantity: text
+    musicId: Principal3
+});
+var CartCreateQuantityDTO = Record2({
+    userId: Principal3,
+    cartId: Principal3
+});
+var CartCreateQuantityByValueDTO = Record2({
+    userId: Principal3,
+    cartId: Principal3,
+    quantity: int64
 });
 var RemoveFromCartDTO = Record2({
     userId: Principal3,
@@ -101369,11 +100857,13 @@ var Error2 = Variant2({
     UserDoesNotExist: Principal3,
     GenreDoesNotExist: Principal3,
     MusicDoesNotExist: Principal3,
+    CartDoesNotExist: Principal3,
     UsernameDoesNotExist: text,
     CredentialNotMatch: text,
     InvalidMusicName: text,
     InvalidMusicPrice: text,
-    NoGenre: text
+    NoGenre: text,
+    ParameterMissing: text
 });
 var usersStorage = StableBTreeMap(0);
 var genreStorage = StableBTreeMap(1);
@@ -101386,12 +100876,25 @@ function generateId() {
 function hashPassword(password) {
     const salt = "your-salt-value";
     const saltedPassword = password + salt;
-    const hash = (0, import_js_sha2562.sha256)(saltedPassword);
+    const hash = (0, import_js_sha256.sha256)(saltedPassword);
     return hash;
 }
 function verifyPassword(password, storedHash) {
     const hashedPassword = hashPassword(password);
     return hashedPassword !== storedHash;
+}
+function bubbleSortByVolumeDesc(musicList) {
+    const n = musicList.length;
+    for(let i = 0; i < n - 1; i++){
+        for(let j = 0; j < n - i - 1; j++){
+            if (musicList[j].volume < musicList[j + 1].volume) {
+                const temp = musicList[j];
+                musicList[j] = musicList[j + 1];
+                musicList[j + 1] = temp;
+            }
+        }
+    }
+    return musicList;
 }
 var src_default = Canister({
     greet: query([
@@ -101405,7 +100908,8 @@ var src_default = Canister({
         const user = {
             id: generateId(),
             username: dto.username,
-            password: hashPassword(dto.password)
+            password: hashPassword(dto.password),
+            imageUrl: "https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bXVzaWN8ZW58MHx8MHx8fDA%3D"
         };
         usersStorage.insert(user.id, user);
         return user;
@@ -101422,13 +100926,14 @@ var src_default = Canister({
         }
         const userResult = {
             id: user.id,
-            username: user.username
+            username: user.username,
+            imageUrl: user.imageUrl
         };
         return Ok(userResult);
     }),
     login: query([
         UserCreateRequestDTO
-    ], Result(Principal3, Error2), (dto)=>{
+    ], Result(UserResultDTO, Error2), (dto)=>{
         const allUsers = usersStorage.values();
         const user = allUsers.find((user2)=>user2.username === dto.username);
         if (user == void 0) {
@@ -101441,7 +100946,12 @@ var src_default = Canister({
                 CredentialNotMatch: dto.username
             });
         }
-        return Ok(user.id);
+        const userResult = {
+            id: user.id,
+            username: user.username,
+            imageUrl: user.imageUrl
+        };
+        return Ok(userResult);
     }),
     getUsers: query([], Vec2(User), ()=>{
         return usersStorage.values();
@@ -101472,12 +100982,23 @@ var src_default = Canister({
     }),
     createMusic: update([
         MusicCreateDTO
-    ], Music, (dto)=>{
+    ], Result(Music, Error2), (dto)=>{
+        const user = usersStorage.get(dto.authorId).Some;
+        if (!user) {
+            return Err({
+                UserDoesNotExist: dto.authorId
+            });
+        }
+        const author = {
+            id: user.id,
+            imageUrl: user.imageUrl,
+            username: user.username
+        };
         const music = {
             id: generateId(),
             name: dto.name,
             genres: dto.genres,
-            authorId: dto.authorId,
+            author,
             volume: BigInt(0),
             price: dto.price,
             imageUrl: dto.imageUrl,
@@ -101485,12 +101006,30 @@ var src_default = Canister({
             description: dto.description
         };
         musicStorage.insert(music.id, music);
-        return music;
+        return Ok(music);
+    }),
+    getMusicByVolumeDesc: query([
+        MusicByVolumeDescDTO
+    ], Result(Vec2(Music), Error2), (dto)=>{
+        if (dto.limit == void 0) {
+            return Err({
+                ParameterMissing: "limit"
+            });
+        }
+        const allMusic = musicStorage.values();
+        const sortedMusic = bubbleSortByVolumeDesc(allMusic);
+        return Ok(sortedMusic.slice(0, Number(dto.limit)));
     }),
     getMusicById: query([
         Principal3
-    ], Opt2(Music), (id2)=>{
-        return musicStorage.get(id2);
+    ], Result(Music, Error2), (id2)=>{
+        const music = musicStorage.get(id2).Some;
+        if (!music) {
+            return Err({
+                MusicDoesNotExist: id2
+            });
+        }
+        return Ok(music);
     }),
     getMusics: query([], Vec2(Music), ()=>{
         return musicStorage.values();
@@ -101509,62 +101048,9 @@ var src_default = Canister({
     getMusicCount: query([], nat64, ()=>{
         return musicStorage.len();
     }),
-    createCart: update([
+    addToCart: update([
         CartCreateDTO
-    ], Cart, (dto)=>{
-        const userOpt = usersStorage.get(dto.userId);
-        if ("None" in userOpt) {
-            return Err({
-                UserDoesNotExist: dto.userId
-            });
-        }
-        const musicOpt = musicStorage.get(dto.musicId);
-        if ("None" in musicOpt) {
-            return Err({
-                MusicDoesNotExist: dto.userId
-            });
-        }
-        const musicCart = {
-            authorId: musicOpt.Some.authorId,
-            genreId: musicOpt.Some.genreId,
-            name: musicOpt.Some.name,
-            id: musicOpt.Some.id,
-            quantity: dto.quantity
-        };
-        const keysIterator = cartStorage.keys();
-        for (const key of keysIterator){
-            var _cart2_Some;
-            const cart2 = cartStorage.get(key);
-            if (((_cart2_Some = cart2.Some) == null ? void 0 : _cart2_Some.userId.compareTo(dto.userId)) == "eq") {
-                var _cart2_Some1;
-                (_cart2_Some1 = cart2.Some) == null ? void 0 : _cart2_Some1.musics.push(musicCart);
-                return cart2;
-            }
-        }
-        const cart = {
-            id: generateId(),
-            musics: [
-                musicCart
-            ],
-            userId: dto.userId
-        };
-        cartStorage.insert(cart.id, cart);
-        return cart;
-    }),
-    getCartById: query([
-        Principal3
-    ], Opt2(Music), (id2)=>{
-        return musicStorage.get(id2);
-    }),
-    getCarts: query([], Vec2(Music), ()=>{
-        return musicStorage.values();
-    }),
-    getCartCount: query([], nat64, ()=>{
-        return musicStorage.len();
-    }),
-    deleteMusicFromCart: query([
-        RemoveFromCartDTO
-    ], Result(text, Error2), (dto)=>{
+    ], Result(Cart, Error2), (dto)=>{
         const userOpt = usersStorage.get(dto.userId);
         if ("None" in userOpt) {
             return Err({
@@ -101577,13 +101063,125 @@ var src_default = Canister({
                 MusicDoesNotExist: dto.musicId
             });
         }
-        for (const cart of cartStorage.values()){
-            if (cart.userId === dto.userId) {
-                break;
-            }
-        }
-        return "asd";
+        const cart = {
+            id: generateId(),
+            musicId: dto.musicId,
+            userId: dto.userId,
+            quantity: BigInt(1)
+        };
+        cartStorage.insert(cart.id, cart);
+        return Ok(cart);
     }),
+    addCartQuantity: update([
+        CartCreateQuantityDTO
+    ], Result(Opt2(Cart), Error2), (dto)=>{
+        const userOpt = usersStorage.get(dto.userId);
+        if ("None" in userOpt) {
+            return Err({
+                UserDoesNotExist: dto.userId
+            });
+        }
+        const cartOpt = cartStorage.get(dto.cartId);
+        if ("None" in cartOpt) {
+            return Err({
+                CartDoesNotExist: dto.cartId
+            });
+        }
+        const qty = cartOpt.Some.quantity + BigInt(1);
+        cartOpt.Some.quantity = qty;
+        return Ok(cartOpt);
+    }),
+    addCartQuantityByValue: update([
+        CartCreateQuantityByValueDTO
+    ], Result(Opt2(Cart), Error2), (dto)=>{
+        const userOpt = usersStorage.get(dto.userId);
+        if ("None" in userOpt) {
+            return Err({
+                UserDoesNotExist: dto.userId
+            });
+        }
+        const cartOpt = cartStorage.get(dto.cartId);
+        if ("None" in cartOpt) {
+            return Err({
+                CartDoesNotExist: dto.cartId
+            });
+        }
+        const qty = cartOpt.Some.quantity + BigInt(dto.quantity);
+        cartOpt.Some.quantity = qty;
+        return Ok(cartOpt);
+    }),
+    removeCartQuantity: update([
+        CartCreateQuantityDTO
+    ], Result(Opt2(Cart), Error2), (dto)=>{
+        const userOpt = usersStorage.get(dto.userId);
+        if ("None" in userOpt) {
+            return Err({
+                UserDoesNotExist: dto.userId
+            });
+        }
+        const cartOpt = cartStorage.get(dto.cartId);
+        if ("None" in cartOpt) {
+            return Err({
+                CartDoesNotExist: dto.cartId
+            });
+        }
+        const qty = cartOpt.Some.quantity - BigInt(1);
+        if (qty <= 0) {
+            cartStorage.remove(cartOpt.Some.id);
+        } else {
+            cartOpt.Some.quantity = qty;
+        }
+        return Ok(cartOpt);
+    }),
+    removeCart: update([
+        CartCreateQuantityDTO
+    ], Result(Opt2(Cart), Error2), (dto)=>{
+        const userOpt = usersStorage.get(dto.userId);
+        if ("None" in userOpt) {
+            return Err({
+                UserDoesNotExist: dto.userId
+            });
+        }
+        const cartOpt = cartStorage.get(dto.cartId);
+        if ("None" in cartOpt) {
+            return Err({
+                CartDoesNotExist: dto.cartId
+            });
+        }
+        cartStorage.remove(cartOpt.Some.id);
+        return Ok(cartOpt);
+    }),
+    getCartById: query([
+        Principal3
+    ], Opt2(Music), (id2)=>{
+        return musicStorage.get(id2);
+    }),
+    getCarts: query([], Vec2(Music), ()=>{
+        return musicStorage.values();
+    }),
+    getCartCount: query([], nat64, ()=>{
+        return musicStorage.len();
+    }),
+    // deleteMusicFromCart: query([RemoveFromCartDTO], Result(text, Error), (dto: RemoveFromCartRequestDTO) => {
+    //   const userOpt = usersStorage.get(dto.userId);
+    //   if ("None" in userOpt) {
+    //     return Err({
+    //       UserDoesNotExist: dto.userId,
+    //     });
+    //   }
+    //   const musicOpt = musicStorage.get(dto.musicId);
+    //   if ("None" in musicOpt) {
+    //     return Err({
+    //       MusicDoesNotExist: dto.musicId,
+    //     });
+    //   }
+    //   for (const cart of cartStorage.values()) {
+    //     if (cart.userId === dto.userId) {
+    //       break;
+    //     }
+    //   }
+    //   return "asd";
+    // }),
     getMusicByGenre: query([
         text
     ], Result(Music, Error2), (genre)=>{
@@ -101613,16 +101211,6 @@ buffer/index.js:
    *
    * @author   Feross Aboukhadijeh <https://feross.org>
    * @license  MIT
-   *)
-
-js-sha256/src/sha256.js:
-  (**
-   * [js-sha256]{@link https://github.com/emn178/js-sha256}
-   *
-   * @version 0.9.0
-   * @author Chen, Yi-Cyuan [emn178@gmail.com]
-   * @copyright Chen, Yi-Cyuan 2014-2017
-   * @license MIT
    *)
 
 js-sha256/src/sha256.js:

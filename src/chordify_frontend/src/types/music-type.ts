@@ -1,13 +1,14 @@
 import { Principal } from "@dfinity/principal"
+import { UserType } from "./user-type"
 
 export type MusicType = {
     id: Principal
     name: string
     description: string
-    genres: []
+    genres: string[]
     imageUrl: string
     supply: number
     price: number
     volume: number
-    authorId: Principal
+    author: UserType
 }

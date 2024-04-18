@@ -1,7 +1,9 @@
+html {
+    scroll-behavior: smooth;
+}
 
 ::-webkit-scrollbar {
-    width: 11px;
-    height: 11px;
+    width: 11px; 
 }
 
 ::-webkit-scrollbar-track {
@@ -9,20 +11,16 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: black; 
+    background-color: black; 
     border-radius: 10px; 
+    opacity: 0.5; 
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #333;
+    background-color: black;
+    opacity: 0.8; 
 }
 
-::-webkit-scrollbar:horizontal {
-    height: 11px; 
-    width: auto; 
-}
-
-::-webkit-scrollbar:vertical {
-    width: 11px; 
-    height: auto;
+::-webkit-scrollbar-button {
+    display: none;
 }
