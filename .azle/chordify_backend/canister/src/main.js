@@ -100816,7 +100816,8 @@ var Music = Record2({
     volume: int64,
     supply: int64,
     price: int64,
-    imageUrl: text
+    imageUrl: text,
+    saleEnd: int64
 });
 var MusicCreateDTO = Record2({
     name: text,
@@ -100825,7 +100826,8 @@ var MusicCreateDTO = Record2({
     description: text,
     supply: int64,
     price: int64,
-    imageUrl: text
+    imageUrl: text,
+    saleEnd: int64
 });
 var MusicByVolumeDescDTO = Record2({
     limit: int64
@@ -101003,7 +101005,8 @@ var src_default = Canister({
             price: dto.price,
             imageUrl: dto.imageUrl,
             supply: dto.supply,
-            description: dto.description
+            description: dto.description,
+            saleEnd: dto.saleEnd
         };
         musicStorage.insert(music.id, music);
         return Ok(music);

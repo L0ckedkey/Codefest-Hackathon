@@ -16,7 +16,7 @@ export default function Home() {
     return (
         <>
             {/* <Tabs /> */}
-            <div className="relative w-full h-full flex flex-grow flex-col justify-start items-center overflow-x-hidden" >
+            <div className="relative max-w-screen w-full h-full flex  flex-col justify-start items-center oveflow-x-hidden " >
                 <div className='relative h-full w-full flex flex-col justify-end items-start'>
                     <img className='z-1 absolute bottom-0 top-0 w-full h-full object-cover blur-md bg-black opacity-50 ' src={banner} alt="" />
                     <div className='w-full mt-28 mb-10 flex flex-col justify-center items-center gap-4 text-white'>
@@ -27,32 +27,28 @@ export default function Home() {
                         <Carousel />
                     </div>
                 </div>
-                <div className='z-0 marquee w-[125%]  h-52 sm:h-40 md:h-60 bg-white -rotate-6 translate-y-1/3 sm:translate-y-1/2 bg-opacity-15'>
-                    <div className="marquee__group">
-                        {
-                            images.map((image, index) => (
-                                <img className='p-8' key={index} src={image} alt='' />
-                            ))
-                        }
-                    </div>
-                    <div className="marquee__group">
-                        {
-                            images.map((image, index) => (
-                                <img className='p-8' key={index} src={image} alt='' />
-                            ))
-                        }
+                <div className='relative w-[125%] overflow-x-visible  h-fit'>
+                    <div className=' marquee w-full h-52 sm:h-60 bg-white -rotate-6  bg-opacity-15 translate-y-1/3 sm:translate-y-1/2'>
+                        <div className="marquee__group">
+                            {
+                                images.map((image, index) => (
+                                    <img className='p-6 max-w-60' key={index} src={image} alt='' />
+                                ))
+                            }
+                        </div>
+                        <div className="marquee__group">
+                            {
+                                images.map((image, index) => (
+                                    <img className='p-6 max-w-60' key={index} src={image} alt='' />
+                                ))
+                            }
+                        </div>
                     </div>
                 </div>
-                <img className='z-10 w-36 h-36 sm:w-56 sm:h-56 rounded-full object-cover self-end  lg:mr-44'
-                    data-scroll
-                    data-scroll-speed="2"
-                    data-scroll-position="top"
-                    data-scroll-direction="horizontal" src={banner} alt="" />
-
+                <img className='z-10 w-36 h-36 sm:w-56 sm:h-56 rounded-full object-cover self-end  lg:mr-44' src={banner} alt="" />
                 <div className="px-4 py-8 sm:px-6 lg:px-8 box-border">
                     <DiscoverSection />
                 </div>
-                <StatisticTable />
             </div >
         </>
     )

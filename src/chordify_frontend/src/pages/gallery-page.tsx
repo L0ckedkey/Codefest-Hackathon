@@ -22,8 +22,10 @@ export default function Gallery() {
                     imageUrl: music.imageUrl,
                     price: Number(music.price),
                     supply: Number(music.supply),
-                    genres: music.genres
+                    genres: music.genres,
+                    saleEnd: Number(music.saleEnd)
                 }))
+                
                 setMusics(musicData)
             }
         } catch (error) {
@@ -42,14 +44,13 @@ export default function Gallery() {
 
     return (
         <>
-            <div className="w-full h-full min-h-screen flex mt-20 p-10 box-border overflow-auto">
-
-                <div className="min-h-full h-full w-full columns-2 md:columns-3 lg:columns-4 gap-x-6 overflow-auto">
+            <div className="w-full h-full flex mt-20 p-10 box-border ">
+                <div className="min-h-full h-full w-full columns-2 md:columns-3 lg:columns-4 gap-x-6 ">
                     {
                         musics && musics.map((music, index) => (
-                            <div key={index} className="w-full mb-3 break-inside-avoid">
-                                <img className="max-w-full rounded-md" loading="lazy" src={music.imageUrl} alt="" />
-                            </div>
+                            <a href={`/music/${music!.id}`} key={index} className="w-full break-inside-avoid ">
+                                <img className="max-w-full rounded-md mb-3 " loading="lazy" src={music.imageUrl} alt="" />
+                            </a>
                         ))
                     }
                 </div>

@@ -4,7 +4,8 @@ import App from './App';
 import './index.scss';
 import '@splidejs/splide/css';
 import "./css/animations.css"
-import "./css/scroll.css"
+import "./css/scrollbar.css"
+// import "./css/loco-scroll.scss"
 import "./javascripts/event.js"
 import Aos from 'aos';
 import 'aos/dist/aos.css';

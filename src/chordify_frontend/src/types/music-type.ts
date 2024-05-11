@@ -10,5 +10,6 @@ export type MusicType = {
     supply: number
     price: number
     volume: number
-    author: UserType
+    author: UserType,
+    saleEnd: number
 }

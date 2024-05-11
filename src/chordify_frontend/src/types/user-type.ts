@@ -4,3 +4,9 @@ export type UserType = {
     username?: string
     imageUrl?: string
 }
+
+export interface IUser{
+    id: Principal
+    username?: string
+    imageUrl?: string
+}

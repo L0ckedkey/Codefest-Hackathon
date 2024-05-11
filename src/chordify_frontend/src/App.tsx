@@ -9,13 +9,16 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingProvider from "./contexts/loading-context.tsx";
 import MusicDetail from "./pages/music-detail-page/music-detail-page.tsx";
+import Rankings from "./pages/rankings.tsx";
+import Cart from "./pages/cart.tsx";
+import MyProfile from "./pages/my-profile.tsx";
 
 function App() {
     return (
         <>
-            <ToastContainer />
-            <LoadingProvider>
-                <AuthProvider>
+            <AuthProvider>
+                <ToastContainer />
+                <LoadingProvider>
                     <BaseLayout>
                         <BrowserRouter>
                             <Routes>
@@ -23,12 +26,15 @@ function App() {
                                 <Route path="/create-music" element={<CreateMusic />} />
                                 <Route path="/music/:id" element={<MusicDetail />} />
                                 <Route path="/gallery" element={<Gallery />} />
+                                <Route path="/rankings" element={<Rankings />} />
                                 <Route path="/debug" element={<Debug />} />
+                                <Route path="/cart" element={<Cart />} />
+                                <Route path="/profile" element={<MyProfile />} />
                             </Routes>
                         </BrowserRouter>
                     </BaseLayout>
-                </AuthProvider>
-            </LoadingProvider>
+                </LoadingProvider>
+            </AuthProvider>
         </>
     )
 }

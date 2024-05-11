@@ -1,8 +1,8 @@
 import { STATS_TABLE } from '../types/consts';
 import { HTMLAttributes, ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
-import Button from './button';
 import Container from './container';
+import Button from './button';
 
 export default function StatisticTable() {
   return (

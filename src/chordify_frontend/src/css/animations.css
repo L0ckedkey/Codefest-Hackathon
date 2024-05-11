@@ -28,7 +28,7 @@
 }
 
 .marquee__group img {
-  max-width: clamp(10rem, 1rem + 28vmin, 20rem);
+  /* max-width: clamp(10rem, 1rem + 28vmin, 20rem); */
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50px;

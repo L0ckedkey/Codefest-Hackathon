@@ -17,7 +17,8 @@ export default function CreateMusic() {
         "name": "",
         "description": "",
         "supply": "",
-        "price": ""
+        "price": "",
+        "saleEnd":  new Date().toISOString().slice(0, 16)
     }
 
     const [form, setForm] = useState(defaultForm)
@@ -53,14 +54,18 @@ export default function CreateMusic() {
             toast.error("Please Select Image")
             return
         }
-        if(!form.name || !form.description || !form.price || !form.supply || selectedGenres.length === 0){
+        if(!form.name || !form.description || !form.price || !form.supply || selectedGenres.length === 0 || !form.saleEnd){
             toast.error("All Field Must Be Filled")
+            return
+        }
+        if(new Date(form.saleEnd) < new Date()){
+            toast.error("Sale End Date must be more than current time")
             return
         }
         try {
             setIsLoading(true)
-            reset()
             const url = await UploadFile("images", selectedFile)
+            const saleEndDate = new Date(form.saleEnd)
             const res = await chordify_backend.createMusic({
                 authorId: user.id,
                 name: form.name,
@@ -68,8 +73,10 @@ export default function CreateMusic() {
                 price: BigInt(form.price),
                 supply: BigInt(form.supply),
                 genres: selectedGenres,
-                imageUrl: url
+                imageUrl: url,
+                saleEnd: BigInt(saleEndDate.getTime())
             })
+            reset()
             setIsLoading(false)
             toast.success("Create NFT Success")
         } catch (error) {
@@ -82,7 +89,7 @@ export default function CreateMusic() {
     return (
         <>
             <div className="relative w-full h-full flex flex-grow justify-center p-20 box-border ">
-                <div className=" max-w-5xl w-full h-full flex flex-grow flex-col items-center  text-white box-border">
+                <div className=" max-w-7xl w-full h-full flex flex-grow flex-col items-center  text-white box-border">
                     <h1 className="text-3xl font-semibold self-start py-6 box-border">Create NFT</h1>
                     <div className="w-full h-full flex flex-grow justify-between gap-20">
                         {
@@ -138,6 +145,10 @@ export default function CreateMusic() {
                             <label className="form-control w-full">
                                 <span className="label-text text-white pb-2 font-semibold text-lg">Price</span>
                                 <input onChange={handleInputChange} value={form.price} name="price" className="bg-white py-3 bg-opacity-10  ring-1 ring-white focus:ring-white rounded-md border-none outline-none" type="number" placeholder="1-999" />
+                            </label>
+                            <label className="form-control w-full">
+                                <span className="label-text text-white pb-2 font-semibold text-lg">Sale End</span>
+                                <input onChange={handleInputChange} value={form.saleEnd} name="saleEnd" className="text-white icon bg-white py-3 bg-opacity-10  ring-1 ring-white focus:ring-white rounded-md border-none outline-none" type="datetime-local" placeholder="" />
                             </label>
                             <button onClick={handleSubmit} className=" bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold rounded-md px-6 py-3 ml-0">Create</button>
                         </div>

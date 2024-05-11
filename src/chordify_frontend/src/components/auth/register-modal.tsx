@@ -1,6 +1,7 @@
 import { WalletIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import { useState } from "react";
 import { chordify_backend } from "../../../../declarations/chordify_backend";
+import { toast } from "react-toastify";
 
 export default function Register({ handleClick, goToSignIn }: { handleClick: () => void, goToSignIn: () => void }) {
     const [auth, setAuth] = useState({
@@ -12,7 +13,9 @@ export default function Register({ handleClick, goToSignIn }: { handleClick: () 
         try {
             const res = await chordify_backend.createUser({ username: auth.username, password: auth.password })
             console.log(res)
+            toast.success("Register Successfull")
         } catch (error) {
+            toast.error("Register Failed")
             console.log(error)
         }
         handleClick()

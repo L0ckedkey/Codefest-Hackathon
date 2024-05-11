@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { MusicType } from "../../types/music-type"
 import { useLoading } from "../../contexts/loading-context"
 import { chordify_backend } from "../../../../declarations/chordify_backend"
-import NFTCard from "./discover-card"
+import DiscoverCard from "./discover-card"
 
 export default function DiscoverSection() {
     const [musics, setMusics] = useState<MusicType[]>([])
@@ -22,7 +22,8 @@ export default function DiscoverSection() {
                     imageUrl: music.imageUrl,
                     price: Number(music.price),
                     supply: Number(music.supply),
-                    genres: music.genres
+                    genres: music.genres,
+                    saleEnd: Number(music.saleEnd)
                 }))
                 setMusics(musicData)
             }
@@ -38,22 +39,22 @@ export default function DiscoverSection() {
     }, [])
     return (
         <>
-        {
-            musics && (
-                <>
-            <h1 className='text-white text-3xl font-bold self-start'>Discover</h1>
-            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                {
-                    musics.map((music, index) => (
-                        <NFTCard key={index} music={music} />
-                    ))
-                }
-                <div className="group relative">
-                </div>
-            </div>
-                </>
-            )
-        }
+            {
+                musics.length>0 && (
+                    <>
+                        <h1 className='text-white text-3xl font-bold self-start'>Discover</h1>
+                        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                            {
+                                musics.map((music, index) => (
+                                    <DiscoverCard key={index} music={music} />
+                                ))
+                            }
+                            <div className="group relative">
+                            </div>
+                        </div>
+                    </>
+                )
+            }
         </>
     )
 }
