@@ -9,7 +9,7 @@ const User = Record({
   id: Principal,
   username: text,
   password: text,
-  money: int64,
+  money: int64
 });
 type User = typeof User.tsType;
 
@@ -21,7 +21,8 @@ type UserCreateRequestDTO = typeof UserCreateRequestDTO.tsType;
 
 const UserResultDTO = Record({
   id: Principal,
-  username: text
+  username: text,
+  money: int64,
 });
 type UserResultDTO = typeof UserResultDTO.tsType;
 
@@ -83,6 +84,13 @@ const CartCreateDTO = Record({
 });
 type CartCreateRequestDTO = typeof CartCreateDTO.tsType;
 
+const Transaction = Record({
+  id: Principal, 
+  userId: Principal,
+  musics: Vec(MusicCart)
+})
+type Transaction = typeof Transaction.tsType;
+
 const RemoveFromCartDTO = Record({
   userId: Principal,
   musicId: Principal
@@ -105,6 +113,7 @@ let usersStorage = StableBTreeMap<Principal, User>(0);
 let genreStorage = StableBTreeMap<Principal, Genre>(1)
 let musicStorage = StableBTreeMap<Principal, Music>(2)
 let cartStorage = StableBTreeMap<Principal, Cart>(3)
+let transactionStorage = StableBTreeMap<Principal, Transaction>(4)
 
 const saltRounds = 10;
 const secretKey = 'my-secret'
@@ -161,12 +170,13 @@ export default Canister({
     }
     const userResult: UserResultDTO = {
       id: user.id,
-      username: user.username
+      username: user.username,
+      money: user.money
     }
 
     return Ok(userResult);
   }),
-  updateUsername: update([Principal, text], Result(User, Error), (id: Principal, username: text) => {
+  updateUsername: update([Principal, text], Result(UserResultDTO, Error), (id: Principal, username: text) => {
     const userOpt = usersStorage.get(id);
     const user = userOpt.Some;
     if (user == undefined) {
@@ -178,7 +188,7 @@ export default Canister({
     usersStorage.insert(user.id, user);
     return Ok(user);
   }),
-  topup: update([Principal, int64], Result(User, Error), (id: Principal, money: int64) => {
+  topup: update([Principal, int64], Result(UserResultDTO, Error), (id: Principal, money: int64) => {
     const userOpt = usersStorage.get(id);
     const user = userOpt.Some;
     if (user == undefined) {
@@ -295,22 +305,22 @@ export default Canister({
 
 
   createCart: update(
-    [CartCreateDTO],
+    [Principal, Principal, int64],
     Result(Cart, Error),
-    (dto: CartCreateRequestDTO) => {
-      const userOpt = usersStorage.get(dto.userId);
+    (userId: Principal, musicId: Principal, quantity: int64) => {
+      const userOpt = usersStorage.get(userId);
       const user = userOpt.Some;
       if (user == undefined) {
         return Err({
-          UserDoesNotExist: dto.userId
+          UserDoesNotExist: userId
         })
       }
 
-      const musicOpt = musicStorage.get(dto.musicId);
+      const musicOpt = musicStorage.get(musicId);
       const music = musicOpt.Some;
       if (music == undefined) {
         return Err({
-          MusicDoesNotExist: dto.userId,
+          MusicDoesNotExist: userId,
         });
       }
 
@@ -320,7 +330,7 @@ export default Canister({
         genres: music.genres,
         name: music.name,
         musicId: music.id,
-        quantity: dto.quantity
+        quantity: quantity
       }
 
       // const keysIterator = cartStorage.keys();
@@ -337,12 +347,12 @@ export default Canister({
       //   }
       // }
 
-      const cartOpt = cartStorage.get(dto.userId)
+      const cartOpt = cartStorage.get(userId)
       const cart = cartOpt.Some;
       let newCart: Cart;
       if (cart == undefined) {
         newCart = ({
-          id: dto.userId,
+          id: userId,
           musics: [musicCart],
         })
         cartStorage.insert(newCart.id, newCart);
@@ -400,7 +410,7 @@ export default Canister({
     const updatedCartMusic = cart.musics.filter((m) => m.id !== musicId);
     cart.musics = updatedCartMusic;
     cartStorage.insert(cart.id, cart)
-    return Ok(cart);
+    return Ok('Success');
   }),
 
   getCartById: query([Principal], Opt(Music), (id: Principal) => {
@@ -422,33 +432,6 @@ export default Canister({
     return musicStorage.len();
   }),
 
-  deleteMusicFromCart: query([RemoveFromCartDTO], Result(text, Error), (dto: RemoveFromCartRequestDTO) => {
-
-    const userOpt = usersStorage.get(dto.userId);
-    if ("None" in userOpt) {
-      return Err({
-        UserDoesNotExist: dto.userId,
-      });
-    }
-
-    const musicOpt = musicStorage.get(dto.musicId);
-    if ("None" in musicOpt) {
-      return Err({
-        MusicDoesNotExist: dto.musicId,
-      });
-    }
-
-
-    for (const cart of cartStorage.values()) {
-      if (cart.userId === dto.userId) {
-
-        break;
-      }
-    }
-
-    return "asd";
-  }),
-
   getMusicByGenre: query([text], Result(Music, Error), (genre) => {
     const allMusic = musicStorage.values();
     const musicResult = allMusic.find(music => music.genres.includes(genre));
@@ -459,6 +442,23 @@ export default Canister({
     }
     return Ok(musicResult)
   }),
+  checkout: update([Principal], Result(Transaction, Error), (id: Principal) => {
+    const cartOpt = cartStorage.get(id)
+    if ("None" in cartOpt) {
+      return Err({
+        UserDoesNotExist: id,
+      });
+    }
+    const cart = cartOpt.Some;
 
+    const transaction: Transaction = {
+      id: generateId(),
+      userId: id,
+      musics: cart.musics
+    }
+    transactionStorage.insert(transaction.id, transaction)
+    cartStorage.remove(id)
+    return Ok(transaction)
+  }),
 
 })
