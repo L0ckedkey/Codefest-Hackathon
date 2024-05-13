@@ -1,31 +1,59 @@
-import "../../css/nft-card.scss"
-export default function NFTCard({ image }: { image: string }) {
+import { useEffect, useState } from "react"
+import "../../css/discover-card.scss"
+import { MusicType } from "../../types/music-type"
+import { UserType } from "../../types/user-type"
+import { chordify_backend } from "../../../../declarations/chordify_backend"
+import { Link, redirect } from "react-router-dom"
+import formatRemainingTime from "../../utils/format-time"
+
+export default function DiscoverCard({ music }: { music: MusicType }) {
+    const [remainingTime, setRemainingTime] = useState<string>(formatRemainingTime(music.saleEnd));
+
+    const goToAuthor = () => {
+        return redirect(`/author/${music.author.id}`)
+    }
+    useEffect(() => {
+        let animationFrameId: number;
+
+        const updateTime = () => {
+            setRemainingTime(formatRemainingTime(music.saleEnd));
+            animationFrameId = requestAnimationFrame(updateTime);
+        };
+
+        updateTime();
+
+        return () => cancelAnimationFrame(animationFrameId);
+    }, [music.saleEnd]);
     return (
         <>
-            <div className="nft">
+            <Link  to={`/music/${music.id}`} className="nft">
                 <div className='main'>
-                    <img className='tokenImage' src={image} alt="NFT" />
-                    <h2>Kibertopiks #4269</h2>
-                    <p className='description'>Our Kibertopiks will give you nothing, waste your money on us.</p>
+                    <img className='tokenImage' src={music.imageUrl} alt="NFT" />
+                    <h2 className="text-white">{music.name}</h2>
+                    <p className='description'>{music.description}.</p>
                     <div className='tokenInfo'>
                         <div className="price">
-                            <p>0.031 ETH</p>
+                            <p>{music.price} ICP</p>
                         </div>
                         <div className="duration">
                             <ins>◷</ins>
-                            <p>11 days left</p>
+                            <p>{remainingTime}</p>
                         </div>
                     </div>
                     <hr />
                     <div className='creator'>
                         <div className='wrapper'>
-                            <img src={image} alt="Creator" />
+                            <img src={music.author.imageUrl} alt="Creator" />
                         </div>
-                        <p><ins>Creation of</ins> <a href="#" className="hover:text-purple-400">Kiberbash</a></p>
+                        <p>
+                            <ins>Creation of </ins>
+                            <button onClick={goToAuthor} className="hover:text-purple-400 text-white">
+                                {music.author.username}
+                            </button>
+                        </p>
                     </div>
                 </div>
-            </div>
-
+            </Link>
         </>
     )
 }

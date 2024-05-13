@@ -64,8 +64,8 @@ export default function ChooseGenre({ selectedGenres, setSelectedGenres }: Choos
                                 className="bg-transparent w-full rounded-md border-none outline-none ring-1 ring-white py-3 text-md text-white focus:outline-none focus:ring-1 focus:ring-white focus:bg-none placeholder:text-gray-400" type="search" autoComplete="off" />
                             <div className="z-10 absolute inset-x-0 bg-white bg-opacity-20 backdrop-blur-md  max-h-60 mt-14 flex flex-col  rounded-md overflow-y-auto">
                                 {
-                                    filteredGenres.map((genre) => (
-                                        <div onClick={() => handleSelectGenre(genre)} className="w-full border-b-2 border-white flex items-center hover:bg-white hover:bg-opacity-30 hover:cursor-pointer" key={genre}>
+                                    filteredGenres.map((genre, index) => (
+                                        <div onClick={() => handleSelectGenre(genre)}  className="w-full border-b-2 border-white flex items-center hover:bg-white hover:bg-opacity-30 hover:cursor-pointer" key={index}>
                                             <p className="p-3">{genre}</p>
                                         </div>
                                     ))
@@ -87,9 +87,9 @@ export default function ChooseGenre({ selectedGenres, setSelectedGenres }: Choos
                                             (
                                                 <>
                                                     {
-                                                        selectedGenres.map((genre) => (
-                                                            <div className="w-fit h-fit px-3 py-1 flex items-center gap-1 rounded-full bg-white bg-opacity-20">
-                                                                <XMarkIcon onClick={() => handleRemoveGenre(genre)} className="w-4 h-4 cursor-pointer" />
+                                                        selectedGenres.map((genre, index) => (
+                                                            <div key={index} className="w-fit h-fit px-3 py-1 flex items-center gap-1 rounded-full bg-white bg-opacity-20">
+                                                                <XMarkIcon  onClick={() => handleRemoveGenre(genre)} className="w-4 h-4 cursor-pointer" />
                                                                 {genre}
                                                             </div>
 

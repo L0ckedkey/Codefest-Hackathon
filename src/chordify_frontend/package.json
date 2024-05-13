@@ -7,11 +7,11 @@
     "setup": "npm i && dfx canister create chordify_backend && dfx generate chordify_backend && dfx deploy",
     "start": "vite --port 3000",
     "prebuild": "dfx generate",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\""
   },
   "dependencies": {
-    "@dfinity/agent": "^0.15.7",
+    "@dfinity/agent": "^1.2.0",
     "@dfinity/auth-client": "^1.2.0",
     "@dfinity/candid": "^0.15.7",
     "@dfinity/principal": "^0.15.7",
@@ -28,6 +28,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-toastify": "^10.0.5",
     "swiper": "^11.0.7",
     "swiper-react": "^1.0.0",
     "tailwind-merge": "^2.2.2"

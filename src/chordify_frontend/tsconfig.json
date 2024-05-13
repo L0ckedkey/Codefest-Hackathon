@@ -16,8 +16,19 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": ["vite/client"],
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "rootDir": "./src",
+    "outDir": "./lib/",
+    "paths": {
+      "@dfinity/principal": ["./node_modules/@dfinity/principal"]
+    },
+    "jsx": "react" // or "preserve"
   },
+  "files": [
+    "src/types/user-type.ts",
+    "src/types/music-type.ts",
+  ],
   "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

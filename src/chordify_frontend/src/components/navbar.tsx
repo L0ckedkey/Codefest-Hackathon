@@ -1,7 +1,8 @@
-import { MagnifyingGlassIcon, ShoppingCartIcon, UserCircleIcon, WalletIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftStartOnRectangleIcon, MagnifyingGlassIcon, ShoppingCartIcon, UserCircleIcon, WalletIcon } from "@heroicons/react/24/outline";
 import Logo from "./logo";
 import Auth from "./auth/auth";
 import { useAuth } from "../contexts/auth-context";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
 
@@ -10,13 +11,16 @@ export default function Navbar() {
     return (
         <>
             <div id="navbar"
-                className="fixed z-40 top-0 w-full bg-transparent flex justify-around items-center py-6 text-white transition-colors duration-500">
+                className="fixed z-30 top-0 w-full bg-transparent flex justify-around items-center py-6 text-white transition-colors duration-500">
                 <Logo />
                 <div className="w-fit flex justify-center items-center gap-8 font-semibold text-lg">
+                    <a href="/" className="group">Home
+                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-white"></span>
+                    </a>
                     <a href="/gallery" className="group">Gallery
                         <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-white"></span>
                     </a>
-                    <a href="#" className="group">Stats
+                    <a href="/rankings" className="group">Stats
                         <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-white"></span>
                     </a>
                     <a href="/create-music" className="group">Create
@@ -35,17 +39,18 @@ export default function Navbar() {
                     {
                         isLoggedIn ? (
                             <>
-                                <h1>{user.username}</h1>
-                                <a href="#" className=" bg-white bg-opacity-20 flex gap-4 items-center p-3 rounded-lg hover:bg-opacity-30">
+                                <a href="/my-profile" className=" bg-white bg-opacity-20 flex gap-4 items-center p-3 rounded-lg hover:bg-opacity-30">
                                     <UserCircleIcon className="w-6 h-6" />
                                 </a>
-                                <a href="#" className="bg-white bg-opacity-20 flex gap-4 items-center p-3 rounded-lg hover:bg-opacity-30">
+                                <a href="/cart" className="bg-white bg-opacity-20 flex gap-4 items-center p-3 rounded-lg hover:bg-opacity-30">
                                     <ShoppingCartIcon className="w-6 h-6" />
                                 </a>
+                                <button onClick={logOut} className="bg-white bg-opacity-20 flex gap-4 items-center p-3 rounded-lg hover:bg-opacity-30">
+                                    <ArrowLeftStartOnRectangleIcon className="w-6 h-6 rotate-180"/>
+                                </button>
                             </>
                         ) : <Auth />
                     }
-
                 </div>
             </div>
         </>

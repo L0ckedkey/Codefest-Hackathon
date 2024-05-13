@@ -2,6 +2,9 @@ import { WalletIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import React, { useEffect, useState } from "react"
 import { chordify_backend } from "../../../../declarations/chordify_backend"
 import Cookies from "js-cookie"
+import { UserType } from "../../types/user-type"
+import { toast } from "react-toastify"
+import {redirect } from "react-router-dom"
 
 export default function Login({ handleClick, goToSignUp }: { handleClick: () => void, goToSignUp: () => void }) {
 
@@ -9,17 +12,21 @@ export default function Login({ handleClick, goToSignUp }: { handleClick: () => 
         username: "",
         password: ""
     })
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent) => {
         try {
             const res = await chordify_backend.login({ username: auth.username, password: auth.password })
-            console.log(res)
             if ('Ok' in res) {
-                Cookies.set("authentication", res.Ok)
+                const user:UserType = res.Ok
+                toast.success("Login Success")
+                Cookies.set("authentication", user.id.toText())
+                redirect("/")
             }
         } catch (error) {
+            toast.error("Login Failed")
             console.log("Error")
             console.log(error)
         }
+        handleClick()
     }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -42,10 +49,10 @@ export default function Login({ handleClick, goToSignUp }: { handleClick: () => 
                             <p>C</p>
                         </div>
                         <p className="text-3xl text-black font-semibold self-center my-10">Connect to Chordify</p>
-                        <form className="flex flex-col gap-6 ">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-6 ">
                             <input onChange={handleChange} value={auth.username} className="w-full auth-input" placeholder="Username" name="username" type="text" />
                             <input onChange={handleChange} value={auth.password} className="w-full auth-input" placeholder="Password" name="password" type="password" />
-                            <button onClick={handleSubmit} className="relative btn-glass w-full bg-black  rounded-md p-4 font-semibold text-md">Sign In
+                            <button type="submit" className="relative btn-glass w-full bg-black  rounded-md p-4 font-semibold text-md">Sign In
                             </button>
                             <div className="w-full flex items-center gap-2 text-gray-400 text-xs">
                                 <hr className="border-b-[1px] border-gray-400 w-full" />

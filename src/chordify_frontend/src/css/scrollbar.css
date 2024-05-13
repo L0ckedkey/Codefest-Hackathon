@@ -1,28 +1,27 @@
+html {
+    scroll-behavior: smooth;
+}
 
 ::-webkit-scrollbar {
-    width: 11px;
-    height: 11px;
+    width: 8px; 
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: black;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: black; 
+    background-color: white; 
     border-radius: 10px; 
+    opacity: 0.5; 
+    margin: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #333;
+    /* background-color: black; */
+    opacity: 0.8; 
 }
 
-::-webkit-scrollbar:horizontal {
-    height: 11px; 
-    width: auto; 
-}
-
-::-webkit-scrollbar:vertical {
-    width: 11px; 
-    height: auto;
+::-webkit-scrollbar-button {
+    display: none;
 }

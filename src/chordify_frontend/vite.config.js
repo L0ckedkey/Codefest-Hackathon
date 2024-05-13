@@ -20,8 +20,13 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
+<<<<<<< HEAD
         // target: "http://127.0.0.1:4943",
         target: "http://127.0.0.1:39393/",
+=======
+        target: "http://127.0.0.1:4943",
+        // target: "http://localhost:39393/",
+>>>>>>> 5d9763ea7a13e9cfba9c7fe77e1832ecf48baa94
         changeOrigin: true,
       },
     },
