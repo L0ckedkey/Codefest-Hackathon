@@ -11,22 +11,24 @@ export default function DiscoverSection() {
     const fetchMusics = async () => {
         try {
             setIsLoading(true)
-            const res = await chordify_backend.getMusicByVolumeDesc({ limit: BigInt(12) })
-            if ('Ok' in res) {
-                const musicData = res.Ok.map((music) => ({
-                    id: music.id,
-                    author: music.author,
-                    name: music.name,
-                    description: music.description,
-                    volume: Number(music.volume),
-                    imageUrl: music.imageUrl,
-                    price: Number(music.price),
-                    supply: Number(music.supply),
-                    genres: music.genres,
-                    saleEnd: Number(music.saleEnd)
-                }))
-                setMusics(musicData)
-            }
+            const res = await chordify_backend.getMusics()
+            const musicData = res.map((music) => ({
+                id: music.id,
+                author: music.author,
+                name: music.name,
+                description: music.description,
+                volume: Number(music.volume),
+                imageUrl: music.imageUrl,
+                price: Number(music.price),
+                supply: Number(music.supply),
+                genres: music.genres,
+                saleEnd: Number(music.saleEnd)
+            }))
+            
+            setMusics(musicData)
+            // if ('Ok' in res) {
+            // }
+            
         } catch (error) {
             console.log(error)
         }

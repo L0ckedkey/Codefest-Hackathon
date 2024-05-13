@@ -13,12 +13,15 @@ export default function Login({ handleClick, goToSignUp }: { handleClick: () => 
         password: ""
     })
     const handleSubmit = async (e: React.FormEvent) => {
+        // e.preventDefault();
         try {
             const res = await chordify_backend.login({ username: auth.username, password: auth.password })
+            
             if ('Ok' in res) {
-                const user:UserType = res.Ok
+                const user:UserType = res.Ok;
                 toast.success("Login Success")
-                Cookies.set("authentication", user.id.toText())
+                Cookies.set("authentication", user)
+                console.log(Cookies.get("authentication"))
                 redirect("/")
             }
         } catch (error) {

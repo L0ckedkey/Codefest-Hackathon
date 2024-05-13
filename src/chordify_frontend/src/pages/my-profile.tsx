@@ -13,9 +13,11 @@ export default function MyProfile() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
+    const [refresh, setRefresh] = useState(false);
+    const [number, setNumber] = useState(0);
     const [profile, setProfile] = useState<UserType>();
-    const [username, setUsername] = useState<String | undefined>("");
     const { user, isLoggedIn} = useAuth()
+    const [username, setUsername] = useState(user.username);
 
     const handleUpdateUserName = () => {
         setIsUpdating(true);
@@ -34,18 +36,38 @@ export default function MyProfile() {
             const res = await chordify_backend.getUserById(user.id!)
             if ('Ok' in res) {
                 const data = res.Ok
+                console.log(data);
+                
                 const userRes: UserType = {
                     id: data.id,
                     username: data.username,
-                    imageUrl: data.imageUrl
+                    imageUrl: data.imageUrl,
+                    money: Number(data.money)
                 }
                 setProfile(userRes)
                 
             }
             setIsLoading(false)
+            
         }
         fetch();
-    }, [user]);
+    }, [user, refresh]);
+
+    const handleTopUp = async () => {
+        const res = await chordify_backend.topup(user.id!, BigInt(number));
+        setNumber(0);
+        setRefresh(!refresh);
+        toast.success("Top Up Success!");
+    }
+
+    const handleUpdateToBE = async () => {
+        if (username) {
+            const res = await chordify_backend.updateUsername(user.id!, username);
+            setIsUpdating(false);
+            setRefresh(!refresh)
+            toast.success("Username Updated!");
+        }
+    }
 
 
     return (
@@ -65,7 +87,7 @@ export default function MyProfile() {
                             <input type="text" className="rounded-lg w-full bg-black border-2 border-[white]" value={username + ""} onChange={(e) => setUsername(e.target.value)}/>
                         </div>
                         <div>
-                            <button className="w-full bg-[#0148FF] hover:bg-opacity-80 text-white font-semibold rounded-md py-2">Update</button>
+                            <button onClick={handleUpdateToBE} className="w-full bg-[#0148FF] hover:bg-opacity-80 text-white font-semibold rounded-md py-2">Update</button>
                         </div>
                     </div>
                 </div>
@@ -80,7 +102,7 @@ export default function MyProfile() {
 
             <div className="mt-4 flex flex-col items-center">
                 <div className="mb-6">
-                    <img src={profile?.imageUrl} className="rounded-full w-[18vw] h-[18vw]"/>
+                    <img src={"https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"} className="rounded-full w-[18vw] h-[18vw]"/>
                 </div>
 
                 <div className="mb-6">
@@ -101,11 +123,11 @@ export default function MyProfile() {
                     <div>
                         
                     <div>
-                        <input type="text" className="rounded-lg w-full bg-black border-2 border-[white]" value={profile?.username}/></div>
+                        <input type="number" onChange={(e) => setNumber(Number(e.target.value))} placeholder="ICP" className="rounded-lg w-full bg-black border-2 border-[white]" /></div>
                     </div>
 
                     <div className='mt-6'>
-                        <button className="w-full bg-[#0148FF] hover:bg-opacity-80 text-white font-semibold rounded-md py-2">Top Up</button>
+                        <button onClick={handleTopUp} className="w-full bg-[#0148FF] hover:bg-opacity-80 text-white font-semibold rounded-md py-2">Top Up</button>
                     </div>
                 </div>
             </div>

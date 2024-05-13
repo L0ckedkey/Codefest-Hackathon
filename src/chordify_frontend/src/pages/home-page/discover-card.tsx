@@ -30,7 +30,7 @@ export default function DiscoverCard({ music }: { music: MusicType }) {
                 <div className='main'>
                     <img className='tokenImage' src={music.imageUrl} alt="NFT" />
                     <h2 className="text-white">{music.name}</h2>
-                    <p className='description'>{music.description}.</p>
+                    <p className='description text-ellipsis text-wrap line-clamp-2'>{music.description}.</p>
                     <div className='tokenInfo'>
                         <div className="price">
                             <p>{music.price} ICP</p>

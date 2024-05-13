@@ -7,6 +7,7 @@ import { Principal } from "@dfinity/principal"
 import { toast } from "react-toastify"
 import formatRemainingTime from "../../utils/format-time"
 import { Bars3BottomLeftIcon, ShoppingCartIcon } from "@heroicons/react/24/outline"
+import { useAuth } from "../../contexts/auth-context"
 
 export default function MusicDetail() {
 
@@ -14,26 +15,29 @@ export default function MusicDetail() {
     const { setIsLoading } = useLoading()
     const [music, setMusic] = useState<MusicType>()
     const [remainingTime, setRemainingTime] = useState<string>();
+    const { user } = useAuth();
 
     const fetch = async () => {
         try {
             setIsLoading(true)
             const res = await chordify_backend.getMusicById(Principal.fromText(id!))
+            
+            const data = res[0]
+            
+            const musicRes: MusicType = {
+                id: data.id,
+                author: data?.author,
+                name: data.name,
+                description: data.description,
+                genres: data.genres,
+                imageUrl: data.imageUrl,
+                price: Number(data.price),
+                supply: Number(data.supply),
+                volume: Number(data.volume),
+                saleEnd: Number(data.saleEnd)
+            }
+            setMusic(musicRes)
             if ('Ok' in res) {
-                const data = res.Ok
-                const musicRes: MusicType = {
-                    id: data.id,
-                    author: data.author,
-                    name: data.name,
-                    description: data.description,
-                    genres: data.genres,
-                    imageUrl: data.imageUrl,
-                    price: Number(data.price),
-                    supply: Number(data.supply),
-                    volume: Number(data.volume),
-                    saleEnd: Number(data.saleEnd)
-                }
-                setMusic(musicRes)
             }
         } catch (error) {
             toast.error("Failed to get music")
@@ -60,6 +64,12 @@ export default function MusicDetail() {
         fetch()
     }, [])
 
+    const handleAddToCart = async () => {
+        if (music) {
+            const res = await chordify_backend.createCart(user.id, music?.id);
+            toast.success("Music Added To Cart!");
+        }
+    }
 
     return (
         <>
@@ -98,8 +108,8 @@ export default function MusicDetail() {
                                         <p className="text-md font-regular">${music!.price * 15} </p>
                                     </div>
                                     <div className="w-full flex items-center bg-blue-500  rounded-lg btn-glass">
-                                        <button className="w-full py-3">Buy Now</button>
-                                        <button className="px-6 py-3 ring-1 rounded-r-lg ring-white ">
+                                        <button onClick={handleAddToCart} className="w-full py-3">Add To Cart</button>
+                                        <button onClick={handleAddToCart} className="px-6 py-3 ring-1 rounded-r-lg ring-white ">
                                             <ShoppingCartIcon className="w-6 h-6" />
                                         </button>
                                     </div>

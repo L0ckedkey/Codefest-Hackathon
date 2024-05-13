@@ -35,9 +35,11 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     const init = async () =>{
         try {
             const authentication = Cookies.get("authentication")
+            
             if(authentication){
                 const id = Principal.fromText(authentication)
                 const res = await chordify_backend.getUserById(id)
+                
                 if('Ok' in res){
                     setIsLoggedIn(true)
                     const user: UserType = res.Ok

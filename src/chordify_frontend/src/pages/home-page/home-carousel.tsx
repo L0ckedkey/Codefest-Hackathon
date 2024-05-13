@@ -10,38 +10,37 @@ export default function Carousel() {
 
     const {images} = useImage()
 
-    // const [musics, setMusics] = useState<MusicType[]>([])
-    // const { isLoading, setIsLoading } = useLoading()
+    const [musics, setMusics] = useState<MusicType[]>([])
+    const { isLoading, setIsLoading } = useLoading()
 
-    // const fetchMusics = async () => {
-    //     try {
-    //         setIsLoading(true)
-    //         const res = await chordify_backend.getMusicByVolumeDesc({ limit: BigInt(12) })
-    //         if ('Ok' in res) {
-    //             const musicData = res.Ok.map((music) => ({
-    //                 id: music.id,
-    //                 author: music.author,
-    //                 name: music.name,
-    //                 description: music.description,
-    //                 volume: Number(music.volume),
-    //                 imageUrl: music.imageUrl,
-    //                 price: Number(music.price),
-    //                 supply: Number(music.supply),
-    //                 genres: music.genres,
-    //                 saleEnd: Number(music.saleEnd)
-    //             }))
-    //             setMusics(musicData)
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    //     setIsLoading(false)
-    // }
+    const fetchMusics = async () => {
+        try {
+            setIsLoading(true)
+            const res = await chordify_backend.getMusics()
+            const musicData = res.map((music) => ({
+                id: music.id,
+                author: music.author,
+                name: music.name,
+                description: music.description,
+                volume: Number(music.volume),
+                imageUrl: music.imageUrl,
+                price: Number(music.price),
+                supply: Number(music.supply),
+                genres: music.genres,
+                saleEnd: Number(music.saleEnd)
+            }))
+            setMusics(musicData)
+            
+        } catch (error) {
+            console.log(error)
+        }
+        setIsLoading(false)
+    }
 
 
-    // useEffect(() => {
-    //     fetchMusics()
-    // }, [])
+    useEffect(() => {
+        fetchMusics()
+    }, [])
 
     useEffect(() => {
         var splide = new Splide(".splide", {
@@ -49,7 +48,7 @@ export default function Carousel() {
             perMove: 1,
             perPage: 5,
             autoplay: true,
-            gap: '1rem',
+            gap: '2rem',
             pagination: false,
             snap: true,
             lazyLoad: 'nearby',
@@ -83,9 +82,9 @@ export default function Carousel() {
                             ))
                         } */}
                         {
-                            images.map((image, index) => (
+                            musics.map((image, index) => (
                                 <div key={index} className="splide__slide overflow-hidden rounded-lg hover:cursor-pointer ">
-                                    <img className="rounded-md w-full hover:scale-110  transition-transform duration-300 " src={image}  />
+                                    <img className="rounded-md w-full hover:scale-110  transition-transform duration-300 h-60" src={image.imageUrl} />
                                 </div>
                             ))
                         }

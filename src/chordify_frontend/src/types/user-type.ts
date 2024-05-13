@@ -3,7 +3,7 @@ export type UserType = {
     id: Principal
     username?: string
     imageUrl?: string,
-    money?: number
+    money: number
 }
 
 export interface IUser{

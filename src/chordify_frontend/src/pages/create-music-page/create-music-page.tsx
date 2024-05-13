@@ -90,7 +90,7 @@ export default function CreateMusic() {
         <>
             <div className="relative w-full h-full flex flex-grow justify-center p-20 box-border ">
                 <div className=" max-w-7xl w-full h-full flex flex-grow flex-col items-center  text-white box-border">
-                    <h1 className="text-3xl font-semibold self-start py-6 box-border">Create NFT</h1>
+                    <h1 className="text-3xl font-semibold self-start py-6 box-border">Create Music</h1>
                     <div className="w-full h-full flex flex-grow justify-between gap-20">
                         {
                             selectedFile ? (
