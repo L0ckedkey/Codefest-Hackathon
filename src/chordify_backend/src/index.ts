@@ -286,7 +286,7 @@ export default Canister({
   getMusics: query([], Vec(Music), () => {
     return musicStorage.values();
   }),
-
+ 
   getMusicByName: query([text], Vec(Music), (name: text) => {
     const searchedMusic: Music[] = [];
 

@@ -1,16 +1,16 @@
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 
-import AccountSettings from './account-settings'
+import AccountSettings from "./account-settings"
 import Actions from './actions'
 
-const Content = () => {
+export const Content = () => {
   const tabs = ['Account Settings']
 
   return (
     <Box
       as="main"
       flex={3}
-      d="flex"
+      display="flex"
       flexDir="column"
       justifyContent="space-between"
       pt={5}
@@ -45,10 +45,7 @@ const Content = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
-
       <Actions />
     </Box>
   )
 }
-
-export default Content

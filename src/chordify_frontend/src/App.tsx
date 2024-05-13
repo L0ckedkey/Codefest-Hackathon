@@ -29,7 +29,7 @@ function App() {
                                 <Route path="/rankings" element={<Rankings />} />
                                 <Route path="/debug" element={<Debug />} />
                                 <Route path="/cart" element={<Cart />} />
-                                <Route path="/profile" element={<MyProfile />} />
+                                <Route path="/my-profile" element={<MyProfile />} />
                             </Routes>
                         </BrowserRouter>
                     </BaseLayout>
