@@ -1,5 +1,5 @@
 import { DocumentPlusIcon } from '@heroicons/react/24/outline';
-import { Canister, Err, Ok, Opt, Principal, Record, Result, StableBTreeMap, Variant, Vec, nat64, query, text, update, int64 } from 'azle';
+import { Canister, Err, Ok, Opt, Principal, Record, Result, StableBTreeMap, Variant, Vec, nat64, query, text, update, int64, float64 } from 'azle';
 import { sha256 } from 'js-sha256';
 
 const USERS_STORAGE_MEMORY_ID = 0;
@@ -9,6 +9,7 @@ const User = Record({
   id: Principal,
   username: text,
   password: text,
+  money: int64,
 });
 type User = typeof User.tsType;
 
@@ -37,10 +38,11 @@ type GenreCreateRequestDTO = typeof GenreCreateDTO.tsType;
 
 const MusicCart = Record({
   id: Principal,
+  musicId: Principal,
   name: text,
-  genreId: Principal,
+  genres: Vec(text),
   authorId: Principal,
-  quantity: text
+  quantity: int64
 })
 type MusicCart = typeof MusicCart.tsType;
 
@@ -61,16 +63,15 @@ const MusicCreateDTO = Record({
   name: text,
   genres: Vec(text),
   authorId: Principal,
-  description: text, 
-  supply: int64, 
-  price: int64, 
+  description: text,
+  supply: int64,
+  price: int64,
   imageUrl: text
 });
 type MusicCreateRequestDTO = typeof MusicCreateDTO.tsType;
 
 const Cart = Record({
   id: Principal,
-  userId: Principal,
   musics: Vec(MusicCart)
 })
 type Cart = typeof Cart.tsType;
@@ -78,7 +79,7 @@ type Cart = typeof Cart.tsType;
 const CartCreateDTO = Record({
   userId: Principal,
   musicId: Principal,
-  quantity: text
+  quantity: int64
 });
 type CartCreateRequestDTO = typeof CartCreateDTO.tsType;
 
@@ -119,7 +120,7 @@ function generateId(): Principal {
 function hashPassword(password: string) {
   const salt = 'your-salt-value';
   const saltedPassword = password + salt;
-  
+
   const hash = sha256(saltedPassword);
   return hash;
 }
@@ -141,7 +142,8 @@ export default Canister({
       const user: User = {
         id: generateId(),
         username: dto.username,
-        password: hashPassword(dto.password)
+        password: hashPassword(dto.password),
+        money: BigInt(0),
       };
       usersStorage.insert(user.id, user);
 
@@ -152,7 +154,7 @@ export default Canister({
   getUserById: query([Principal], Result(UserResultDTO, Error), (id: Principal) => {
     const userOpt = usersStorage.get(id);
     const user = userOpt.Some;
-    if(user == undefined){
+    if (user == undefined) {
       return Err({
         UserDoesNotExist: id
       })
@@ -164,24 +166,48 @@ export default Canister({
 
     return Ok(userResult);
   }),
+  updateUsername: update([Principal, text], Result(User, Error), (id: Principal, username: text) => {
+    const userOpt = usersStorage.get(id);
+    const user = userOpt.Some;
+    if (user == undefined) {
+      return Err({
+        UserDoesNotExist: id
+      })
+    }
+    user.username = username;
+    usersStorage.insert(user.id, user);
+    return Ok(user);
+  }),
+  topup: update([Principal, int64], Result(User, Error), (id: Principal, money: int64) => {
+    const userOpt = usersStorage.get(id);
+    const user = userOpt.Some;
+    if (user == undefined) {
+      return Err({
+        UserDoesNotExist: id
+      })
+    }
+    user.money = user.money + money;
+    usersStorage.insert(user.id, user);
+    return Ok(user);
+  }),
 
   login: query([UserCreateRequestDTO], Result(Principal, Error), (dto: UserCreateRequestDTO) => {
     const allUsers = usersStorage.values();
 
     const user = allUsers.find(user => user.username === dto.username);
-    
+
     if (user == undefined) {
       return Err({
         UsernameDoesNotExist: dto.username,
       });
     }
 
-    if(verifyPassword(dto.password, user.password)){
+    if (verifyPassword(dto.password, user.password)) {
       return Err({
         CredentialNotMatch: dto.username
       })
     }
-    
+
     return Ok(user.id)
   }),
 
@@ -224,7 +250,7 @@ export default Canister({
     [MusicCreateDTO],
     Music,
     (dto: MusicCreateRequestDTO) => {
-      
+
       const music: Music = {
         id: generateId(),
         name: dto.name,
@@ -245,7 +271,7 @@ export default Canister({
   getMusicById: query([Principal], Opt(Music), (id: Principal) => {
     return musicStorage.get(id);
   }),
-  
+
 
   getMusics: query([], Vec(Music), () => {
     return musicStorage.values();
@@ -270,63 +296,126 @@ export default Canister({
 
   createCart: update(
     [CartCreateDTO],
-    Cart,
+    Result(Cart, Error),
     (dto: CartCreateRequestDTO) => {
       const userOpt = usersStorage.get(dto.userId);
-      if ("None" in userOpt) {
+      const user = userOpt.Some;
+      if (user == undefined) {
         return Err({
-          UserDoesNotExist: dto.userId,
-        });
+          UserDoesNotExist: dto.userId
+        })
       }
 
       const musicOpt = musicStorage.get(dto.musicId);
-      if ("None" in musicOpt) {
+      const music = musicOpt.Some;
+      if (music == undefined) {
         return Err({
           MusicDoesNotExist: dto.userId,
         });
       }
 
       const musicCart: MusicCart = {
-        authorId: musicOpt.Some.authorId,
-        genreId: musicOpt.Some.genreId,
-        name: musicOpt.Some.name,
-        id: musicOpt.Some.id,
+        id: generateId(),
+        authorId: music.authorId,
+        genres: music.genres,
+        name: music.name,
+        musicId: music.id,
         quantity: dto.quantity
       }
 
-      const keysIterator = cartStorage.keys();
+      // const keysIterator = cartStorage.keys();
 
-      for (const key of keysIterator) {
-        const cart = cartStorage.get(key);
+      // for (const key of keysIterator) {
+      //   const cart = cartStorage.get(key);
 
-        if (cart.Some?.userId.compareTo(dto.userId) == 'eq') {
+      //   if (cart.Some?.userId.compareTo(dto.userId) == 'eq') {
 
 
-          cart.Some?.musics.push(musicCart)
+      //     cart.Some?.musics.push(musicCart)
 
-          return cart;
-        }
+      //     return cart;
+      //   }
+      // }
+
+      const cartOpt = cartStorage.get(dto.userId)
+      const cart = cartOpt.Some;
+      let newCart: Cart;
+      if (cart == undefined) {
+        newCart = ({
+          id: dto.userId,
+          musics: [musicCart],
+        })
+        cartStorage.insert(newCart.id, newCart);
+        return Ok(newCart);
+      } else {
+        cart.musics.push(musicCart)
+        cartStorage.insert(cart.id, cart)
+        return Ok(cart);
       }
 
-      const cart: Cart = ({
-        id: generateId(),
-        musics: [musicCart],
-        userId: dto.userId
-      })
-
-      cartStorage.insert(cart.id, cart)
-
-      return cart;
 
     }
   ),
+
+  updateCart: update([Principal, Principal, int64], Result(Cart, Error), (userId: Principal, musicId: Principal, quantity: int64) => {
+    const cartOpt = cartStorage.get(userId);
+    const cart = cartOpt.Some;
+    if (cart == undefined) {
+      return Err({
+        UserDoesNotExist: userId
+      })
+    }
+    const music = cart.musics.find((m)=>{
+      if(m.id === musicId){
+        m.quantity = quantity;
+      }
+    });
+      cartStorage.insert(cart.id, cart);
+    return Ok(cart);
+  }),
+
+  removeCart: query([Principal, Principal], Result(text, Error), (userId: Principal, musicId: Principal)=>{
+    const userOpt = usersStorage.get(userId);
+    if ("None" in userOpt) {
+      return Err({
+        UserDoesNotExist: userId,
+      });
+    }
+
+    const musicOpt = musicStorage.get(musicId);
+    if ("None" in musicOpt) {
+      return Err({
+        MusicDoesNotExist: musicId,
+      });
+    }
+    const cartOpt = cartStorage.get(userId);
+    if ("None" in cartOpt) {
+      return Err({
+        UserDoesNotExist: userId,
+      });
+    }
+    const user = userOpt.Some;
+    const music = musicOpt.Some;
+    const cart = cartOpt.Some;
+    const updatedCartMusic = cart.musics.filter((m) => m.id !== musicId);
+    cart.musics = updatedCartMusic;
+    cartStorage.insert(cart.id, cart)
+    return Ok(cart);
+  }),
 
   getCartById: query([Principal], Opt(Music), (id: Principal) => {
     return musicStorage.get(id);
   }),
 
-  getCarts: query([], Vec(Music), () => {
-    return musicStorage.values();
+  getCarts: query([Principal], Result(Vec(MusicCart), Error), (id: Principal) => {
+    const cartOpt = cartStorage.get(id)
+    if ("None" in cartOpt) {
+      return Err({
+        UserDoesNotExist: id,
+      });
+    }
+    const cart = cartOpt.Some;
+    return Ok(cart.musics)
   }),
 
   getCartCount: query([], nat64, () => {
@@ -363,11 +452,13 @@ export default Canister({
   getMusicByGenre: query([text], Result(Music, Error), (genre) => {
     const allMusic = musicStorage.values();
     const musicResult = allMusic.find(music => music.genres.includes(genre));
-    if(musicResult == undefined){
+    if (musicResult == undefined) {
       return Err({
         NoGenre: genre
       });
     }
     return Ok(musicResult)
   }),
+
+
 })
