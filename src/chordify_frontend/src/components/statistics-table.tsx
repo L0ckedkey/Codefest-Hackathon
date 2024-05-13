@@ -1,10 +1,47 @@
-import { STATS_TABLE } from '../types/consts';
-import { HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes, ReactNode, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Container from './container';
 import Button from './button';
 
+import { useLoading } from "../contexts/loading-context"
+import { useAuth } from "../contexts/auth-context"
+import { chordify_backend } from "../../../declarations/chordify_backend"
+import { Principal } from "@dfinity/principal"
+import { toast } from "react-toastify"
+import { MusicType } from '../types/music-type'
+import { useParams } from 'react-router-dom';
+
 export default function StatisticTable() {
+  const { id } = useParams()
+  const { setIsLoading } = useLoading()
+  const [music, setMusic] = useState([])
+
+  const fetch = async () => {
+    try {
+        // setIsLoading(true)
+        const res = await chordify_backend.getMusics()
+        const musicData = res.map((dataItem) => ({
+          id: dataItem.id,
+          name: dataItem.name,
+          genres: dataItem.genres,
+          author: dataItem.author,
+          description: dataItem.description,
+          volume: Number(dataItem.volume),
+          supply: Number(dataItem.supply),
+          price: Number(dataItem.price),
+          imageUrl: dataItem.imageUrl,
+          saleEnd: dataItem.saleEnd,
+          username: dataItem.author.username,
+        }));
+        setMusic(musicData);
+    } catch (error) {
+        toast.error("Failed to get music")
+    }
+    setIsLoading(false)
+  }
+
+  fetch()
+
   return (
     <Container className="pt-12">
       <div className="flex justify-between border-b">
@@ -24,15 +61,15 @@ export default function StatisticTable() {
       </div>
       <div className="gg overflow-auto py-4">
         <div className="flex gap-x-8 md:gap-x-24">
-          <StatTable data={STATS_TABLE.slice(0, 5)} indexStart={1} />
-          <StatTable data={STATS_TABLE.slice(-5)} indexStart={6} />
+          <StatTable data={music.slice(0, 5)} indexStart={1} />
+          <StatTable data={music.slice(-5)} indexStart={6} />
         </div>
       </div>
     </Container>
   );
 }
 
-function StatTable({ data, indexStart }: { data: typeof STATS_TABLE; indexStart: number }) {
+function StatTable({ data, indexStart }: { data: typeof MusicType; indexStart: number }) {
   return (
     <table className="flex-1 whitespace-nowrap w-full">
       <thead>
@@ -50,18 +87,18 @@ function StatTable({ data, indexStart }: { data: typeof STATS_TABLE; indexStart:
             <td>
               <div className="flex gap-x-3 items-center md:gap-x-6 pr-6">
                 <div className="aspect-square border lg:w-[4.25rem] overflow-hidden relative rounded-xl">
-                  <img className="absolute inset-0 h-full object-center object-cover w-full" src={item.image} />
+                  <img className="absolute inset-0 h-full object-center object-cover w-full" src={item.imageUrl} />
                 </div>
                 <div>
                   <p>{item.name}</p>
                   <p className="font-normal text-slate-500 text-xs">
-                    Floor: <span className="font-semibold">{item.floor} ETH</span>
+                    Author: <span className="font-semibold">{item.username}</span>
                   </p>
                 </div>
               </div>
             </td>
-            <td className="hidden md:table-cell">{item.floor} ETH</td>
-            <td className="text-right">{item.volume} ETH</td>
+            <td className="hidden md:table-cell">{item.price} ICP</td>
+            <td className="text-right">{item.volume}</td>
           </tr>
         ))}
       </tbody>
