@@ -75,7 +75,7 @@ export default function MusicDetail() {
         <>
             {
                 music && (
-                    <div className="w-full h-full max-h-screen flex items-center py-24 px-20">
+                    <div className="w-full min-h-[120vh] max-h-screen flex items-center py-24 px-20">
                         <div className="w-full flex justify-center gap-20 text-white">
                             <div className="max-w-xl  w-full h-full rounded-md overflow-hidden">
                                 <img className="w-full h-full max-w-full max-h-[600px] rounded-md object-cover hover:scale-110  transition-transform duration-300" src={music!.imageUrl} loading="lazy" alt="" />

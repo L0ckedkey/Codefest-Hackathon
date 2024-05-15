@@ -42,8 +42,10 @@ const MusicCart = Record({
   musicId: Principal,
   name: text,
   genres: Vec(text),
-  authorId: Principal,
-  quantity: int64
+  author: User,
+  quantity: int64,
+  imageUrl: text,
+  price: int64
 })
 type MusicCart = typeof MusicCart.tsType;
 
@@ -51,12 +53,13 @@ const Music = Record({
   id: Principal,
   name: text,
   genres: Vec(text),
-  authorId: Principal,
+  author: User,
   description: text,
   volume: int64,
   supply: int64,
   price: int64,
-  imageUrl: text
+  imageUrl: text,
+  saleEnd: int64
 })
 type Music = typeof Music.tsType;
 
@@ -67,7 +70,8 @@ const MusicCreateDTO = Record({
   description: text,
   supply: int64,
   price: int64,
-  imageUrl: text
+  imageUrl: text,
+  saleEnd: int64
 });
 type MusicCreateRequestDTO = typeof MusicCreateDTO.tsType;
 
@@ -146,7 +150,7 @@ export default Canister({
 
   createUser: update(
     [UserCreateRequestDTO],
-    User,
+    UserResultDTO,
     (dto: UserCreateRequestDTO) => {
       const user: User = {
         id: generateId(),
@@ -155,19 +159,23 @@ export default Canister({
         money: BigInt(0),
       };
       usersStorage.insert(user.id, user);
-
-      return user;
+      const userResult: UserResultDTO = {
+        id: user.id,
+        username: user.username,
+        money: user.money
+      }
+      return userResult;
     }
   ),
 
   getUserById: query([Principal], Result(UserResultDTO, Error), (id: Principal) => {
     const userOpt = usersStorage.get(id);
-    const user = userOpt.Some;
-    if (user == undefined) {
+    if ("None" in userOpt) {
       return Err({
-        UserDoesNotExist: id
-      })
+        UserDoesNotExist: id,
+      });
     }
+    const user = userOpt.Some;
     const userResult: UserResultDTO = {
       id: user.id,
       username: user.username,
@@ -260,17 +268,24 @@ export default Canister({
     [MusicCreateDTO],
     Music,
     (dto: MusicCreateRequestDTO) => {
-
+      const userOpt = usersStorage.get(dto.authorId);
+      const user = userOpt.Some;
+      if (user == undefined) {
+        return Err({
+          UserDoesNotExist: dto.authorId
+        })
+      }
       const music: Music = {
         id: generateId(),
         name: dto.name,
         genres: dto.genres,
-        authorId: dto.authorId,
+        author: user,
         volume: BigInt(0),
         price: dto.price,
         imageUrl: dto.imageUrl,
         supply: dto.supply,
-        description: dto.description
+        description: dto.description,
+        saleEnd: dto.saleEnd
       }
       musicStorage.insert(music.id, music)
 
@@ -283,8 +298,14 @@ export default Canister({
   }),
 
 
-  getMusics: query([], Vec(Music), () => {
-    return musicStorage.values();
+  getMusics: query([],  Vec(Music), () => {
+    const musics: Music[] = [];
+
+    for (const music of musicStorage.values()) {
+      musics.push(music);
+      
+    }
+    return musics;
   }),
  
   getMusicByName: query([text], Vec(Music), (name: text) => {
@@ -305,9 +326,9 @@ export default Canister({
 
 
   createCart: update(
-    [Principal, Principal, int64],
+    [Principal, Principal],
     Result(Cart, Error),
-    (userId: Principal, musicId: Principal, quantity: int64) => {
+    (userId: Principal, musicId: Principal) => {
       const userOpt = usersStorage.get(userId);
       const user = userOpt.Some;
       if (user == undefined) {
@@ -326,26 +347,26 @@ export default Canister({
 
       const musicCart: MusicCart = {
         id: generateId(),
-        authorId: music.authorId,
+        author: music.author,
         genres: music.genres,
         name: music.name,
         musicId: music.id,
-        quantity: quantity
+        quantity: BigInt(1),
+        imageUrl: music.imageUrl,
+        price: music.price
       }
 
-      // const keysIterator = cartStorage.keys();
+      const keysIterator = cartStorage.keys();
 
-      // for (const key of keysIterator) {
-      //   const cart = cartStorage.get(key);
+      for (const key of keysIterator) {
+        const cart = cartStorage.get(key);
 
-      //   if (cart.Some?.userId.compareTo(dto.userId) == 'eq') {
+        if (cart.Some?.id.compareTo(userId) == 'eq') {
+          cart.Some?.musics.push(musicCart)
 
-
-      //     cart.Some?.musics.push(musicCart)
-
-      //     return cart;
-      //   }
-      // }
+          return Ok(cart);
+        }
+      }
 
       const cartOpt = cartStorage.get(userId)
       const cart = cartOpt.Some;
@@ -383,6 +404,33 @@ export default Canister({
       cartStorage.insert(cart.id, cart);
     return Ok(cart);
   }),
+//   updateCart: update([Principal, Principal, int64], Result(Cart, Error), (userId: Principal, musicId: Principal, quantity: int64) => {
+//     const cartOpt = cartStorage.get(userId);
+//     if (!cartOpt) {
+//         return Err({
+//             UserDoesNotExist: userId
+//         });
+//     }
+
+//     const cart = cartOpt.Some;
+//     if (cart == undefined) {
+//       return Err({
+//         UserDoesNotExist: userId
+//       })
+//     }
+//     const musicIndex = cart.musics.findIndex(m => m.id === musicId);
+
+//     if (musicIndex !== -1) {
+//         cart.musics[musicIndex].quantity = quantity;
+//         cartStorage.insert(cart.id, cart);
+//         return Ok(cart);
+//     } 
+//     else {
+//         return Err({
+//             MusicNotFound: musicId
+//         });
+//     }
+// }),
 
   removeCart: query([Principal, Principal], Result(text, Error), (userId: Principal, musicId: Principal)=>{
     const userOpt = usersStorage.get(userId);
@@ -392,23 +440,24 @@ export default Canister({
       });
     }
 
-    const musicOpt = musicStorage.get(musicId);
-    if ("None" in musicOpt) {
-      return Err({
-        MusicDoesNotExist: musicId,
-      });
-    }
+    
     const cartOpt = cartStorage.get(userId);
     if ("None" in cartOpt) {
       return Err({
         UserDoesNotExist: userId,
       });
     }
-    const user = userOpt.Some;
-    const music = musicOpt.Some;
     const cart = cartOpt.Some;
-    const updatedCartMusic = cart.musics.filter((m) => m.id !== musicId);
-    cart.musics = updatedCartMusic;
+    const updatedCartMusic:MusicCart[] = []
+    for(let i=0; i<cart.musics.length; i++){
+      if(cart.musics[i].id === musicId){
+        updatedCartMusic.push(cart.musics[i])
+        // cart.musics.splice(i, 1)
+      }
+    }
+    // const updatedCartMusic = cart.musics.filter((m) => m.id !== musicId);
+    // console.log(updatedCartMusic)
+    cart.musics = updatedCartMusic
     cartStorage.insert(cart.id, cart)
     return Ok('Success');
   }),
