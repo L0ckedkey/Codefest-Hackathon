@@ -57,7 +57,7 @@ export default function Home() {
                     <div className='w-full mt-28 mb-10 flex flex-col justify-center items-center gap-4 text-white'>
                         <h1 className='text-5xl font-bold'>Chordify</h1>
                         <p className='max-w-5xl'>
-                        SoundToken is a cutting-edge platform that revolutionizes the music industry by introducing non-fungible tokens (NFTs) specifically designed for songs and audio content. Unlike traditional NFT platforms that focus on visual art or digital collectibles, SoundToken is dedicated to empowering musicians, producers, and audio creators to tokenize and monetize their work in a unique and secure manner.
+                        Chordify is a cutting-edge platform that revolutionizes the music industry by introducing non-fungible tokens (NFTs) specifically designed for songs and audio content. Unlike traditional NFT platforms that focus on visual art or digital collectibles, Chordify is dedicated to empowering musicians, producers, and audio creators to tokenize and monetize their work in a unique and secure manner.
                         </p>
                     </div>
                     <div className='px-8 z-10 box-border'>
